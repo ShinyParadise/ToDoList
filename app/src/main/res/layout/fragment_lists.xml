@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ListsFragment">
+    tools:context=".listscreen.ListsFragment">
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/lists_recycler_view"
+        android:id="@+id/recView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/recycler_view_item"
-        />
+        tools:listitem="@layout/recycler_view_item" />
 </FrameLayout>

@@ -3,6 +3,10 @@ package com.example.todolist.models;
 import java.util.ArrayList;
 
 public class ToDoList {
+    private String listName;
+
+    private String description;
+
     private ArrayList<String> paragraphs;
 
     public ArrayList<String> getParagraphs() {
@@ -16,6 +20,22 @@ public class ToDoList {
     public void changeParagraph(String oldParagraph, String changedParagraph) {
         int indexOfOldParagraph = paragraphs.indexOf(oldParagraph);
         paragraphs.set(indexOfOldParagraph, changedParagraph);
+    }
+
+    public String getListName() {
+        return listName;
+    }
+
+    public void setListName(String listName) {
+        this.listName = listName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setParagraphs(ArrayList<String> paragraphs) {

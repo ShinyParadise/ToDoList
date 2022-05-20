@@ -1,6 +1,4 @@
-package com.example.todolist;
-
-import androidx.lifecycle.ViewModelProvider;
+package com.example.todolist.detailscreen;
 
 import android.os.Bundle;
 
@@ -12,10 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.todolist.R;
+
 public class DetailedListFragment extends Fragment {
     private long detailedListFragmentId;
-
-    private DetailedListViewModel mViewModel;
 
     public static DetailedListFragment newInstance() {
         return new DetailedListFragment();
@@ -25,13 +23,6 @@ public class DetailedListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_detailed_list, container, false);
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(DetailedListViewModel.class);
-        // TODO: Use the ViewModel
     }
 
     public void setDetailedListFragmentId(long id) {
