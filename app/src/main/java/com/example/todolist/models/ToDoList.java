@@ -9,6 +9,12 @@ public class ToDoList {
 
     private ArrayList<String> paragraphs;
 
+    public ToDoList(String name, String descr) {
+        listName = name;
+        description = descr;
+    }
+
+
     public ArrayList<String> getParagraphs() {
         return paragraphs;
     }

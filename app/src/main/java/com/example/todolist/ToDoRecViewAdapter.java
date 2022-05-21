@@ -15,6 +15,10 @@ import java.util.ArrayList;
 public class ToDoRecViewAdapter extends RecyclerView.Adapter<ToDoRecViewAdapter.ViewHolder> {
     private ArrayList<ToDoList> toDoLists;
 
+    public ToDoRecViewAdapter(ArrayList<ToDoList> toDoLists) {
+        this.toDoLists = toDoLists;
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView listName;
         private final TextView listDescription;
@@ -37,7 +41,7 @@ public class ToDoRecViewAdapter extends RecyclerView.Adapter<ToDoRecViewAdapter.
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ToDoRecViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rootView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_view_item, parent, false);
 
