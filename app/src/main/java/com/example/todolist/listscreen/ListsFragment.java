@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.todolist.R;
-import com.example.todolist.ToDoRecViewAdapter;
+import com.example.todolist.listscreen.recycler.ToDoRecViewAdapter;
 import com.example.todolist.models.ToDoList;
 
 import java.util.ArrayList;
@@ -38,9 +39,23 @@ public class ListsFragment extends Fragment {
 
         // TODO: поменять на запрос с базы данных
         ToDoRecViewAdapter adapter = new ToDoRecViewAdapter(toDoLists);
+        adapter.setOnItemClickListener(new ToDoRecViewAdapter.ClickListener() {
+            @Override
+            public void onItemClick(int position, View v) {
+                Toast.makeText(getContext(), "clicked " + position + " item", Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onItemLongClick(int position, View v) {
+                Toast.makeText(getContext(), "long clicked " + position + " item", Toast.LENGTH_LONG).show();
+            }
+        });
+
         recyclerView.setAdapter(adapter);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+
 
         return rootView;
     }
