@@ -1,4 +1,4 @@
-package com.example.todolist.listscreen;
+package com.example.todolist.ui.listscreen;
 
 import android.os.Bundle;
 
@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
-import com.example.todolist.listscreen.recycler.ToDoRecViewAdapter;
-import com.example.todolist.models.ToDoList;
+import com.example.todolist.ui.listscreen.recycler.ToDoRecViewAdapter;
+import com.example.todolist.db.ToDoList;
 
 import java.util.ArrayList;
 

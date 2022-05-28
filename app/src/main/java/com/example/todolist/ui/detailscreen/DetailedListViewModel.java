@@ -1,4 +1,4 @@
-package com.example.todolist.detailscreen;
+package com.example.todolist.ui.detailscreen;
 
 import androidx.lifecycle.ViewModel;
 

@@ -1,4 +1,4 @@
-package com.example.todolist.models;
+package com.example.todolist.db;
 
 import java.util.ArrayList;
 

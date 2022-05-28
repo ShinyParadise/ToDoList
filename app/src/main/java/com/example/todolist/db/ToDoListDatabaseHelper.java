@@ -1,11 +1,11 @@
-package com.example.todolist;
+package com.example.todolist.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.todolist.models.contracts.ParagraphContract;
-import com.example.todolist.models.contracts.ToDoListContract;
+import com.example.todolist.db.contracts.ParagraphContract;
+import com.example.todolist.db.contracts.ToDoListContract;
 
 
 public class ToDoListDatabaseHelper extends SQLiteOpenHelper {

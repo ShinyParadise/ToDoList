@@ -1,4 +1,4 @@
-package com.example.todolist.models.contracts;
+package com.example.todolist.db.contracts;
 
 import android.provider.BaseColumns;
 

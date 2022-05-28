@@ -1,10 +1,11 @@
-package com.example.todolist;
+package com.example.todolist.ui.startup;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-import com.example.todolist.listscreen.ListsFragment;
+import com.example.todolist.R;
+import com.example.todolist.ui.listscreen.ListsFragment;
 
 public class MainActivity extends AppCompatActivity {
 
