@@ -1,8 +1,12 @@
 package com.example.todolist.db;
 
 import android.content.Context;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
+
+import java.sql.SQLOutput;
 
 
 public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
@@ -18,8 +22,10 @@ public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if (oldVersion != newVersion) {
+            db.execSQL(DatabaseContract.ToDoListTable.DELETE_TABLE);
+            db.execSQL(DatabaseContract.EntryTable.DELETE_TABLE);
+            onCreate(db);
+        }
     }
-
-    // TODO: написать методы для создания, удаления и изменения списков дел
 }

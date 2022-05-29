@@ -6,7 +6,7 @@ public final class DatabaseContract {
     public static final int    DATABASE_VERSION   = 1;
     public static final String DATABASE_NAME      = "todolist.db";
 
-    private DatabaseContract() {};
+    private DatabaseContract() {}
 
     public static abstract class ToDoListTable implements BaseColumns {
         public static final String TABLE_NAME           = "ToDoLists";
@@ -28,6 +28,8 @@ public final class DatabaseContract {
                 EntryTable.TABLE_NAME,
                 EntryTable._ID
         );
+
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 
     public static abstract class EntryTable implements BaseColumns {
@@ -38,5 +40,7 @@ public final class DatabaseContract {
                 "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, %s TEXT);\n",
                 TABLE_NAME, _ID, COLUMN_DESCRIPTION
         );
+
+        public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
     }
 }
