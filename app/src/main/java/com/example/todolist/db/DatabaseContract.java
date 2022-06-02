@@ -9,12 +9,12 @@ public final class DatabaseContract {
     private DatabaseContract() {}
 
     public static abstract class ToDoListTable implements BaseColumns {
-        public static final String TABLE_NAME           = "ToDoLists";
+        public static final String TABLE_NAME           = "todo_lists";
         public static final String COLUMN_HEADER        = "header";
         public static final String COLUMN_DESCRIPTION   = "description";
         // Список (родитель) -> пункт списка (ребенок)
         // связь "one-to-many"
-        public static final String COLUMN_FK_PARAGRAPHS = "fk_paragraphs";
+        public static final String COLUMN_FK_ENTRIES = "fk_entries";
 
         public static final String CREATE_TABLE = String.format(
                 "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -24,7 +24,7 @@ public final class DatabaseContract {
                 _ID,
                 COLUMN_HEADER,
                 COLUMN_DESCRIPTION,
-                COLUMN_FK_PARAGRAPHS,
+                COLUMN_FK_ENTRIES,
                 EntryTable.TABLE_NAME,
                 EntryTable._ID
         );
@@ -33,7 +33,7 @@ public final class DatabaseContract {
     }
 
     public static abstract class EntryTable implements BaseColumns {
-        public static final String TABLE_NAME           = "paragraphs";
+        public static final String TABLE_NAME           = "entries";
         public static final String COLUMN_DESCRIPTION   = "description";
 
         public static final String CREATE_TABLE = String.format(

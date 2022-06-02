@@ -13,11 +13,11 @@ import com.example.todolist.db.ToDoList;
 
 import java.util.ArrayList;
 
-public class ToDoRecViewAdapter extends RecyclerView.Adapter<ToDoRecViewAdapter.ViewHolder> {
+public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
     private ArrayList<ToDoList> toDoLists;
     private static ClickListener clickListener;
 
-    public ToDoRecViewAdapter(ArrayList<ToDoList> toDoLists) {
+    public ListsRecyclerViewAdapter(ArrayList<ToDoList> toDoLists) {
         this.toDoLists = toDoLists;
     }
 
@@ -27,7 +27,7 @@ public class ToDoRecViewAdapter extends RecyclerView.Adapter<ToDoRecViewAdapter.
     }
 
     public void setOnItemClickListener(ClickListener clickListener) {
-        ToDoRecViewAdapter.clickListener = clickListener;
+        ListsRecyclerViewAdapter.clickListener = clickListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
@@ -40,8 +40,8 @@ public class ToDoRecViewAdapter extends RecyclerView.Adapter<ToDoRecViewAdapter.
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 
-            listName = itemView.findViewById(R.id.listName);
-            listDescription = itemView.findViewById(R.id.listDescription);
+            listName = itemView.findViewById(R.id.list_name);
+            listDescription = itemView.findViewById(R.id.list_description);
         }
 
         public TextView getListNameView() {
@@ -66,9 +66,9 @@ public class ToDoRecViewAdapter extends RecyclerView.Adapter<ToDoRecViewAdapter.
 
     @NonNull
     @Override
-    public ToDoRecViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ListsRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View rootView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recycler_view_item, parent, false);
+                .inflate(R.layout.lists_recycler_view_item, parent, false);
 
         return new ViewHolder(rootView);
     }

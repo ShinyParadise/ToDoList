@@ -14,13 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
-import com.example.todolist.ui.listscreen.recycler.ToDoRecViewAdapter;
+import com.example.todolist.ui.listscreen.recycler.ListsRecyclerViewAdapter;
 import com.example.todolist.db.ToDoList;
 
 import java.util.ArrayList;
 
 public class ListsFragment extends Fragment {
-    private RecyclerView recyclerView;
+    private RecyclerView listsRecyclerView;
     private ArrayList<ToDoList> toDoLists;
 
     public static ListsFragment newInstance() {
@@ -32,14 +32,14 @@ public class ListsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_lists, container, false);
 
-        recyclerView = rootView.findViewById(R.id.recView);
+        listsRecyclerView = rootView.findViewById(R.id.lists_recycler_view);
         toDoLists = new ArrayList<>();
 
         initiateLists(toDoLists);
 
         // TODO: поменять на запрос с базы данных
-        ToDoRecViewAdapter adapter = new ToDoRecViewAdapter(toDoLists);
-        adapter.setOnItemClickListener(new ToDoRecViewAdapter.ClickListener() {
+        ListsRecyclerViewAdapter adapter = new ListsRecyclerViewAdapter(toDoLists);
+        adapter.setOnItemClickListener(new ListsRecyclerViewAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
                 Toast.makeText(getContext(), "clicked " + position + " item", Toast.LENGTH_LONG).show();
@@ -51,9 +51,9 @@ public class ListsFragment extends Fragment {
             }
         });
 
-        recyclerView.setAdapter(adapter);
+        listsRecyclerView.setAdapter(adapter);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
 
 

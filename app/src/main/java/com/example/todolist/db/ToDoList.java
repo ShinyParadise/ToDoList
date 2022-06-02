@@ -2,6 +2,7 @@ package com.example.todolist.db;
 
 import java.util.ArrayList;
 
+// TODO: change class to suit the Repository pattern
 public class ToDoList {
     private String listName;
 
