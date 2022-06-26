@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.R;
-import com.example.todolist.db.ToDoList;
+import com.example.todolist.db.models.ListModel;
 
 import java.util.ArrayList;
 
 public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<ToDoList> toDoLists;
+    private ArrayList<ListModel> toDoLists;
     private static ClickListener clickListener;
 
-    public ListsRecyclerViewAdapter(ArrayList<ToDoList> toDoLists) {
+    public ListsRecyclerViewAdapter(ArrayList<ListModel> toDoLists) {
         this.toDoLists = toDoLists;
     }
 
@@ -75,16 +75,16 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ToDoList list = toDoLists.get(position);
+        ListModel list = toDoLists.get(position);
 
-        holder.getListNameView().setText(list.getListName());
-        holder.getListDescription().setText(list.getDescription());
+        if (!(list.name.isEmpty() || list.description.isEmpty())) {
+            holder.getListNameView().setText(list.name);
+            holder.getListDescription().setText(list.description);
+        }
     }
 
     @Override
     public int getItemCount() {
         return toDoLists.size();
     }
-
-
 }

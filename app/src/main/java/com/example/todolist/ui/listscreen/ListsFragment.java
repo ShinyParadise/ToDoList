@@ -14,14 +14,16 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
+import com.example.todolist.db.ListRepository;
+import com.example.todolist.db.models.ListModel;
 import com.example.todolist.ui.listscreen.recycler.ListsRecyclerViewAdapter;
-import com.example.todolist.db.ToDoList;
 
 import java.util.ArrayList;
 
 public class ListsFragment extends Fragment {
     private RecyclerView listsRecyclerView;
-    private ArrayList<ToDoList> toDoLists;
+    private ArrayList<ListModel> toDoLists;
+    private ListRepository listRepository;
 
     public static ListsFragment newInstance() {
         return new ListsFragment();
@@ -33,11 +35,11 @@ public class ListsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lists, container, false);
 
         listsRecyclerView = rootView.findViewById(R.id.lists_recycler_view);
-        toDoLists = new ArrayList<>();
 
-        initiateLists(toDoLists);
+        listRepository = new ListRepository(this.getContext());
 
-        // TODO: поменять на запрос с базы данных
+        toDoLists = listRepository.getAllLists();
+
         ListsRecyclerViewAdapter adapter = new ListsRecyclerViewAdapter(toDoLists);
         adapter.setOnItemClickListener(new ListsRecyclerViewAdapter.ClickListener() {
             @Override
@@ -58,25 +60,6 @@ public class ListsFragment extends Fragment {
 
 
         return rootView;
-    }
-
-    private void initiateLists(ArrayList<ToDoList> toDoLists) {
-        toDoLists.add(new ToDoList("Today", "gotta do it faster"));
-        toDoLists.add(new ToDoList("Tomorrow", "ain't gonna do this"));
-        toDoLists.add(new ToDoList("Plan", "description"));
-        toDoLists.add(new ToDoList("Today", "gotta do it faster"));
-        toDoLists.add(new ToDoList("Tomorrow", "ain't gonna do this"));
-        toDoLists.add(new ToDoList("Plan", "description"));
-        toDoLists.add(new ToDoList("Today", "gotta do it faster"));
-        toDoLists.add(new ToDoList("Tomorrow", "ain't gonna do this"));
-        toDoLists.add(new ToDoList("Plan", "description"));
-        toDoLists.add(new ToDoList("Plan", "description"));
-        toDoLists.add(new ToDoList("Today", "gotta do it faster"));
-        toDoLists.add(new ToDoList("Tomorrow", "ain't gonna do this"));
-        toDoLists.add(new ToDoList("Plan", "description"));
-        toDoLists.add(new ToDoList("Today", "gotta do it faster"));
-        toDoLists.add(new ToDoList("Tomorrow", "ain't gonna do this"));
-        toDoLists.add(new ToDoList("Plan", "description"));
     }
 
 
