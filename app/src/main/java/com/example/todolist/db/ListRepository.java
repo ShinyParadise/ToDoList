@@ -33,12 +33,11 @@ public class ListRepository {
         insertStatement.executeInsert();
     }
 
-    public void insertEntries(String listName, String listDescription, String fkEntries) {
+    public void insertEntries(String entryDescription) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
+        SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.EntryTable.INSERT_VALUES);
 
-        String[] args = { listName, listDescription, fkEntries };
-        insertStatement.bindAllArgsAsStrings(args);
+        insertStatement.bindString(1, entryDescription);
         insertStatement.executeInsert();
     }
 

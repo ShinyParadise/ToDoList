@@ -17,11 +17,13 @@ import com.example.todolist.R;
 import com.example.todolist.db.ListRepository;
 import com.example.todolist.db.models.ListModel;
 import com.example.todolist.ui.listscreen.recycler.ListsRecyclerViewAdapter;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
 public class ListsFragment extends Fragment {
     private RecyclerView listsRecyclerView;
+    private FloatingActionButton btnAddList;
     private ArrayList<ListModel> toDoLists;
     private ListRepository listRepository;
 
@@ -35,9 +37,9 @@ public class ListsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lists, container, false);
 
         listsRecyclerView = rootView.findViewById(R.id.lists_recycler_view);
+        btnAddList = rootView.findViewById(R.id.addListButton);
 
         listRepository = new ListRepository(this.getContext());
-
         toDoLists = listRepository.getAllLists();
 
         ListsRecyclerViewAdapter adapter = new ListsRecyclerViewAdapter(toDoLists);
@@ -54,12 +56,22 @@ public class ListsFragment extends Fragment {
         });
 
         listsRecyclerView.setAdapter(adapter);
-
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-
-
+        btnAddList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                
+            }
+        });
         return rootView;
+    }
+
+    private void initiateLists(ListRepository listRepository) {
+        listRepository.insertEntries("do something");
+        listRepository.insertEntries("do something else");
+        listRepository.insertToDoList("123", "321", "1");
+        listRepository.insertToDoList("abc", "def", "2");
     }
 
 
