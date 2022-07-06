@@ -14,7 +14,7 @@ public final class DatabaseContract {
         public static final String COLUMN_DESCRIPTION   = "description";
         // Список (родитель) -> пункт списка (ребенок)
         // связь "one-to-many"
-        public static final String COLUMN_FK_ENTRIES = "fk_entries";
+        public static final String COLUMN_FK_ENTRIES    = "fk_entries";
 
         public static final String CREATE_TABLE = String.format(
                 "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -56,4 +56,11 @@ public final class DatabaseContract {
         public static final String INSERT_VALUES = "INSERT INTO " + TABLE_NAME + " ("
                 + COLUMN_DESCRIPTION + ") " + "VALUES (?)";
     }
+
+    public static String SELECT_LIST_WITH_ENTRIES = "SELECT * FROM " + ToDoListTable.TABLE_NAME +
+            " INNER JOIN " + EntryTable.TABLE_NAME + " ON " + ToDoListTable.TABLE_NAME + "." +
+            ToDoListTable.COLUMN_FK_ENTRIES + " = " + EntryTable._ID + " WHERE " +
+            ToDoListTable._ID + " = (?)";
+
+    public static String NULL = "NULL";
 }

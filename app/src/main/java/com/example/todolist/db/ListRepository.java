@@ -24,11 +24,22 @@ public class ListRepository {
         databaseHelper = new ToDoListDatabaseHelper(context.getApplicationContext());
     }
 
-    public void insertToDoList(String listName, String listDescription, String fkEntries) {
+    public void insertToDoListWithEntries(String listName, String listDescription, String[] fkEntries) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
 
-        String[] args = { listName, listDescription, fkEntries };
+        for (String entry: fkEntries) {
+            String[] args = {listName, listDescription, entry};
+            insertStatement.bindAllArgsAsStrings(args);
+            insertStatement.executeInsert();
+        }
+    }
+
+    public void insertToDoListWithoutEntries(String listName, String listDescription) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
+
+        String[] args = { listName, listDescription, DatabaseContract.NULL };
         insertStatement.bindAllArgsAsStrings(args);
         insertStatement.executeInsert();
     }

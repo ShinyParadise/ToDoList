@@ -61,7 +61,7 @@ public class ListsFragment extends Fragment {
         btnAddList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                
+                // TODO: Implement listener
             }
         });
         return rootView;
@@ -70,8 +70,9 @@ public class ListsFragment extends Fragment {
     private void initiateLists(ListRepository listRepository) {
         listRepository.insertEntries("do something");
         listRepository.insertEntries("do something else");
-        listRepository.insertToDoList("123", "321", "1");
-        listRepository.insertToDoList("abc", "def", "2");
+        String[] exampleEntries = { "1", "2" };
+        listRepository.insertToDoListWithEntries("123", "321", exampleEntries);
+        listRepository.insertToDoListWithEntries("abc", "def", exampleEntries);
     }
 
 
