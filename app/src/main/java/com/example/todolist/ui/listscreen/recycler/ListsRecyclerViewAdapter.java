@@ -12,6 +12,7 @@ import com.example.todolist.R;
 import com.example.todolist.db.models.ListModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
     private ArrayList<ListModel> toDoLists;
@@ -81,6 +82,10 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
             holder.getListNameView().setText(list.name);
             holder.getListDescription().setText(list.description);
         }
+    }
+
+    public void setToDoLists(ArrayList<ListModel> toDoLists) {
+        this.toDoLists = toDoLists;
     }
 
     @Override

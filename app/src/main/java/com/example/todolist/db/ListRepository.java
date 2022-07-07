@@ -66,6 +66,7 @@ public class ListRepository {
 
             lists.add(newList);
             while(request.moveToNext()) {
+                newList = new ListModel();
                 newList.id = Integer.parseInt(request.getString(0));
                 newList.name = request.getString(1);
                 newList.description = request.getString(2);

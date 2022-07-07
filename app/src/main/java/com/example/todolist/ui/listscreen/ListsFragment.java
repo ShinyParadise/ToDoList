@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,18 +15,19 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
-import com.example.todolist.db.ListRepository;
 import com.example.todolist.db.models.ListModel;
 import com.example.todolist.ui.listscreen.recycler.ListsRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class ListsFragment extends Fragment {
+public class ListsFragment extends Fragment implements AddListDialog.AddListDialogListener {
     private RecyclerView listsRecyclerView;
+    private ListsRecyclerViewAdapter adapter;
+
     private FloatingActionButton btnAddList;
-    private ArrayList<ListModel> toDoLists;
-    private ListRepository listRepository;
+
+    private ListViewModel listViewModel;
 
     public static ListsFragment newInstance() {
         return new ListsFragment();
@@ -36,13 +38,15 @@ public class ListsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_lists, container, false);
 
+        listViewModel = new ListViewModel(getContext());
+
         listsRecyclerView = rootView.findViewById(R.id.lists_recycler_view);
         btnAddList = rootView.findViewById(R.id.addListButton);
 
-        listRepository = new ListRepository(this.getContext());
-        toDoLists = listRepository.getAllLists();
+        listViewModel.initiateLists();
+        listViewModel.fetchLists();
 
-        ListsRecyclerViewAdapter adapter = new ListsRecyclerViewAdapter(toDoLists);
+        adapter = new ListsRecyclerViewAdapter(listViewModel.getLists());
         adapter.setOnItemClickListener(new ListsRecyclerViewAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -58,27 +62,28 @@ public class ListsFragment extends Fragment {
         listsRecyclerView.setAdapter(adapter);
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        btnAddList.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Implement listener
-            }
+        btnAddList.setOnClickListener(v -> {
+            AddListDialog addListDialog = new AddListDialog();
+            addListDialog.listener = this;
+            addListDialog.show(getParentFragmentManager(), "AddListDialog");
         });
+
         return rootView;
     }
-
-    private void initiateLists(ListRepository listRepository) {
-        listRepository.insertEntries("do something");
-        listRepository.insertEntries("do something else");
-        String[] exampleEntries = { "1", "2" };
-        listRepository.insertToDoListWithEntries("123", "321", exampleEntries);
-        listRepository.insertToDoListWithEntries("abc", "def", exampleEntries);
-    }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+    }
 
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        listViewModel.fetchLists();
+        adapter.setToDoLists(listViewModel.getLists());
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
     }
 }

@@ -5,6 +5,7 @@
       <map>
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/activity_todolists.xml" value="0.4" />
+        <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/dialog_add_list.xml" value="0.25" />
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/fragment_detailed_list.xml" value="0.4041666666666667" />
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/fragment_lists.xml" value="0.276268115942029" />
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/lists_recycler_view_item.xml" value="0.4041666666666667" />

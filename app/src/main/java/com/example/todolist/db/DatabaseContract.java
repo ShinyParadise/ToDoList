@@ -18,7 +18,7 @@ public final class DatabaseContract {
 
         public static final String CREATE_TABLE = String.format(
                 "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "%s TEXT, %s TEXT, %s INTEGER, " +
+                        "%s TEXT, %s TEXT, %s INTEGER NULL, " +
                         "FOREIGN KEY (%s) REFERENCES %s(%s) ON DELETE CASCADE" +
                         ");",
                 TABLE_NAME,
@@ -31,7 +31,11 @@ public final class DatabaseContract {
                 EntryTable._ID
         );
 
-        public static final String SELECT_ALL_LISTS = "SELECT * FROM " + TABLE_NAME;
+        public static final String SELECT_ALL_LISTS = String.format(
+                "SELECT %s, %s, %s, %s FROM %s GROUP BY %s",
+                _ID, COLUMN_HEADER, COLUMN_DESCRIPTION, COLUMN_FK_ENTRIES,
+                TABLE_NAME, COLUMN_HEADER
+        );
 
         public static final String SELECT_LIST_BY_ID = "SELECT * FROM " + TABLE_NAME + " WHERE _id = (?)";
 
