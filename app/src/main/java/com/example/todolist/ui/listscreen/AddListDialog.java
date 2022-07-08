@@ -24,7 +24,7 @@ public class AddListDialog extends DialogFragment {
 
     AddListDialogListener listener;
 
-    public static String TAG = "AddListDialog";
+    public static final String TAG = "AddListDialog";
 
     public interface AddListDialogListener {
         void onDialogPositiveClick(DialogFragment dialog);

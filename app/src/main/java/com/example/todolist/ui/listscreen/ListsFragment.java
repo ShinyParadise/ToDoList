@@ -15,11 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
-import com.example.todolist.db.models.ListModel;
 import com.example.todolist.ui.listscreen.recycler.ListsRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.ArrayList;
 
 public class ListsFragment extends Fragment implements AddListDialog.AddListDialogListener {
     private RecyclerView listsRecyclerView;
@@ -29,23 +26,35 @@ public class ListsFragment extends Fragment implements AddListDialog.AddListDial
 
     private ListViewModel listViewModel;
 
-    public static ListsFragment newInstance() {
-        return new ListsFragment();
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_lists, container, false);
+        initiateViews(rootView);
+
+        //listViewModel.initiateLists();
+        listViewModel.fetchLists();
+
+        initiateRecyclerView();
+
+        btnAddList.setOnClickListener(this::onAddClick);
+
+        return rootView;
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_lists, container, false);
-
-        listViewModel = new ListViewModel(getContext());
-
-        listsRecyclerView = rootView.findViewById(R.id.lists_recycler_view);
-        btnAddList = rootView.findViewById(R.id.addListButton);
-
-        listViewModel.initiateLists();
+    public void onDialogPositiveClick(DialogFragment dialog) {
         listViewModel.fetchLists();
+        adapter.setToDoLists(listViewModel.getLists());
+        adapter.notifyDataSetChanged();
+    }
 
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+    }
+
+    private void initiateRecyclerView() {
         adapter = new ListsRecyclerViewAdapter(listViewModel.getLists());
         adapter.setOnItemClickListener(new ListsRecyclerViewAdapter.ClickListener() {
             @Override
@@ -61,29 +70,17 @@ public class ListsFragment extends Fragment implements AddListDialog.AddListDial
 
         listsRecyclerView.setAdapter(adapter);
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        btnAddList.setOnClickListener(v -> {
-            AddListDialog addListDialog = new AddListDialog();
-            addListDialog.listener = this;
-            addListDialog.show(getParentFragmentManager(), "AddListDialog");
-        });
-
-        return rootView;
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    private void initiateViews(View rootView) {
+        listViewModel = new ListViewModel(getContext());
+        listsRecyclerView = rootView.findViewById(R.id.lists_recycler_view);
+        btnAddList = rootView.findViewById(R.id.addListButton);
     }
 
-    @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
-        listViewModel.fetchLists();
-        adapter.setToDoLists(listViewModel.getLists());
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
+    private void onAddClick(View v) {
+        AddListDialog addListDialog = new AddListDialog();
+        addListDialog.listener = this;
+        addListDialog.show(getParentFragmentManager(), AddListDialog.TAG);
     }
 }
