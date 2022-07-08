@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
-    ToDoListDatabaseHelper(Context context) {
+    public ToDoListDatabaseHelper(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
     }
 

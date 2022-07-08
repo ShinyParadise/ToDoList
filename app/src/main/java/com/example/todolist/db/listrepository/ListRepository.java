@@ -1,24 +1,20 @@
-package com.example.todolist.db;
+package com.example.todolist.db.listrepository;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
+import com.example.todolist.db.DatabaseContract;
+import com.example.todolist.db.ToDoListDatabaseHelper;
 import com.example.todolist.db.models.ListModel;
 
 import java.util.ArrayList;
 
-/*
-* Repository for ToDoLists
-* use cases:
-* 1) показать все списки дел
-* 2) показать конкретный список дел и его пункты
-* 3) добавить новый список
-* 4) удалить список
-*/
-public class ListRepository {
-    private static ToDoListDatabaseHelper databaseHelper;
+
+public class ListRepository implements IListRepository {
+    private static SQLiteOpenHelper databaseHelper;
 
     public ListRepository(Context context) {
         databaseHelper = new ToDoListDatabaseHelper(context.getApplicationContext());
@@ -35,6 +31,7 @@ public class ListRepository {
         }
     }
 
+    // TODO: fix this to work with null values
     public void insertToDoListWithoutEntries(String listName, String listDescription) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);

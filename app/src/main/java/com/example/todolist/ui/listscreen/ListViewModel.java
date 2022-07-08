@@ -4,13 +4,14 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.todolist.db.ListRepository;
+import com.example.todolist.db.listrepository.IListRepository;
+import com.example.todolist.db.listrepository.ListRepository;
 import com.example.todolist.db.models.ListModel;
 
 import java.util.ArrayList;
 
 public class ListViewModel extends ViewModel {
-    private ListRepository listRepository;
+    private IListRepository listRepository;
 
     private ArrayList<ListModel> toDoLists;
 

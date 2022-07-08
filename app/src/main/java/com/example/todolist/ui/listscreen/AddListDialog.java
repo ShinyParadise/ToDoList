@@ -1,11 +1,9 @@
 package com.example.todolist.ui.listscreen;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
@@ -14,7 +12,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.todolist.R;
-import com.example.todolist.db.ListRepository;
 
 public class AddListDialog extends DialogFragment {
     private EditText etListName, etListDescription;
