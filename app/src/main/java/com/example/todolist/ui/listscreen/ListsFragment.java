@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -44,14 +43,15 @@ public class ListsFragment extends Fragment implements AddListDialog.AddListDial
     }
 
     @Override
-    public void onDialogPositiveClick(DialogFragment dialog) {
+    public void onDialogPositiveClick(String listName, String listDescription) {
+        listViewModel.insertNewList(listName, listDescription);
         listViewModel.fetchLists();
         adapter.setToDoLists(listViewModel.getLists());
         adapter.notifyDataSetChanged();
     }
 
     @Override
-    public void onDialogNegativeClick(DialogFragment dialog) {
+    public void onDialogNegativeClick() {
     }
 
     private void initiateRecyclerView() {
@@ -75,7 +75,7 @@ public class ListsFragment extends Fragment implements AddListDialog.AddListDial
     private void initiateViews(View rootView) {
         listViewModel = new ListViewModel(getContext());
         listsRecyclerView = rootView.findViewById(R.id.lists_recycler_view);
-        btnAddList = rootView.findViewById(R.id.addListButton);
+        btnAddList = rootView.findViewById(R.id.add_list_button);
     }
 
     private void onAddClick(View v) {

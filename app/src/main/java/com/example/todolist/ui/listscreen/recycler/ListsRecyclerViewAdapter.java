@@ -12,7 +12,6 @@ import com.example.todolist.R;
 import com.example.todolist.db.models.ListModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
     private ArrayList<ListModel> toDoLists;
@@ -41,8 +40,8 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 
-            listName = itemView.findViewById(R.id.list_name);
-            listDescription = itemView.findViewById(R.id.list_description);
+            listName = itemView.findViewById(R.id.recycler_list_name);
+            listDescription = itemView.findViewById(R.id.recycler_list_description);
         }
 
         public TextView getListNameView() {

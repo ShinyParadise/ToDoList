@@ -17,41 +17,37 @@ public class AddListDialog extends DialogFragment {
     private EditText etListName, etListDescription;
     private String listName, listDescription;
 
-    private ListViewModel listViewModel;
-
     AddListDialogListener listener;
 
     public static final String TAG = "AddListDialog";
 
     public interface AddListDialogListener {
-        void onDialogPositiveClick(DialogFragment dialog);
-        void onDialogNegativeClick(DialogFragment dialog);
+        void onDialogPositiveClick(String listName, String listDescription);
+        void onDialogNegativeClick();
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
-        listViewModel = new ListViewModel(requireActivity());
 
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         View view = inflater.inflate(R.layout.dialog_add_list, null);
-        etListName = view.findViewById(R.id.input_list_name);
-        etListDescription = view.findViewById(R.id.input_list_description);
+        etListName = view.findViewById(R.id.dialog_add_list_input_name);
+        etListDescription = view.findViewById(R.id.dialog_add_list_input_description);
 
         builder.setView(view)
-                .setPositiveButton(R.string.addListDialogOkButton, (dialog, which) -> {
+                .setPositiveButton(R.string.add_list_dialog_ok_button, (dialog, which) -> {
                     listName = etListName.getText().toString();
                     listDescription = etListDescription.getText().toString();
 
                     if (!listName.isEmpty() && !listDescription.isEmpty()) {
-                        listViewModel.insertNewList(listName, listDescription);
-                        listener.onDialogPositiveClick(AddListDialog.this);
+                        listener.onDialogPositiveClick(listName, listDescription);
                     }
                 } )
-                .setNegativeButton(R.string.cancelDialog, (dialog, which) -> {
+                .setNegativeButton(R.string.cancel_dialog, (dialog, which) -> {
                     // TODO: save what user have typed
-                    listener.onDialogNegativeClick(AddListDialog.this);
+                    listener.onDialogNegativeClick();
                 });
 
         return builder.create();
