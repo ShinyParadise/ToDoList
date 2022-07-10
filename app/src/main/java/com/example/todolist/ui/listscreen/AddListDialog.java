@@ -1,6 +1,7 @@
 package com.example.todolist.ui.listscreen;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,19 +38,23 @@ public class AddListDialog extends DialogFragment {
         etListDescription = view.findViewById(R.id.dialog_add_list_input_description);
 
         builder.setView(view)
-                .setPositiveButton(R.string.add_list_dialog_ok_button, (dialog, which) -> {
-                    listName = etListName.getText().toString();
-                    listDescription = etListDescription.getText().toString();
-
-                    if (!listName.isEmpty() && !listDescription.isEmpty()) {
-                        listener.onDialogPositiveClick(listName, listDescription);
-                    }
-                } )
-                .setNegativeButton(R.string.cancel_dialog, (dialog, which) -> {
-                    // TODO: save what user have typed
-                    listener.onDialogNegativeClick();
-                });
+                .setPositiveButton(R.string.add_list_dialog_ok_button, this::onOkButtonClick)
+                .setNegativeButton(R.string.cancel_dialog, this::onCancelDialogClick);
 
         return builder.create();
+    }
+
+    private void onOkButtonClick(DialogInterface dialog, int which) {
+        listName = etListName.getText().toString();
+        listDescription = etListDescription.getText().toString();
+
+        if (!listName.isEmpty() && !listDescription.isEmpty()) {
+            listener.onDialogPositiveClick(listName, listDescription);
+        }
+    }
+
+    private void onCancelDialogClick(DialogInterface dialog, int which) {
+        // TODO: save what user have typed
+        listener.onDialogNegativeClick();
     }
 }
