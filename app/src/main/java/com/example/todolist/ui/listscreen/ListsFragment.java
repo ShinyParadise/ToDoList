@@ -17,7 +17,7 @@ import com.example.todolist.R;
 import com.example.todolist.ui.listscreen.recycler.ListsRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-public class ListsFragment extends Fragment implements AddListDialog.AddListDialogListener {
+public class ListsFragment extends Fragment {
     private RecyclerView listsRecyclerView;
     private ListsRecyclerViewAdapter adapter;
 
@@ -39,19 +39,8 @@ public class ListsFragment extends Fragment implements AddListDialog.AddListDial
 
         btnAddList.setOnClickListener(this::onAddClick);
 
+
         return rootView;
-    }
-
-    @Override
-    public void onDialogPositiveClick(String listName, String listDescription) {
-        listViewModel.insertNewList(listName, listDescription);
-        listViewModel.fetchLists();
-        adapter.setToDoLists(listViewModel.getLists());
-        adapter.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onDialogNegativeClick() {
     }
 
     private void initiateRecyclerView() {
@@ -80,7 +69,23 @@ public class ListsFragment extends Fragment implements AddListDialog.AddListDial
 
     private void onAddClick(View v) {
         AddListDialog addListDialog = new AddListDialog();
-        addListDialog.listener = this;
+        setDialogListener(addListDialog);
         addListDialog.show(getParentFragmentManager(), AddListDialog.TAG);
+    }
+
+    private void setDialogListener(AddListDialog addListDialog) {
+        addListDialog.listener = new AddListDialog.AddListDialogListener() {
+            @Override
+            public void onDialogPositiveClick(String listName, String listDescription) {
+                listViewModel.insertNewList(listName, listDescription);
+                listViewModel.fetchLists();
+                adapter.setToDoLists(listViewModel.getLists());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onDialogNegativeClick() {
+            }
+        };
     }
 }
