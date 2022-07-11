@@ -63,8 +63,8 @@ public class ListsFragment extends Fragment {
 
     private void initiateViews(View rootView) {
         listViewModel = new ListViewModel(getContext());
-        listsRecyclerView = rootView.findViewById(R.id.lists_recycler_view);
-        btnAddList = rootView.findViewById(R.id.add_list_button);
+        listsRecyclerView = rootView.findViewById(R.id.fragment_lists_recycler_view);
+        btnAddList = rootView.findViewById(R.id.fragment_lists_add_list_button);
     }
 
     private void onAddClick(View v) {
