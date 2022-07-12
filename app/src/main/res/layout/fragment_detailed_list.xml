@@ -3,4 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.detailscreen.DetailedListFragment"/>
+    tools:context=".ui.detailscreen.DetailedListFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/details_recycler_view_item"
+        android:id="@+id/fragment_details_recycler_view"/>
+</FrameLayout>

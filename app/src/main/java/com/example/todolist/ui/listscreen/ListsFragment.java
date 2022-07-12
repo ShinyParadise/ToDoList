@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
-import com.example.todolist.ui.listscreen.recycler.ListsRecyclerViewAdapter;
+import com.example.todolist.ui.listscreen.listsrecycler.ListsRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ListsFragment extends Fragment {

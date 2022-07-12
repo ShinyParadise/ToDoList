@@ -1,4 +1,4 @@
-package com.example.todolist.ui.listscreen.recycler;
+package com.example.todolist.ui.listscreen.listsrecycler;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +30,34 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         ListsRecyclerViewAdapter.clickListener = clickListener;
     }
 
+    @NonNull
+    @Override
+    public ListsRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View rootView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.lists_recycler_view_item, parent, false);
+
+        return new ViewHolder(rootView);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        ListModel list = toDoLists.get(position);
+
+        if (!(list.name.isEmpty() || list.description.isEmpty())) {
+            holder.getListNameView().setText(list.name);
+            holder.getListDescriptionView().setText(list.description);
+        }
+    }
+
+    public void setToDoLists(ArrayList<ListModel> toDoLists) {
+        this.toDoLists = toDoLists;
+    }
+
+    @Override
+    public int getItemCount() {
+        return toDoLists.size();
+    }
+
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
         private final TextView listName;
         private final TextView listDescription;
@@ -48,7 +76,7 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
             return listName;
         }
 
-        public TextView getListDescription() {
+        public TextView getListDescriptionView() {
             return listDescription;
         }
 
@@ -62,33 +90,5 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
             clickListener.onItemLongClick(getAdapterPosition(), v);
             return false;
         }
-    }
-
-    @NonNull
-    @Override
-    public ListsRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.lists_recycler_view_item, parent, false);
-
-        return new ViewHolder(rootView);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListModel list = toDoLists.get(position);
-
-        if (!(list.name.isEmpty() || list.description.isEmpty())) {
-            holder.getListNameView().setText(list.name);
-            holder.getListDescription().setText(list.description);
-        }
-    }
-
-    public void setToDoLists(ArrayList<ListModel> toDoLists) {
-        this.toDoLists = toDoLists;
-    }
-
-    @Override
-    public int getItemCount() {
-        return toDoLists.size();
     }
 }
