@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.example.todolist.db.DatabaseContract;
 import com.example.todolist.db.ToDoListDatabaseHelper;
+import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.db.models.ListModel;
 
 import java.util.ArrayList;
@@ -20,11 +21,11 @@ public class ListRepository implements IListRepository {
         databaseHelper = new ToDoListDatabaseHelper(context.getApplicationContext());
     }
 
-    public void insertToDoListWithEntries(String listName, String listDescription, String[] fkEntries) {
+    public void insertToDoListWithItems(String listName, String listDescription, String[] listItemsIDs) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
 
-        for (String entry: fkEntries) {
+        for (String entry: listItemsIDs) {
             String[] args = {listName, listDescription, entry};
             insertStatement.bindAllArgsAsStrings(args);
             insertStatement.executeInsert();
@@ -32,7 +33,7 @@ public class ListRepository implements IListRepository {
     }
 
     // TODO: fix this to work with null values
-    public void insertToDoListWithoutEntries(String listName, String listDescription) {
+    public void insertToDoListWithoutItems(String listName, String listDescription) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
 
@@ -41,11 +42,11 @@ public class ListRepository implements IListRepository {
         insertStatement.executeInsert();
     }
 
-    public void insertEntries(String entryDescription) {
+    public void insertListItems(String listItem) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.EntryTable.INSERT_VALUES);
+        SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ListItemTable.INSERT_VALUES);
 
-        insertStatement.bindString(1, entryDescription);
+        insertStatement.bindString(1, listItem);
         insertStatement.executeInsert();
     }
 
@@ -75,5 +76,11 @@ public class ListRepository implements IListRepository {
 
         request.close();
         return lists;
+    }
+
+    @Override
+    public ArrayList<ListItemModel> getListItems(int listID) {
+        // TODO: Implement method
+        return null;
     }
 }

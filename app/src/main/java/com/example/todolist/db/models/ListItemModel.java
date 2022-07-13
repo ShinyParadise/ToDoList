@@ -1,6 +1,6 @@
 package com.example.todolist.db.models;
 
-public class EntryModel {
+public class ListItemModel {
     public int id;
     public String description;
 }

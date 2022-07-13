@@ -12,9 +12,7 @@ public final class DatabaseContract {
         public static final String TABLE_NAME           = "todo_lists";
         public static final String COLUMN_HEADER        = "header";
         public static final String COLUMN_DESCRIPTION   = "description";
-        // Список (родитель) -> пункт списка (ребенок)
-        // связь "one-to-many"
-        public static final String COLUMN_FK_ENTRIES    = "fk_entries";
+        public static final String COLUMN_FK_LIST_ITEMS = "fk_list_items";
 
         public static final String CREATE_TABLE = String.format(
                 "CREATE TABLE %s (%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -25,15 +23,15 @@ public final class DatabaseContract {
                 _ID,
                 COLUMN_HEADER,
                 COLUMN_DESCRIPTION,
-                COLUMN_FK_ENTRIES,
-                COLUMN_FK_ENTRIES,
-                EntryTable.TABLE_NAME,
-                EntryTable._ID
+                COLUMN_FK_LIST_ITEMS,
+                COLUMN_FK_LIST_ITEMS,
+                ListItemTable.TABLE_NAME,
+                ListItemTable._ID
         );
 
         public static final String SELECT_ALL_LISTS = String.format(
                 "SELECT %s, %s, %s, %s FROM %s GROUP BY %s",
-                _ID, COLUMN_HEADER, COLUMN_DESCRIPTION, COLUMN_FK_ENTRIES,
+                _ID, COLUMN_HEADER, COLUMN_DESCRIPTION, COLUMN_FK_LIST_ITEMS,
                 TABLE_NAME, COLUMN_HEADER
         );
 
@@ -42,12 +40,12 @@ public final class DatabaseContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
         public static final String INSERT_VALUES = "INSERT INTO " + TABLE_NAME + " ("
-                + COLUMN_HEADER + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_FK_ENTRIES
+                + COLUMN_HEADER + ", " + COLUMN_DESCRIPTION + ", " + COLUMN_FK_LIST_ITEMS
                 + ") " + "VALUES (?, ?, ?)";
     }
 
-    public static abstract class EntryTable implements BaseColumns {
-        public static final String TABLE_NAME           = "entries";
+    public static abstract class ListItemTable implements BaseColumns {
+        public static final String TABLE_NAME           = "list_item";
         public static final String COLUMN_DESCRIPTION   = "description";
 
         public static final String CREATE_TABLE = String.format(
@@ -61,9 +59,9 @@ public final class DatabaseContract {
                 + COLUMN_DESCRIPTION + ") " + "VALUES (?)";
     }
 
-    public static String SELECT_LIST_WITH_ENTRIES = "SELECT * FROM " + ToDoListTable.TABLE_NAME +
-            " INNER JOIN " + EntryTable.TABLE_NAME + " ON " + ToDoListTable.TABLE_NAME + "." +
-            ToDoListTable.COLUMN_FK_ENTRIES + " = " + EntryTable._ID + " WHERE " +
+    public static String SELECT_LIST_WITH_ITEMS = "SELECT * FROM " + ToDoListTable.TABLE_NAME +
+            " INNER JOIN " + ListItemTable.TABLE_NAME + " ON " + ToDoListTable.TABLE_NAME + "." +
+            ToDoListTable.COLUMN_FK_LIST_ITEMS + " = " + ListItemTable._ID + " WHERE " +
             ToDoListTable._ID + " = (?)";
 
     public static String NULL = "NULL";

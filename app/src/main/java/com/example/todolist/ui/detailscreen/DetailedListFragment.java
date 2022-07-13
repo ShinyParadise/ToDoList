@@ -8,8 +8,10 @@ import android.view.ViewGroup;
 import com.example.todolist.R;
 
 public class DetailedListFragment extends Fragment {
-    public DetailedListFragment() {
+    private DetailedListViewModel detailsViewModel;
 
+    public DetailedListFragment(int listID) {
+        detailsViewModel = new DetailedListViewModel(getActivity().getApplicationContext(), listID);
     }
 
     @Override

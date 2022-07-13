@@ -3,9 +3,6 @@ package com.example.todolist.db;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteStatement;
-
-import java.util.ArrayList;
 
 
 public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
@@ -15,7 +12,7 @@ public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DatabaseContract.EntryTable.CREATE_TABLE);
+        db.execSQL(DatabaseContract.ListItemTable.CREATE_TABLE);
         db.execSQL(DatabaseContract.ToDoListTable.CREATE_TABLE);
     }
 
@@ -23,7 +20,7 @@ public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion != newVersion) {
             db.execSQL(DatabaseContract.ToDoListTable.DELETE_TABLE);
-            db.execSQL(DatabaseContract.EntryTable.DELETE_TABLE);
+            db.execSQL(DatabaseContract.ListItemTable.DELETE_TABLE);
             onCreate(db);
         }
     }

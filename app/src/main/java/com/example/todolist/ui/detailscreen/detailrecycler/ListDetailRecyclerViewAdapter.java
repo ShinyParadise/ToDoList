@@ -9,15 +9,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.R;
-import com.example.todolist.db.models.EntryModel;
+import com.example.todolist.db.models.ListItemModel;
 
 import java.util.ArrayList;
 
 public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDetailRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<EntryModel> entries;
+    private ArrayList<ListItemModel> entries;
     private static ListDetailRecyclerViewAdapter.ClickListener clickListener;
 
-    public ListDetailRecyclerViewAdapter(ArrayList<EntryModel> entries) {
+    public ListDetailRecyclerViewAdapter(ArrayList<ListItemModel> entries) {
         this.entries = entries;
     }
 
@@ -41,10 +41,10 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        EntryModel entry = entries.get(position);
+        ListItemModel entry = entries.get(position);
 
         if (!entry.description.isEmpty()) {
-            holder.getEntryDescriptionView().setText(entry.description);
+            holder.getListItemView().setText(entry.description);
         }
     }
 
@@ -54,7 +54,7 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-        private final TextView entryDescription;
+        private final TextView listItem;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,11 +62,11 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 
-            entryDescription = itemView.findViewById(R.id.detail_description);
+            listItem = itemView.findViewById(R.id.detail_description);
         }
 
-        public TextView getEntryDescriptionView() {
-            return entryDescription;
+        public TextView getListItemView() {
+            return listItem;
         }
 
         @Override
