@@ -14,11 +14,11 @@ import com.example.todolist.db.models.ListItemModel;
 import java.util.ArrayList;
 
 public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDetailRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<ListItemModel> entries;
-    private static ListDetailRecyclerViewAdapter.ClickListener clickListener;
+    private ArrayList<ListItemModel> listItems;
+    private static ClickListener clickListener;
 
-    public ListDetailRecyclerViewAdapter(ArrayList<ListItemModel> entries) {
-        this.entries = entries;
+    public ListDetailRecyclerViewAdapter(ArrayList<ListItemModel> listItems) {
+        this.listItems = listItems;
     }
 
     public interface ClickListener {
@@ -41,20 +41,22 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListItemModel entry = entries.get(position);
+        ListItemModel listItem = listItems.get(position);
 
-        if (!entry.description.isEmpty()) {
-            holder.getListItemView().setText(entry.description);
+        if (!listItem.description.isEmpty()) {
+            holder.getListItemView().setText(listItem.description);
+            holder.getListNumberView().setText(String.valueOf(position + 1));
         }
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return listItems.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-        private final TextView listItem;
+        private final TextView listItemView;
+        private final TextView listNumberView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,11 +64,16 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 
-            listItem = itemView.findViewById(R.id.detail_description);
+            listItemView = itemView.findViewById(R.id.detail_description);
+            listNumberView = itemView.findViewById(R.id.detail_number);
         }
 
         public TextView getListItemView() {
-            return listItem;
+            return listItemView;
+        }
+
+        public TextView getListNumberView() {
+            return listNumberView;
         }
 
         @Override

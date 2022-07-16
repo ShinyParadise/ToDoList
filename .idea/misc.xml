@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.12020383693045564" />
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/activity_todolists.xml" value="0.4" />
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/dialog_add_list.xml" value="0.25" />
@@ -18,6 +19,7 @@
         <entry key="..\:/coding/work/ToDoList/app/src/main/res/layout/lists_recycler_view_item.xml" value="0.4" />
         <entry key="..\:/coding/work/ToDoList/app/src/main/res/layout/main_activity.xml" value="0.21965579710144928" />
         <entry key="..\:/coding/work/ToDoList/app/src/main/res/layout/splash_screen.xml" value="0.4041666666666667" />
+        <entry key="app/src/main/res/layout/details_recycler_view_item.xml" value="0.35520833333333335" />
         <entry key="app/src/main/res/layout/fragment_detailed_list.xml" value="0.34479166666666666" />
         <entry key="app/src/main/res/layout/fragment_lists.xml" value="0.5" />
         <entry key="app/src/main/res/layout/main_activity.xml" value="0.34479166666666666" />

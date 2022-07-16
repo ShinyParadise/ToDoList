@@ -85,11 +85,11 @@ public class ListRepository implements IListRepository {
     }
 
     @Override
-    public ArrayList<ListItemModel> getListItems(int listID) {
+    public ArrayList<ListItemModel> getListItems(String header) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor request = db.rawQuery(
                 DatabaseContract.SELECT_SINGLE_LIST_ITEMS,
-                new String[] { Integer.toString(listID) });
+                new String[] { header });
         ArrayList<ListItemModel> listItems = new ArrayList<>();
 
         if (request.moveToFirst()){
@@ -109,5 +109,23 @@ public class ListRepository implements IListRepository {
 
         request.close();
         return listItems;
+    }
+
+    @Override
+    public String getListHeader(int listID) {
+        String header;
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor request = db.rawQuery(DatabaseContract.ToDoListTable.SELECT_LIST_BY_ID,
+                new String[] { Integer.toString(listID) }
+        );
+
+        if (!request.moveToFirst()) {
+            request.close();
+            throw new NullPointerException();
+        }
+
+        header = request.getString(1);
+        request.close();
+        return header;
     }
 }

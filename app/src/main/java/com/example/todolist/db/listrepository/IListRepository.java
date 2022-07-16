@@ -10,5 +10,6 @@ public interface IListRepository {
     void insertToDoListWithoutItems(String listName, String listDescription);
     void insertListItems(String listItem);
     ArrayList<ListModel> getAllLists();
-    ArrayList<ListItemModel> getListItems(int listID);
+    ArrayList<ListItemModel> getListItems(String header);
+    String getListHeader(int listID);
 }

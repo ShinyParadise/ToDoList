@@ -59,8 +59,8 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-        private final TextView listName;
-        private final TextView listDescription;
+        private final TextView listNameView;
+        private final TextView listDescriptionView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -68,16 +68,16 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
 
-            listName = itemView.findViewById(R.id.recycler_list_name);
-            listDescription = itemView.findViewById(R.id.recycler_list_description);
+            listNameView = itemView.findViewById(R.id.recycler_list_name);
+            listDescriptionView = itemView.findViewById(R.id.recycler_list_description);
         }
 
         public TextView getListNameView() {
-            return listName;
+            return listNameView;
         }
 
         public TextView getListDescriptionView() {
-            return listDescription;
+            return listDescriptionView;
         }
 
         @Override

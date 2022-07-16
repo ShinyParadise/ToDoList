@@ -2,6 +2,9 @@ package com.example.todolist.db;
 
 import android.provider.BaseColumns;
 
+import com.example.todolist.db.dbo.List;
+import com.example.todolist.db.dbo.ListItem;
+
 public final class DatabaseContract {
     public static final int    DATABASE_VERSION   = 1;
     public static final String DATABASE_NAME      = "todolist.db";
@@ -59,10 +62,13 @@ public final class DatabaseContract {
                 + COLUMN_DESCRIPTION + ") " + "VALUES (?)";
     }
 
-    public static String SELECT_SINGLE_LIST_ITEMS = "SELECT * FROM " + ToDoListTable.TABLE_NAME +
-            " INNER JOIN " + ListItemTable.TABLE_NAME + " ON " + ToDoListTable.TABLE_NAME + "." +
-            ToDoListTable.COLUMN_FK_LIST_ITEMS + " = " + ListItemTable._ID + " WHERE " +
-            ToDoListTable._ID + " = (?)";
+    public static String SELECT_SINGLE_LIST_ITEMS =
+            "SELECT " + ListItemTable.TABLE_NAME + "." + ListItemTable._ID
+            + ", " + ListItemTable.TABLE_NAME + "." + ListItemTable.COLUMN_DESCRIPTION
+            + " FROM " + ToDoListTable.TABLE_NAME + " INNER JOIN " + ListItemTable.TABLE_NAME
+            + " ON " + ToDoListTable.TABLE_NAME + "." + ToDoListTable.COLUMN_FK_LIST_ITEMS + " = "
+            + ListItemTable.TABLE_NAME + "." + ListItemTable._ID + " WHERE "
+            + ToDoListTable.TABLE_NAME + "." + ToDoListTable.COLUMN_HEADER + " = (?)";
 
     public static String NULL = "NULL";
 }

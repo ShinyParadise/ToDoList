@@ -49,7 +49,7 @@ public class ListsFragment extends Fragment {
         adapter.setOnItemClickListener(new ListsRecyclerViewAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Toast.makeText(getContext(), "clicked " + position + " item", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "clicked " + position + " item", Toast.LENGTH_SHORT).show();
 
                 // TODO: fix parsing list ID
                 DetailedListFragment detailedListFragment = new DetailedListFragment(position + 1);
@@ -62,7 +62,7 @@ public class ListsFragment extends Fragment {
 
             @Override
             public void onItemLongClick(int position, View v) {
-                Toast.makeText(getContext(), "long clicked " + position + " item", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "long clicked " + position + " item", Toast.LENGTH_SHORT).show();
             }
         });
 
