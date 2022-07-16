@@ -6,8 +6,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
-    public ToDoListDatabaseHelper(Context context) {
+    private static ToDoListDatabaseHelper listHelperInstance = null;
+
+    private ToDoListDatabaseHelper(Context context) {
         super(context, DatabaseContract.DATABASE_NAME, null, DatabaseContract.DATABASE_VERSION);
+    }
+
+    public static ToDoListDatabaseHelper getInstance(Context context) {
+        if (listHelperInstance == null) {
+            listHelperInstance = new ToDoListDatabaseHelper(context);
+        }
+
+        return listHelperInstance;
     }
 
     @Override

@@ -19,12 +19,7 @@ public class ListRepository implements IListRepository {
     private static volatile SQLiteOpenHelper databaseHelper = null;
 
     public ListRepository(Context context) {
-        if (databaseHelper == null) {
-            synchronized (ToDoListDatabaseHelper.class) {
-                if (databaseHelper == null)
-                    databaseHelper = new ToDoListDatabaseHelper(context.getApplicationContext());
-            }
-        }
+        databaseHelper = ToDoListDatabaseHelper.getInstance(context);
     }
 
     public void insertToDoListWithItems(String listName, String listDescription, String[] listItemsIDs) {
