@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.example.todolist.db.DatabaseContract;
 import com.example.todolist.db.ToDoListDatabaseHelper;
+import com.example.todolist.db.dbo.List;
 import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.db.models.ListModel;
 
@@ -15,10 +16,15 @@ import java.util.ArrayList;
 
 
 public class ListRepository implements IListRepository {
-    private static SQLiteOpenHelper databaseHelper;
+    private static volatile SQLiteOpenHelper databaseHelper = null;
 
     public ListRepository(Context context) {
-        databaseHelper = new ToDoListDatabaseHelper(context.getApplicationContext());
+        if (databaseHelper == null) {
+            synchronized (ToDoListDatabaseHelper.class) {
+                if (databaseHelper == null)
+                    databaseHelper = new ToDoListDatabaseHelper(context.getApplicationContext());
+            }
+        }
     }
 
     public void insertToDoListWithItems(String listName, String listDescription, String[] listItemsIDs) {
@@ -80,7 +86,25 @@ public class ListRepository implements IListRepository {
 
     @Override
     public ArrayList<ListItemModel> getListItems(int listID) {
-        // TODO: Implement method
-        return null;
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor request = db.rawQuery(DatabaseContract.SELECT_SINGLE_LIST_ITEMS, null);
+        ArrayList<ListItemModel> listItems = new ArrayList<>();
+
+        if (request.moveToFirst()){
+            ListItemModel newListItem = new ListItemModel();
+            newListItem.id = Integer.parseInt(request.getString(0));
+            newListItem.description = request.getString(1);
+
+            listItems.add(newListItem);
+            while(request.moveToNext()) {
+                newListItem = new ListItemModel();
+                newListItem.id = Integer.parseInt(request.getString(0));
+                newListItem.description = request.getString(1);
+
+                listItems.add(newListItem);
+            }
+        }
+
+        return listItems;
     }
 }

@@ -33,7 +33,7 @@ public class ListsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lists, container, false);
         initiateViews(rootView);
 
-        listViewModel.initiateLists();
+        //listViewModel.initiateLists();
         listViewModel.fetchLists();
 
         initiateRecyclerView();

@@ -11,7 +11,7 @@ public class DetailedListFragment extends Fragment {
     private DetailedListViewModel detailsViewModel;
 
     public DetailedListFragment(int listID) {
-        detailsViewModel = new DetailedListViewModel(getActivity().getApplicationContext(), listID);
+        detailsViewModel = new DetailedListViewModel(getContext(), listID);
     }
 
     @Override

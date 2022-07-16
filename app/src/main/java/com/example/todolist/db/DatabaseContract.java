@@ -59,7 +59,7 @@ public final class DatabaseContract {
                 + COLUMN_DESCRIPTION + ") " + "VALUES (?)";
     }
 
-    public static String SELECT_LIST_WITH_ITEMS = "SELECT * FROM " + ToDoListTable.TABLE_NAME +
+    public static String SELECT_SINGLE_LIST_ITEMS = "SELECT * FROM " + ToDoListTable.TABLE_NAME +
             " INNER JOIN " + ListItemTable.TABLE_NAME + " ON " + ToDoListTable.TABLE_NAME + "." +
             ToDoListTable.COLUMN_FK_LIST_ITEMS + " = " + ListItemTable._ID + " WHERE " +
             ToDoListTable._ID + " = (?)";
