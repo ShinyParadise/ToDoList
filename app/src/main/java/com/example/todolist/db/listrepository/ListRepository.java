@@ -87,7 +87,9 @@ public class ListRepository implements IListRepository {
     @Override
     public ArrayList<ListItemModel> getListItems(int listID) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        Cursor request = db.rawQuery(DatabaseContract.SELECT_SINGLE_LIST_ITEMS, null);
+        Cursor request = db.rawQuery(
+                DatabaseContract.SELECT_SINGLE_LIST_ITEMS,
+                new String[] { Integer.toString(listID) });
         ArrayList<ListItemModel> listItems = new ArrayList<>();
 
         if (request.moveToFirst()){
@@ -105,6 +107,7 @@ public class ListRepository implements IListRepository {
             }
         }
 
+        request.close();
         return listItems;
     }
 }
