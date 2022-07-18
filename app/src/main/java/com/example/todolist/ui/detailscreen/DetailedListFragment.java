@@ -12,12 +12,16 @@ import android.widget.Toast;
 
 import com.example.todolist.R;
 import com.example.todolist.ui.detailscreen.detailrecycler.ListDetailRecyclerViewAdapter;
+import com.example.todolist.ui.listscreen.AddListDialog;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailedListFragment extends Fragment {
     private DetailedListViewModel detailsViewModel;
 
     private RecyclerView detailsRecyclerView;
     private ListDetailRecyclerViewAdapter adapter;
+
+    private FloatingActionButton btnAddDetail;
 
     public DetailedListFragment(int listID) {
         detailsViewModel = new DetailedListViewModel(getContext(), listID);
@@ -32,6 +36,8 @@ public class DetailedListFragment extends Fragment {
 
         detailsViewModel.fetchListItems();
         initiateRecyclerView();
+
+        btnAddDetail.setOnClickListener(this::onAddDetailClick);
 
         return rootView;
     }
@@ -57,5 +63,10 @@ public class DetailedListFragment extends Fragment {
 
     private void initiateViews(View rootView) {
         detailsRecyclerView = rootView.findViewById(R.id.fragment_details_recycler_view);
+        btnAddDetail = rootView.findViewById(R.id.fragment_details_btn_add_detail);
+    }
+
+    private void onAddDetailClick(View v) {
+        Toast.makeText(getContext(), "Clicked add a detail", Toast.LENGTH_SHORT).show();
     }
 }
