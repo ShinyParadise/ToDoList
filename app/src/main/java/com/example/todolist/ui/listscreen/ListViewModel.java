@@ -20,11 +20,8 @@ public class ListViewModel extends ViewModel {
     }
 
     public void initiateLists() {
-        listRepository.insertListItems("do something");
-        listRepository.insertListItems("do something else");
-        String[] exampleListItems = { "1", "2" };
-        listRepository.insertToDoListWithItems("123", "321", exampleListItems);
-        listRepository.insertToDoListWithItems("abc", "def", exampleListItems);
+        listRepository.insertToDoListWithoutItems("123", "321");
+        listRepository.insertToDoListWithoutItems("abc", "def");
     }
 
     public void fetchLists() {
@@ -32,8 +29,7 @@ public class ListViewModel extends ViewModel {
     }
 
     public void insertNewList(String listName, String listDescription) {
-        // пофиксить добавление с null значениями внешнего ключа
-        listRepository.insertToDoListWithItems(listName, listDescription, new String[] {"1", "2"});
+        listRepository.insertToDoListWithoutItems(listName, listDescription);
     }
 
     public ArrayList<ListModel> getLists() {

@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
+import com.example.todolist.db.listrepository.ListRepository;
 import com.example.todolist.ui.detailscreen.DetailedListFragment;
 import com.example.todolist.ui.listscreen.listsrecycler.ListsRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -52,7 +53,7 @@ public class ListsFragment extends Fragment {
                 Toast.makeText(getContext(), "clicked " + position + " item", Toast.LENGTH_SHORT).show();
 
                 // TODO: fix parsing list ID
-                DetailedListFragment detailedListFragment = new DetailedListFragment(position + 1);
+                DetailedListFragment detailedListFragment = new DetailedListFragment(new ListRepository(getContext()), position + 1);
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_view, detailedListFragment)
                         .setReorderingAllowed(true)

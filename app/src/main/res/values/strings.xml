@@ -7,7 +7,5 @@
     <string name="cancel_dialog">Back</string>
     <string name="hint_list_name">Enter list name</string>
     <string name="hint_list_description">Enter description</string>
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_details_button_text">Add a detail to the list</string>
 </resources>

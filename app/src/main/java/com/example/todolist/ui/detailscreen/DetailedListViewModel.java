@@ -4,7 +4,6 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.todolist.db.dbo.ListItem;
 import com.example.todolist.db.listrepository.IListRepository;
 import com.example.todolist.db.listrepository.ListRepository;
 import com.example.todolist.db.models.ListItemModel;
@@ -19,17 +18,23 @@ public class DetailedListViewModel extends ViewModel {
 
     private ArrayList<ListItemModel> listItems;
 
-    public DetailedListViewModel(Context context, int listID) {
+    public DetailedListViewModel(IListRepository listRepository, int listID) {
         this.listID = listID;
-        listRepository = new ListRepository(context);
+        this.listRepository = listRepository;
         listHeader = listRepository.getListHeader(listID);
     }
 
     public void fetchListItems() {
-        listItems = listRepository.getListItems(listHeader);
+        listItems = listRepository.getListItems(listID);
     }
+
+    // TODO: add method to fetch header
 
     public ArrayList<ListItemModel> getListItems() {
         return listItems;
+    }
+
+    public int getListId() {
+        return listID;
     }
 }

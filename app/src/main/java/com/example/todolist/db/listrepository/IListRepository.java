@@ -6,10 +6,10 @@ import com.example.todolist.db.models.ListModel;
 import java.util.ArrayList;
 
 public interface IListRepository {
-    void insertToDoListWithItems(String listName, String listDescription, String[] listItemsIDs);
     void insertToDoListWithoutItems(String listName, String listDescription);
-    void insertListItems(String listItem);
+    void insertListItems(String listName, String[] listItems);
     ArrayList<ListModel> getAllLists();
-    ArrayList<ListItemModel> getListItems(String header);
+    ArrayList<ListItemModel> getListItems(int listID);
     String getListHeader(int listID);
+    int getListID(String listHeader);
 }

@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.example.todolist.db.DatabaseContract;
 import com.example.todolist.db.ToDoListDatabaseHelper;
-import com.example.todolist.db.dbo.List;
 import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.db.models.ListModel;
 
@@ -22,32 +21,25 @@ public class ListRepository implements IListRepository {
         databaseHelper = ToDoListDatabaseHelper.getInstance(context);
     }
 
-    public void insertToDoListWithItems(String listName, String listDescription, String[] listItemsIDs) {
+    public void insertListItems(String listName, String[] listItems) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
 
-        for (String entry: listItemsIDs) {
-            String[] args = {listName, listDescription, entry};
+        String listID = String.valueOf(getListID(listName));
+
+        for (String listItem: listItems) {
+            String[] args = { listItem, listID };
             insertStatement.bindAllArgsAsStrings(args);
             insertStatement.executeInsert();
         }
     }
 
-    // TODO: fix this to work with null values
     public void insertToDoListWithoutItems(String listName, String listDescription) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
 
-        String[] args = { listName, listDescription, DatabaseContract.NULL };
+        String[] args = { listName, listDescription };
         insertStatement.bindAllArgsAsStrings(args);
-        insertStatement.executeInsert();
-    }
-
-    public void insertListItems(String listItem) {
-        SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ListItemTable.INSERT_VALUES);
-
-        insertStatement.bindString(1, listItem);
         insertStatement.executeInsert();
     }
 
@@ -61,7 +53,6 @@ public class ListRepository implements IListRepository {
             newList.id = Integer.parseInt(request.getString(0));
             newList.name = request.getString(1);
             newList.description = request.getString(2);
-            newList.fkEntries = Integer.parseInt(request.getString(3));
 
             lists.add(newList);
             while(request.moveToNext()) {
@@ -69,7 +60,6 @@ public class ListRepository implements IListRepository {
                 newList.id = Integer.parseInt(request.getString(0));
                 newList.name = request.getString(1);
                 newList.description = request.getString(2);
-                newList.fkEntries = Integer.parseInt(request.getString(3));
 
                 lists.add(newList);
             }
@@ -80,23 +70,25 @@ public class ListRepository implements IListRepository {
     }
 
     @Override
-    public ArrayList<ListItemModel> getListItems(String header) {
+    public ArrayList<ListItemModel> getListItems(int listID) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor request = db.rawQuery(
                 DatabaseContract.SELECT_SINGLE_LIST_ITEMS,
-                new String[] { header });
+                new String[] { Integer.toString(listID) });
         ArrayList<ListItemModel> listItems = new ArrayList<>();
 
         if (request.moveToFirst()){
             ListItemModel newListItem = new ListItemModel();
             newListItem.id = Integer.parseInt(request.getString(0));
             newListItem.description = request.getString(1);
+            newListItem.fk_lists = request.getInt(2);
 
             listItems.add(newListItem);
             while(request.moveToNext()) {
                 newListItem = new ListItemModel();
                 newListItem.id = Integer.parseInt(request.getString(0));
                 newListItem.description = request.getString(1);
+                newListItem.fk_lists = request.getInt(2);
 
                 listItems.add(newListItem);
             }
@@ -122,5 +114,23 @@ public class ListRepository implements IListRepository {
         header = request.getString(1);
         request.close();
         return header;
+    }
+
+    public int getListID(String listName) {
+        int listID;
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor request = db.rawQuery(DatabaseContract.ToDoListTable.SELECT_LIST_BY_HEADER,
+                new String[] { listName }
+        );
+
+        if (!request.moveToFirst()) {
+            request.close();
+            throw new NullPointerException();
+        }
+
+        listID = request.getInt(1);
+        request.close();
+
+        return listID;
     }
 }
