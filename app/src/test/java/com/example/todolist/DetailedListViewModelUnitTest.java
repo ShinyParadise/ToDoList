@@ -1,5 +1,6 @@
 package com.example.todolist;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -14,9 +15,15 @@ import java.util.ArrayList;
 public class DetailedListViewModelUnitTest {
     private final int testId = 1;
     private final String testHeader = "header";
-    private ListRepositoryMock listRepository = new ListRepositoryMock();
-    private DetailedListViewModel sut = new DetailedListViewModel(listRepository, testId);
 
+    private ListRepositoryMock listRepository;
+    private DetailedListViewModel sut;
+
+    @Before
+    public void setup() {
+        listRepository = new ListRepositoryMock();
+        sut = new DetailedListViewModel(listRepository, testId);
+    }
 
     @Test
     public void test_repository_called_on_list_items_fetch() {
