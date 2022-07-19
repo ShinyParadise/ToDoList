@@ -34,7 +34,7 @@ public class DetailedListViewModel extends ViewModel {
         return listItems;
     }
 
-    public int getListId() {
-        return listID;
+    public String getHeader() {
+        return listHeader;
     }
 }

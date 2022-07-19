@@ -1,5 +1,6 @@
 package com.example.todolist.ui.detailscreen;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.example.todolist.R;
 import com.example.todolist.db.listrepository.IListRepository;
 import com.example.todolist.ui.detailscreen.detailrecycler.ListDetailRecyclerViewAdapter;
+import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailedListFragment extends Fragment {
@@ -33,6 +35,8 @@ public class DetailedListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_detailed_list, container, false);
 
         initiateViews(rootView);
+
+        ((MainActivity)getActivity()).changeActionBarTitle(detailsViewModel.getHeader());
 
         detailsViewModel.fetchListItems();
         initiateRecyclerView();
@@ -69,4 +73,5 @@ public class DetailedListFragment extends Fragment {
     private void onAddDetailClick(View v) {
         Toast.makeText(getContext(), "Clicked add a detail", Toast.LENGTH_SHORT).show();
     }
+
 }
