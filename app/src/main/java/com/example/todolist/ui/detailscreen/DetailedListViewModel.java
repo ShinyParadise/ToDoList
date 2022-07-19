@@ -28,7 +28,9 @@ public class DetailedListViewModel extends ViewModel {
         listItems = listRepository.getListItems(listID);
     }
 
-    // TODO: add method to fetch header
+    public void fetchHeader() {
+        listHeader = listRepository.getListHeader(listID);
+    }
 
     public ArrayList<ListItemModel> getListItems() {
         return listItems;

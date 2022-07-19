@@ -4,10 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import android.content.Context;
-
 import com.example.todolist.db.listrepository.IListRepository;
-import com.example.todolist.db.listrepository.ListRepository;
 import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.db.models.ListModel;
 import com.example.todolist.ui.detailscreen.DetailedListViewModel;
@@ -15,9 +12,11 @@ import com.example.todolist.ui.detailscreen.DetailedListViewModel;
 import java.util.ArrayList;
 
 public class DetailedListViewModelUnitTest {
-    private int testId = 1;
+    private final int testId = 1;
+    private final String testHeader = "header";
     private ListRepositoryMock listRepository = new ListRepositoryMock();
     private DetailedListViewModel sut = new DetailedListViewModel(listRepository, testId);
+
 
     @Test
     public void test_repository_called_on_list_items_fetch() {
@@ -26,10 +25,11 @@ public class DetailedListViewModelUnitTest {
         assertEquals(testId, listRepository.fetchListID);
     }
 
-    // TODO: test for fetching header
     @Test
-    public void test_init_with_correct_header() {
+    public void test_repository_fetched_correct_header() {
+        sut.fetchHeader();
 
+        assertEquals(testHeader, sut.getHeader());
     }
 
 
@@ -60,7 +60,12 @@ public class DetailedListViewModelUnitTest {
 
         @Override
         public String getListHeader(int listID) {
-            return null;
+            if (listID == testId)
+                header = testHeader;
+            else
+                header = null;
+
+            return header;
         }
 
         @Override

@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.main_activity);
 
         actionBar = getSupportActionBar();
+        changeActionBarTitle("Lists");
 
         ListsFragment listsFragment = new ListsFragment();
         getSupportFragmentManager().beginTransaction()
