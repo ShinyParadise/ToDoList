@@ -74,4 +74,9 @@ public class DetailedListFragment extends Fragment {
         Toast.makeText(getContext(), "Clicked add a detail", Toast.LENGTH_SHORT).show();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        ((MainActivity)getActivity()).changeActionBarTitle("Lists");
+    }
 }
