@@ -4,6 +4,7 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 
+import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listrepository.IListRepository;
 import com.example.todolist.repositories.listrepository.ListRepository;
 import com.example.todolist.db.models.ListModel;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 public class ListViewModel extends ViewModel {
     private IListRepository listRepository;
 
-    private ArrayList<ListModel> toDoLists;
+    private ArrayList<ToDoList> toDoLists;
 
     public ListViewModel(Context context) {
         listRepository = new ListRepository(context);
@@ -32,7 +33,7 @@ public class ListViewModel extends ViewModel {
         listRepository.insertToDoListWithoutItems(listName, listDescription);
     }
 
-    public ArrayList<ListModel> getLists() {
+    public ArrayList<ToDoList> getLists() {
         return toDoLists;
     }
 }

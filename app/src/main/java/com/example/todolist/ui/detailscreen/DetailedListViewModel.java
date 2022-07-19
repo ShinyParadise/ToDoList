@@ -2,6 +2,7 @@ package com.example.todolist.ui.detailscreen;
 
 import androidx.lifecycle.ViewModel;
 
+import com.example.todolist.dto.ListItem;
 import com.example.todolist.repositories.listrepository.IListRepository;
 import com.example.todolist.db.models.ListItemModel;
 
@@ -13,7 +14,7 @@ public class DetailedListViewModel extends ViewModel {
 
     private IListRepository listRepository;
 
-    private ArrayList<ListItemModel> listItems;
+    private ArrayList<ListItem> listItems;
 
     public DetailedListViewModel(IListRepository listRepository, int listID) {
         this.listID = listID;
@@ -29,7 +30,7 @@ public class DetailedListViewModel extends ViewModel {
         listHeader = listRepository.getListHeader(listID);
     }
 
-    public ArrayList<ListItemModel> getListItems() {
+    public ArrayList<ListItem> getListItems() {
         return listItems;
     }
 

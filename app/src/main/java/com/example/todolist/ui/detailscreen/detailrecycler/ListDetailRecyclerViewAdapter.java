@@ -10,14 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.R;
 import com.example.todolist.db.models.ListItemModel;
+import com.example.todolist.dto.ListItem;
 
 import java.util.ArrayList;
 
 public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDetailRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<ListItemModel> listItems;
+    private ArrayList<ListItem> listItems;
     private static ClickListener clickListener;
 
-    public ListDetailRecyclerViewAdapter(ArrayList<ListItemModel> listItems) {
+    public ListDetailRecyclerViewAdapter(ArrayList<ListItem> listItems) {
         this.listItems = listItems;
     }
 
@@ -41,10 +42,10 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListItemModel listItem = listItems.get(position);
+        ListItem listItem = listItems.get(position);
 
-        if (!listItem.description.isEmpty()) {
-            holder.getListItemView().setText(listItem.description);
+        if (!listItem.getDescription().isEmpty()) {
+            holder.getListItemView().setText(listItem.getDescription());
             holder.getListNumberView().setText(String.valueOf(position + 1));
         }
     }

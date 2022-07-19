@@ -10,12 +10,14 @@ import com.example.todolist.db.DatabaseContract;
 import com.example.todolist.db.ToDoListDatabaseHelper;
 import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.db.models.ListModel;
+import com.example.todolist.dto.ListItem;
+import com.example.todolist.dto.ToDoList;
 
 import java.util.ArrayList;
 
 
 public class ListRepository implements IListRepository {
-    private static volatile SQLiteOpenHelper databaseHelper = null;
+    private static SQLiteOpenHelper databaseHelper = null;
 
     public ListRepository(Context context) {
         databaseHelper = ToDoListDatabaseHelper.getInstance(context);
@@ -43,24 +45,24 @@ public class ListRepository implements IListRepository {
         insertStatement.executeInsert();
     }
 
-    public ArrayList<ListModel> getAllLists() {
+    public ArrayList<ToDoList> getAllLists() {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor request = db.rawQuery(DatabaseContract.ToDoListTable.SELECT_ALL_LISTS, null);
-        ArrayList<ListModel> lists = new ArrayList<>();
+        ArrayList<ToDoList> lists = new ArrayList<>();
 
         if (request.moveToFirst()){
-            ListModel newList = new ListModel();
-            newList.id = Integer.parseInt(request.getString(0));
-            newList.name = request.getString(1);
-            newList.description = request.getString(2);
+            int id = Integer.parseInt(request.getString(0));
+            String name = request.getString(1);
+            String description = request.getString(2);
 
+            ToDoList newList = new ToDoList(id, name, description);
             lists.add(newList);
             while(request.moveToNext()) {
-                newList = new ListModel();
-                newList.id = Integer.parseInt(request.getString(0));
-                newList.name = request.getString(1);
-                newList.description = request.getString(2);
+                id = Integer.parseInt(request.getString(0));
+                name = request.getString(1);
+                description = request.getString(2);
 
+                newList = new ToDoList(id, name, description);
                 lists.add(newList);
             }
         }
@@ -70,26 +72,27 @@ public class ListRepository implements IListRepository {
     }
 
     @Override
-    public ArrayList<ListItemModel> getListItems(int listID) {
+    public ArrayList<ListItem> getListItems(int listID) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor request = db.rawQuery(
                 DatabaseContract.SELECT_SINGLE_LIST_ITEMS,
                 new String[] { Integer.toString(listID) });
-        ArrayList<ListItemModel> listItems = new ArrayList<>();
+        ArrayList<ListItem> listItems = new ArrayList<>();
 
         if (request.moveToFirst()){
-            ListItemModel newListItem = new ListItemModel();
-            newListItem.id = Integer.parseInt(request.getString(0));
-            newListItem.description = request.getString(1);
-            newListItem.fk_lists = request.getInt(2);
+            int id = Integer.parseInt(request.getString(0));
+            String description = request.getString(1);
+            int fk_list = request.getInt(2);
 
+            ListItem newListItem = new ListItem(id, description, fk_list);
             listItems.add(newListItem);
-            while(request.moveToNext()) {
-                newListItem = new ListItemModel();
-                newListItem.id = Integer.parseInt(request.getString(0));
-                newListItem.description = request.getString(1);
-                newListItem.fk_lists = request.getInt(2);
 
+            while(request.moveToNext()) {
+                id = Integer.parseInt(request.getString(0));
+                description = request.getString(1);
+                fk_list = request.getInt(2);
+
+                newListItem = new ListItem(id, description, fk_list);
                 listItems.add(newListItem);
             }
         }

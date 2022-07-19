@@ -39,6 +39,4 @@ public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
     public void onConfigure(SQLiteDatabase db) {
         db.setForeignKeyConstraintsEnabled(true);
     }
-
-
 }

@@ -10,14 +10,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.R;
 import com.example.todolist.db.models.ListModel;
+import com.example.todolist.dto.ToDoList;
 
 import java.util.ArrayList;
 
 public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
-    private ArrayList<ListModel> toDoLists;
+    private ArrayList<ToDoList> toDoLists;
     private static ClickListener clickListener;
 
-    public ListsRecyclerViewAdapter(ArrayList<ListModel> toDoLists) {
+    public ListsRecyclerViewAdapter(ArrayList<ToDoList> toDoLists) {
         this.toDoLists = toDoLists;
     }
 
@@ -41,15 +42,15 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ListModel list = toDoLists.get(position);
+        ToDoList list = toDoLists.get(position);
 
-        if (!(list.name.isEmpty() || list.description.isEmpty())) {
-            holder.getListNameView().setText(list.name);
-            holder.getListDescriptionView().setText(list.description);
+        if (!(list.getHeader().isEmpty() || list.getDescription().isEmpty())) {
+            holder.getListNameView().setText(list.getHeader());
+            holder.getListDescriptionView().setText(list.getDescription());
         }
     }
 
-    public void setToDoLists(ArrayList<ListModel> toDoLists) {
+    public void setToDoLists(ArrayList<ToDoList> toDoLists) {
         this.toDoLists = toDoLists;
     }
 

@@ -5,9 +5,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+import com.example.todolist.dto.ListItem;
+import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listrepository.IListRepository;
-import com.example.todolist.db.models.ListItemModel;
-import com.example.todolist.db.models.ListModel;
 import com.example.todolist.ui.detailscreen.DetailedListViewModel;
 
 import java.util.ArrayList;
@@ -55,12 +55,12 @@ public class DetailedListViewModelUnitTest {
         }
 
         @Override
-        public ArrayList<ListModel> getAllLists() {
+        public ArrayList<ToDoList> getAllLists() {
             return null;
         }
 
         @Override
-        public ArrayList<ListItemModel> getListItems(int listID) {
+        public ArrayList<ListItem> getListItems(int listID) {
             fetchListID = listID;
             return new ArrayList<>();
         }
