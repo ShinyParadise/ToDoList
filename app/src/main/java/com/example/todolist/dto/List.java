@@ -1,4 +1,4 @@
-package com.example.todolist.db.dbo;
+package com.example.todolist.dto;
 
 import java.util.ArrayList;
 

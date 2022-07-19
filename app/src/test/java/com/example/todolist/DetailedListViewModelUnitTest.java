@@ -23,15 +23,19 @@ public class DetailedListViewModelUnitTest {
     public void test_repository_called_on_list_items_fetch() {
         sut.fetchListItems();
 
-        sut.getListItems();
-
         assertEquals(testId, listRepository.fetchListID);
     }
 
     // TODO: test for fetching header
+    @Test
+    public void test_init_with_correct_header() {
+
+    }
+
 
     private class ListRepositoryMock implements IListRepository {
         public int fetchListID;
+        public String header;
 
         @Override
         public void insertToDoListWithoutItems(String listName, String listDescription) {

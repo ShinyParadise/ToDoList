@@ -2,9 +2,6 @@ package com.example.todolist.db;
 
 import android.provider.BaseColumns;
 
-import com.example.todolist.db.dbo.List;
-import com.example.todolist.db.dbo.ListItem;
-
 public final class DatabaseContract {
     public static final int    DATABASE_VERSION   = 1;
     public static final String DATABASE_NAME      = "todolist.db";

@@ -1,4 +1,4 @@
-package com.example.todolist.db.dbo;
+package com.example.todolist.dto;
 
 public class ListItem {
     private int id;
