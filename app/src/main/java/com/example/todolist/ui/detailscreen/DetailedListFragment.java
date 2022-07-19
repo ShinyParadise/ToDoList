@@ -1,6 +1,5 @@
 package com.example.todolist.ui.detailscreen;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
-import com.example.todolist.db.listrepository.IListRepository;
+import com.example.todolist.repositories.listrepository.IListRepository;
 import com.example.todolist.ui.detailscreen.detailrecycler.ListDetailRecyclerViewAdapter;
 import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

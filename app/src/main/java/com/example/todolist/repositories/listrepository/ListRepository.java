@@ -1,4 +1,4 @@
-package com.example.todolist.db.listrepository;
+package com.example.todolist.repositories.listrepository;
 
 import android.content.Context;
 import android.database.Cursor;

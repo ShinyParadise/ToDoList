@@ -4,8 +4,8 @@ import android.content.Context;
 
 import androidx.lifecycle.ViewModel;
 
-import com.example.todolist.db.listrepository.IListRepository;
-import com.example.todolist.db.listrepository.ListRepository;
+import com.example.todolist.repositories.listrepository.IListRepository;
+import com.example.todolist.repositories.listrepository.ListRepository;
 import com.example.todolist.db.models.ListModel;
 
 import java.util.ArrayList;

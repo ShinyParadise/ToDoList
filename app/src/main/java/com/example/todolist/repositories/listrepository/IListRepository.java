@@ -1,4 +1,4 @@
-package com.example.todolist.db.listrepository;
+package com.example.todolist.repositories.listrepository;
 
 import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.db.models.ListModel;

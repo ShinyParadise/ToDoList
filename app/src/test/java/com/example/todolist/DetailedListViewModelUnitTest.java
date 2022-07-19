@@ -4,7 +4,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-import com.example.todolist.db.listrepository.IListRepository;
+import com.example.todolist.repositories.listrepository.IListRepository;
 import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.db.models.ListModel;
 import com.example.todolist.ui.detailscreen.DetailedListViewModel;
