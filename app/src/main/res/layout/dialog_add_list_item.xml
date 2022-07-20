@@ -4,18 +4,18 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/dialog_add_list_label"
+        android:id="@+id/dialog_add_list_item_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="100dp"
+        android:layout_marginHorizontal="50dp"
         android:layout_marginTop="15dp"
-        android:text="@string/add_list_dialog_title"
+        android:text="@string/add_list_item_dialog_title"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="30sp" />
 
     <EditText
-        android:id="@+id/dialog_add_list_input_name"
+        android:id="@+id/dialog_add_list_item_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="4dp"
@@ -23,22 +23,8 @@
         android:layout_marginRight="4dp"
         android:layout_marginBottom="4dp"
         android:autofillHints=""
-        android:hint="@string/hint_list_name"
+        android:hint="@string/hint_list_item_name"
         android:inputType="textAutoComplete"
-        android:minHeight="48dp"
-        android:textColorHint="#616161" />
-
-    <EditText
-        android:id="@+id/dialog_add_list_input_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginRight="4dp"
-        android:layout_marginBottom="16dp"
-        android:autofillHints=""
-        android:hint="@string/hint_list_description"
-        android:inputType="text"
         android:minHeight="48dp"
         android:textColorHint="#616161" />
 </LinearLayout>

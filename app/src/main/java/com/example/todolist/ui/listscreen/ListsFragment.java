@@ -34,7 +34,6 @@ public class ListsFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_lists, container, false);
         initiateViews(rootView);
 
-        //listViewModel.initiateLists();
         listViewModel.fetchLists();
 
         initiateRecyclerView();
@@ -52,7 +51,6 @@ public class ListsFragment extends Fragment {
             public void onItemClick(int position, View v) {
                 Toast.makeText(getContext(), "clicked " + position + " item", Toast.LENGTH_SHORT).show();
 
-                // TODO: fix parsing list ID
                 DetailedListFragment detailedListFragment = new DetailedListFragment(new ListRepository(getContext()), position + 1);
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_view, detailedListFragment)

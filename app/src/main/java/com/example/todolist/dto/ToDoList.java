@@ -1,6 +1,7 @@
 package com.example.todolist.dto;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ToDoList {
     private int id;
@@ -51,7 +52,7 @@ public class ToDoList {
 
         if (id != toDoList.id) return false;
         if (!header.equals(toDoList.header)) return false;
-        return description != null ? description.equals(toDoList.description) : toDoList.description == null;
+        return Objects.equals(description, toDoList.description);
     }
 
     @Override

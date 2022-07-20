@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteStatement;
 
 import com.example.todolist.db.DatabaseContract;
 import com.example.todolist.db.ToDoListDatabaseHelper;
-import com.example.todolist.db.models.ListItemModel;
-import com.example.todolist.db.models.ListModel;
 import com.example.todolist.dto.ListItem;
 import com.example.todolist.dto.ToDoList;
 
@@ -23,17 +21,13 @@ public class ListRepository implements IListRepository {
         databaseHelper = ToDoListDatabaseHelper.getInstance(context);
     }
 
-    public void insertListItems(String listName, String[] listItems) {
+    public void insertListItem(int listID, String listItem) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
-        SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
+        SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ListItemTable.INSERT_VALUES);
 
-        String listID = String.valueOf(getListID(listName));
-
-        for (String listItem: listItems) {
-            String[] args = { listItem, listID };
-            insertStatement.bindAllArgsAsStrings(args);
-            insertStatement.executeInsert();
-        }
+        String[] args = { listItem, String.valueOf(listID) };
+        insertStatement.bindAllArgsAsStrings(args);
+        insertStatement.executeInsert();
     }
 
     public void insertToDoListWithoutItems(String listName, String listDescription) {

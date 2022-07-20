@@ -37,4 +37,8 @@ public class DetailedListViewModel extends ViewModel {
     public String getHeader() {
         return listHeader;
     }
+
+    public void insertListItem(String listItemDescription) {
+        listRepository.insertListItem(listID, listItemDescription);
+    }
 }

@@ -68,7 +68,7 @@ public final class DatabaseContract {
             + " FROM " + ToDoListTable.TABLE_NAME + " INNER JOIN " + ListItemTable.TABLE_NAME
             + " ON " + ToDoListTable.TABLE_NAME + "." + ToDoListTable._ID + " = "
             + ListItemTable.TABLE_NAME + "." + ListItemTable.COLUMN_FK_LIST + " WHERE "
-            + ToDoListTable.TABLE_NAME + "." + ToDoListTable.COLUMN_HEADER + " = (?)";
+            + ToDoListTable.TABLE_NAME + "." + ToDoListTable._ID + " = (?)";
 
     public static String NULL = "NULL";
 }

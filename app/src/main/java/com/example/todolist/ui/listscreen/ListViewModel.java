@@ -20,11 +20,6 @@ public class ListViewModel extends ViewModel {
         listRepository = new ListRepository(context);
     }
 
-    public void initiateLists() {
-        listRepository.insertToDoListWithoutItems("123", "321");
-        listRepository.insertToDoListWithoutItems("abc", "def");
-    }
-
     public void fetchLists() {
         toDoLists = new ArrayList<>(listRepository.getAllLists());
     }

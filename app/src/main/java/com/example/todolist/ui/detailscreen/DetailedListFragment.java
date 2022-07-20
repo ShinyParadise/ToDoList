@@ -70,7 +70,26 @@ public class DetailedListFragment extends Fragment {
     }
 
     private void onAddDetailClick(View v) {
-        Toast.makeText(getContext(), "Clicked add a detail", Toast.LENGTH_SHORT).show();
+        AddListItemDialog addListItemDialog = new AddListItemDialog();
+        setDialogListener(addListItemDialog);
+        addListItemDialog.show(getParentFragmentManager(), AddListItemDialog.TAG);
+    }
+
+    private void setDialogListener(AddListItemDialog addListItemDialog) {
+        addListItemDialog.listener = new AddListItemDialog.AddListItemDialogListener() {
+            @Override
+            public void onDialogPositiveClick(String listItemDescription) {
+                detailsViewModel.insertListItem(listItemDescription);
+                detailsViewModel.fetchListItems();
+                adapter.setListItems(detailsViewModel.getListItems());
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onDialogNegativeClick() {
+
+            }
+        };
     }
 
     @Override

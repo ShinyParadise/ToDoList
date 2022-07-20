@@ -22,6 +22,10 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
         this.listItems = listItems;
     }
 
+    public void setListItems(ArrayList<ListItem> listItems) {
+        this.listItems = listItems;
+    }
+
     public interface ClickListener {
         void onItemClick(int position, View v);
         void onItemLongClick(int position, View v);

@@ -21,6 +21,7 @@ public class DetailedListViewModelUnitTest {
 
     @Before
     public void setup() {
+        // TODO: переписать с mockk
         listRepository = new ListRepositoryMock();
         sut = new DetailedListViewModel(listRepository, testId);
     }
@@ -50,7 +51,7 @@ public class DetailedListViewModelUnitTest {
         }
 
         @Override
-        public void insertListItems(String listName, String[] listItems) {
+        public void insertListItem(int listID, String listItem) {
 
         }
 

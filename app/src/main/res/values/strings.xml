@@ -9,4 +9,6 @@
     <string name="hint_list_description">Enter description</string>
     <string name="add_details_button_text">Add a detail to the list</string>
     <string name="first_screen_title">Lists</string>
+    <string name="add_list_item_dialog_title">Add an item to the list</string>
+    <string name="hint_list_item_name">Enter description</string>
 </resources>
