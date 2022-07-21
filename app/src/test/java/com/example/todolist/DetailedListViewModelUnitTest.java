@@ -76,6 +76,11 @@ public class DetailedListViewModelUnitTest {
         }
 
         @Override
+        public void changeListItemState(int id, boolean newState) {
+
+        }
+
+        @Override
         public ArrayList<ToDoList> getAllLists() {
             return null;
         }
