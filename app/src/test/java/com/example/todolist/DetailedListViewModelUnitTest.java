@@ -11,6 +11,7 @@ import com.example.todolist.repositories.listrepository.IListRepository;
 import com.example.todolist.ui.detailscreen.DetailedListViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DetailedListViewModelUnitTest {
     private final int testId = 1;
@@ -45,10 +46,24 @@ public class DetailedListViewModelUnitTest {
         assertEquals(testHeader, sut.getHeader());
     }
 
+    @Test
+    public void test_item_selection_inverts_item_selected_state() {
+        listRepository.listItems = new ArrayList<>(
+                Collections.singletonList(
+                        new ListItem(1, "asd", 1)
+                )
+        );
+        sut.fetchListItems();
+
+        sut.changeListItemState(0, true);
+
+        assertTrue(sut.getListItems().get(0).getState());
+    }
 
     private class ListRepositoryMock implements IListRepository {
         public int fetchListID;
         public String header;
+        public ArrayList<ListItem> listItems = new ArrayList<>();
 
         @Override
         public void insertToDoListWithoutItems(String listName, String listDescription) {
@@ -68,7 +83,7 @@ public class DetailedListViewModelUnitTest {
         @Override
         public ArrayList<ListItem> getListItems(int listID) {
             fetchListID = listID;
-            return new ArrayList<>();
+            return listItems;
         }
 
         @Override
