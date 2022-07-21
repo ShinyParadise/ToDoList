@@ -30,6 +30,20 @@ public class ListRepository implements IListRepository {
         insertStatement.executeInsert();
     }
 
+    @Override
+    public void changeListItemState(int listItemID, boolean newState) {
+        SQLiteDatabase db = databaseHelper.getWritableDatabase();
+        SQLiteStatement updateStatement = db.compileStatement(
+                DatabaseContract.ListItemTable.UPDATE_LIST_ITEM_STATE
+        );
+
+        String newStateString = (newState) ? "1" : "0";
+
+        String[] args = { newStateString, String.valueOf(listItemID) };
+        updateStatement.bindAllArgsAsStrings(args);
+        updateStatement.executeUpdateDelete();
+    }
+
     public void insertToDoListWithoutItems(String listName, String listDescription) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
@@ -77,16 +91,21 @@ public class ListRepository implements IListRepository {
             int id = Integer.parseInt(request.getString(0));
             String description = request.getString(1);
             int fk_list = request.getInt(2);
+            int isChecked = request.getInt(3);
 
             ListItem newListItem = new ListItem(id, description, fk_list);
+            if (isChecked == 1) newListItem.setState(true);
+
             listItems.add(newListItem);
 
             while(request.moveToNext()) {
                 id = Integer.parseInt(request.getString(0));
                 description = request.getString(1);
                 fk_list = request.getInt(2);
+                isChecked = request.getInt(3);
 
                 newListItem = new ListItem(id, description, fk_list);
+                if (isChecked == 1) newListItem.setState(true);
                 listItems.add(newListItem);
             }
         }

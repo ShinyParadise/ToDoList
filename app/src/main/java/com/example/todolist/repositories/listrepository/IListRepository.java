@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public interface IListRepository {
     void insertToDoListWithoutItems(String listName, String listDescription);
     void insertListItem(int listID, String listItem);
+    void changeListItemState(int id, boolean newState);
     ArrayList<ToDoList> getAllLists();
     ArrayList<ListItem> getListItems(int listID);
     String getListHeader(int listID);

@@ -41,4 +41,9 @@ public class DetailedListViewModel extends ViewModel {
     public void insertListItem(String listItemDescription) {
         listRepository.insertListItem(listID, listItemDescription);
     }
+
+    public void changeListItemState(int position, boolean state) {
+        listItems.get(position).setState(state);
+        listRepository.changeListItemState(listItems.get(position).getID(), state);
+    }
 }

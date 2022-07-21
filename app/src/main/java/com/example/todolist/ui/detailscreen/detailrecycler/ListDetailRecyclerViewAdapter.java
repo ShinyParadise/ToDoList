@@ -3,20 +3,20 @@ package com.example.todolist.ui.detailscreen.detailrecycler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.R;
-import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.dto.ListItem;
 
 import java.util.ArrayList;
 
 public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDetailRecyclerViewAdapter.ViewHolder> {
     private ArrayList<ListItem> listItems;
-    private static ClickListener clickListener;
+    private static CheckListener checkListener;
 
     public ListDetailRecyclerViewAdapter(ArrayList<ListItem> listItems) {
         this.listItems = listItems;
@@ -26,13 +26,12 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
         this.listItems = listItems;
     }
 
-    public interface ClickListener {
-        void onItemClick(int position, View v);
-        void onItemLongClick(int position, View v);
+    public interface CheckListener {
+        void onCheckChanged(int position, boolean state, View v);
     }
 
-    public void setOnItemClickListener(ListDetailRecyclerViewAdapter.ClickListener clickListener) {
-        ListDetailRecyclerViewAdapter.clickListener = clickListener;
+    public void setOnCheckChangedListener(CheckListener checkListener) {
+        ListDetailRecyclerViewAdapter.checkListener = checkListener;
     }
 
     @NonNull
@@ -50,7 +49,7 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
 
         if (!listItem.getDescription().isEmpty()) {
             holder.getListItemView().setText(listItem.getDescription());
-            holder.getListNumberView().setText(String.valueOf(position + 1));
+            holder.getListItemView().setChecked(listItem.getState());
         }
     }
 
@@ -59,37 +58,23 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
         return listItems.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-        private final TextView listItemView;
-        private final TextView listNumberView;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final CheckBox listItemView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
-
-            listItemView = itemView.findViewById(R.id.detail_description);
-            listNumberView = itemView.findViewById(R.id.detail_number);
+            listItemView = itemView.findViewById(R.id.list_item);
+            listItemView.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    checkListener.onCheckChanged(getAbsoluteAdapterPosition(), isChecked, buttonView);
+                }
+            });
         }
 
-        public TextView getListItemView() {
+        public CheckBox getListItemView() {
             return listItemView;
-        }
-
-        public TextView getListNumberView() {
-            return listNumberView;
-        }
-
-        @Override
-        public void onClick(View v) {
-            clickListener.onItemClick(getAdapterPosition(), v);
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            clickListener.onItemLongClick(getAdapterPosition(), v);
-            return false;
         }
     }
 }

@@ -48,15 +48,10 @@ public class DetailedListFragment extends Fragment {
     private void initiateRecyclerView() {
         adapter = new ListDetailRecyclerViewAdapter(detailsViewModel.getListItems());
 
-        adapter.setOnItemClickListener(new ListDetailRecyclerViewAdapter.ClickListener() {
+        adapter.setOnCheckChangedListener(new ListDetailRecyclerViewAdapter.CheckListener() {
             @Override
-            public void onItemClick(int position, View v) {
-                Toast.makeText(getContext(), "clicked " + position + " item", Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onItemLongClick(int position, View v) {
-                Toast.makeText(getContext(), "clicked " + position + " item", Toast.LENGTH_SHORT).show();
+            public void onCheckChanged(int position, boolean state, View v) {
+                detailsViewModel.changeListItemState(position, state);
             }
         });
 

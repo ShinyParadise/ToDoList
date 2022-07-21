@@ -3,6 +3,7 @@ package com.example.todolist.dto;
 public class ListItem {
     private int id;
     private String description;
+    private boolean isChecked = false;
     private int fk_list;
 
     public ListItem(int id, String description, int fk_list) {
@@ -17,6 +18,14 @@ public class ListItem {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setState(boolean newState) {
+        isChecked = newState;
+    }
+
+    public boolean getState() {
+        return isChecked;
     }
 
     public int getAssociatedListID() { return fk_list; }
