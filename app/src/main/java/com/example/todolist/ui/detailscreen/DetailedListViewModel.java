@@ -20,6 +20,7 @@ public class DetailedListViewModel extends ViewModel {
         this.listID = listID;
         this.listRepository = listRepository;
         listHeader = listRepository.getListHeader(listID);
+        listItems = new ArrayList<>();
     }
 
     public void fetchListItems() {

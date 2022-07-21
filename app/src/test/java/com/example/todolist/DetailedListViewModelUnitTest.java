@@ -27,6 +27,11 @@ public class DetailedListViewModelUnitTest {
     }
 
     @Test
+    public void test_init_data() {
+        assertTrue(sut.getListItems().isEmpty());
+    }
+
+    @Test
     public void test_repository_called_on_list_items_fetch() {
         sut.fetchListItems();
 
