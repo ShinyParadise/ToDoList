@@ -69,7 +69,7 @@ public final class DatabaseContract {
                 + COLUMN_DESCRIPTION + ", " + COLUMN_FK_LIST + ") " + "VALUES (?, ?)";
 
         public static final String UPDATE_LIST_ITEM_STATE = "UPDATE " + TABLE_NAME
-                + "SET " + COLUMN_IS_CHECKED + " = (?) WHERE " + _ID + " = (?);";
+                + " SET " + COLUMN_IS_CHECKED + " = (?) WHERE " + _ID + " = (?);";
     }
 
     public static String SELECT_SINGLE_LIST_ITEMS =

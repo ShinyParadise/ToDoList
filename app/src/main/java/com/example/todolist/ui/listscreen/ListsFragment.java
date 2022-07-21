@@ -49,8 +49,6 @@ public class ListsFragment extends Fragment {
         adapter.setOnItemClickListener(new ListsRecyclerViewAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                Toast.makeText(getContext(), "clicked " + position + " item", Toast.LENGTH_SHORT).show();
-
                 DetailedListFragment detailedListFragment = new DetailedListFragment(new ListRepository(getContext()), position + 1);
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_view, detailedListFragment)
