@@ -32,11 +32,9 @@ public class DetailedListViewModelUnitTest {
 
     @Test
     public void test_repository_called_on_list_items_fetch() {
-        when(mockedListRepository.getListItems(testId)).thenReturn(new ArrayList<>());
-
         sut.fetchListItems();
 
-        assertEquals(sut.getListItems(), mockedListRepository.getListItems(testId));
+        verify(mockedListRepository).getListItems(testId);
     }
 
     @Test
