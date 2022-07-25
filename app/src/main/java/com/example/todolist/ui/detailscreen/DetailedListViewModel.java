@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ListItem;
 import com.example.todolist.repositories.listrepository.IListRepository;
-import com.example.todolist.db.models.ListItemModel;
 
 import java.util.ArrayList;
 
@@ -43,8 +42,12 @@ public class DetailedListViewModel extends ViewModel {
         listRepository.insertListItem(listID, listItemDescription);
     }
 
-    public void changeListItemState(int position, boolean state) {
-        listItems.get(position).setState(state);
-        listRepository.changeListItemState(listItems.get(position).getID(), state);
+    public void changeListItemState(int position) {
+        ListItem listItem = listItems.get(position);
+
+        boolean invertedState = !listItem.getState();
+        listItem.setState(invertedState);
+
+        listRepository.changeListItemState(listItem.getID(), invertedState);
     }
 }

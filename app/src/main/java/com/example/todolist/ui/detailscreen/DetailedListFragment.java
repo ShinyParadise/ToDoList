@@ -48,8 +48,8 @@ public class DetailedListFragment extends Fragment {
     private void initiateRecyclerView() {
         adapter = new ListDetailRecyclerViewAdapter(detailsViewModel.getListItems());
 
-        adapter.setOnCheckChangedListener((position, state, v) ->
-                detailsViewModel.changeListItemState(position, state)
+        adapter.setOnCheckChangedListener((position) ->
+                detailsViewModel.changeListItemState(position)
         );
 
         detailsRecyclerView.setAdapter(adapter);

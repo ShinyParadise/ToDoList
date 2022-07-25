@@ -27,7 +27,7 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
     }
 
     public interface CheckListener {
-        void onCheckChanged(int position, boolean state, View v);
+        void onCheckChanged(int position);
     }
 
     public void setOnCheckChangedListener(CheckListener checkListener) {
@@ -65,8 +65,8 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
             super(itemView);
 
             listItemView = itemView.findViewById(R.id.list_item);
-            listItemView.setOnCheckedChangeListener((buttonView, isChecked) ->
-                    checkListener.onCheckChanged(getAbsoluteAdapterPosition(), isChecked, buttonView)
+            listItemView.setOnClickListener((buttonView) ->
+                    checkListener.onCheckChanged(getAbsoluteAdapterPosition())
             );
         }
 

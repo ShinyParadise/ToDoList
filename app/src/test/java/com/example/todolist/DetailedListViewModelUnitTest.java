@@ -56,7 +56,7 @@ public class DetailedListViewModelUnitTest {
         });
         sut.fetchListItems();
 
-        sut.changeListItemState(0, true);
+        sut.changeListItemState(0);
 
         assertTrue(sut.getListItems().get(0).getState());
     }
