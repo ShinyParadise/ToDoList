@@ -8,9 +8,11 @@ import com.example.todolist.repositories.listrepository.IListRepository;
 import java.util.ArrayList;
 
 public class DetailedListViewModel extends ViewModel {
+    // todo не игнорируй подсказки студии, они обычно только улучшают твой код
     private int listID;
     private String listHeader;
 
+    // todo не игнорируй подсказки студии, они обычно только улучшают твой код
     private IListRepository listRepository;
 
     private ArrayList<ListItem> listItems;
@@ -22,6 +24,7 @@ public class DetailedListViewModel extends ViewModel {
         listItems = new ArrayList<>();
     }
 
+    // todo постарайся соблюдать структуру кода, геттеры отдельно, методы для модификации данных отдельно
     public void fetchListItems() {
         listItems = listRepository.getListItems(listID);
     }

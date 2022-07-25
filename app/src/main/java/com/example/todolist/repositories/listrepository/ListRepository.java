@@ -13,7 +13,7 @@ import com.example.todolist.dto.ToDoList;
 
 import java.util.ArrayList;
 
-
+// TODO сколько обязанностей у этого класса?
 public class ListRepository implements IListRepository {
     private static SQLiteOpenHelper databaseHelper = null;
 
@@ -30,6 +30,7 @@ public class ListRepository implements IListRepository {
         insertStatement.executeInsert();
     }
 
+    // TODO Зачем нужен override?
     @Override
     public void changeListItemState(int listItemID, boolean newState) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();

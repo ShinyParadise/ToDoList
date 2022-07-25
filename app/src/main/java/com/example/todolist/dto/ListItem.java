@@ -1,9 +1,12 @@
 package com.example.todolist.dto;
 
+import java.util.Objects;
+
 public class ListItem {
     private int id;
     private String description;
     private boolean isChecked = false;
+    // todo Избегай "смешение" слоев логики даже в именах переменных
     private int fk_list;
 
     public ListItem(int id, String description, int fk_list) {
@@ -39,11 +42,13 @@ public class ListItem {
 
         if (id != listItem.id) return false;
         if (fk_list != listItem.fk_list) return false;
+        // todo забыл сравнить isChecked
         return description.equals(listItem.description);
     }
 
     @Override
     public int hashCode() {
+        // todo есть метод проще https://mkyong.com/java/java-how-to-overrides-equals-and-hashcode/
         int result = id;
         result = 31 * result + description.hashCode();
         result = 31 * result + fk_list;

@@ -8,13 +8,15 @@ import static org.junit.Assert.*;
 import com.example.todolist.dto.ListItem;
 import com.example.todolist.repositories.listrepository.IListRepository;
 import com.example.todolist.ui.detailscreen.DetailedListViewModel;
+
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
 
 public class DetailedListViewModelUnitTest {
-    private final int testId = 1;
     private final String testHeader = "header";
+    // todo выноси переменные только тогда, когда они используются в нескольких местах
+    private final int testId = 1;
 
     private IListRepository mockedListRepository;
     private DetailedListViewModel sut;

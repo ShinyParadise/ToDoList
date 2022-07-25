@@ -26,6 +26,7 @@ public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(DatabaseContract.ToDoListTable.CREATE_TABLE);
     }
 
+    // todo для чего нужен этот метод?
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion != newVersion) {

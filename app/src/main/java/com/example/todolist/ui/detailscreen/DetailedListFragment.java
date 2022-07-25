@@ -17,6 +17,7 @@ import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailedListFragment extends Fragment {
+    // todo не игнорируй подсказки студии, они обычно только улучшают твой код
     private DetailedListViewModel detailsViewModel;
 
     private RecyclerView detailsRecyclerView;
@@ -35,6 +36,7 @@ public class DetailedListFragment extends Fragment {
 
         initiateViews(rootView);
 
+        // todo Как исправить это место?
         ((MainActivity)getActivity()).changeActionBarTitle(detailsViewModel.getHeader());
 
         detailsViewModel.fetchListItems();
@@ -87,6 +89,7 @@ public class DetailedListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        // todo Как исправить это место?
         ((MainActivity)getActivity()).changeActionBarTitle("Lists");
     }
 }
