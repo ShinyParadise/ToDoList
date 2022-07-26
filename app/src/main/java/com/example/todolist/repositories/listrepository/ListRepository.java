@@ -30,7 +30,6 @@ public class ListRepository implements IListRepository {
         insertStatement.executeInsert();
     }
 
-    @Override
     public void changeListItemState(int listItemID, boolean newState) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement updateStatement = db.compileStatement(
@@ -79,7 +78,6 @@ public class ListRepository implements IListRepository {
         return lists;
     }
 
-    @Override
     public ArrayList<ListItem> getListItems(int listID) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor request = db.rawQuery(
@@ -114,7 +112,6 @@ public class ListRepository implements IListRepository {
         return listItems;
     }
 
-    @Override
     public String getListHeader(int listID) {
         String header;
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
