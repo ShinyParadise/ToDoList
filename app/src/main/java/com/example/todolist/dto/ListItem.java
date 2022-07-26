@@ -1,15 +1,17 @@
 package com.example.todolist.dto;
 
+import java.util.Objects;
+
 public class ListItem {
-    private int id;
+    private final int id;
     private String description;
     private boolean isChecked = false;
-    private int fk_list;
+    private final int listID;
 
-    public ListItem(int id, String description, int fk_list) {
+    public ListItem(int id, String description, int listID) {
         this.id = id;
         this.description = description;
-        this.fk_list = fk_list;
+        this.listID = listID;
     }
 
     public int getID() {
@@ -28,7 +30,7 @@ public class ListItem {
         return isChecked;
     }
 
-    public int getAssociatedListID() { return fk_list; }
+    public int getListID() { return listID; }
 
     @Override
     public boolean equals(Object o) {
@@ -38,15 +40,13 @@ public class ListItem {
         ListItem listItem = (ListItem) o;
 
         if (id != listItem.id) return false;
-        if (fk_list != listItem.fk_list) return false;
+        if (listID != listItem.listID) return false;
+        if (isChecked != listItem.isChecked) return false;
         return description.equals(listItem.description);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + description.hashCode();
-        result = 31 * result + fk_list;
-        return result;
+        return Objects.hash(id, description, isChecked, listID);
     }
 }
