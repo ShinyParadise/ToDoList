@@ -5,10 +5,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.todolist.R;
 import com.example.todolist.repositories.listrepository.IListRepository;
@@ -17,7 +17,9 @@ import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class DetailedListFragment extends Fragment {
-    private DetailedListViewModel detailsViewModel;
+    private static final String TAG = "DetailedListFragment";
+
+    private final DetailedListViewModel detailsViewModel;
 
     private RecyclerView detailsRecyclerView;
     private ListDetailRecyclerViewAdapter adapter;
@@ -35,7 +37,11 @@ public class DetailedListFragment extends Fragment {
 
         initiateViews(rootView);
 
-        ((MainActivity)getActivity()).changeActionBarTitle(detailsViewModel.getHeader());
+        try {
+            ((MainActivity)requireActivity()).changeActionBarTitle(detailsViewModel.getHeader());
+        } catch (IllegalStateException exception) {
+            Log.e(TAG, "On change action bar title: ", exception);
+        }
 
         detailsViewModel.fetchListItems();
         initiateRecyclerView();
@@ -87,6 +93,10 @@ public class DetailedListFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ((MainActivity)getActivity()).changeActionBarTitle("Lists");
+        try {
+            ((MainActivity)requireActivity()).changeActionBarTitle("Lists");
+        } catch (NullPointerException exception) {
+            Log.e(TAG, "on change action bar title: ", exception);
+        }
     }
 }
