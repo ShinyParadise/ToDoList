@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.todolist.R;
+import com.example.todolist.repositories.listitemsrepository.ListItemRepository;
 import com.example.todolist.repositories.listrepository.IListRepository;
 import com.example.todolist.ui.detailscreen.detailrecycler.ListDetailRecyclerViewAdapter;
 import com.example.todolist.ui.startup.MainActivity;
@@ -26,8 +27,12 @@ public class DetailedListFragment extends Fragment {
 
     private FloatingActionButton btnAddDetail;
 
-    public DetailedListFragment(IListRepository listRepository, int listID) {
-        detailsViewModel = new DetailedListViewModel(listRepository, listID);
+    public DetailedListFragment(int listID, String listHeader) {
+        detailsViewModel = new DetailedListViewModel(
+                new ListItemRepository(getContext()),
+                listID,
+                listHeader
+        );
     }
 
     @Override

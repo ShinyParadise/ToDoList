@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.example.todolist.dto.ListItem;
+import com.example.todolist.repositories.listitemsrepository.IListItemRepository;
 import com.example.todolist.repositories.listrepository.IListRepository;
 import com.example.todolist.ui.detailscreen.DetailedListViewModel;
 import static org.mockito.Mockito.*;
@@ -15,13 +16,13 @@ import java.util.ArrayList;
 public class DetailedListViewModelUnitTest {
     private final int testId = 1;
 
-    private IListRepository mockedListRepository;
+    private IListItemRepository mockedListItemRepository;
     private DetailedListViewModel sut;
 
     @Before
     public void setup() {
-        mockedListRepository = mock(IListRepository.class);
-        sut = new DetailedListViewModel(mockedListRepository, testId);
+        mockedListItemRepository = mock(IListItemRepository.class);
+        sut = new DetailedListViewModel(mockedListItemRepository, testId, "");
     }
 
     @Test
@@ -33,12 +34,14 @@ public class DetailedListViewModelUnitTest {
     public void test_repository_called_on_list_items_fetch() {
         sut.fetchListItems();
 
-        verify(mockedListRepository).getListItems(testId);
+        verify(mockedListItemRepository).getListItems(testId);
     }
 
     @Test
     public void test_repository_fetched_correct_header() {
         String testHeader = "header";
+        IListRepository mockedListRepository = mock(IListRepository.class);
+
         when(mockedListRepository.getListHeader(testId)).thenReturn(testHeader);
 
         sut.fetchHeader();
@@ -48,7 +51,7 @@ public class DetailedListViewModelUnitTest {
 
     @Test
     public void test_item_selection_inverts_item_selected_state() {
-        when(mockedListRepository.getListItems(testId)).thenReturn(new ArrayList<ListItem>() {
+        when(mockedListItemRepository.getListItems(testId)).thenReturn(new ArrayList<ListItem>() {
             {
                 add(new ListItem(1, "asdas", 2));
                 add(new ListItem(2, "asdassdas", 3));

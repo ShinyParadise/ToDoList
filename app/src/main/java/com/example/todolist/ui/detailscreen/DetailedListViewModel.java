@@ -3,7 +3,7 @@ package com.example.todolist.ui.detailscreen;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ListItem;
-import com.example.todolist.repositories.listrepository.IListRepository;
+import com.example.todolist.repositories.listitemsrepository.IListItemRepository;
 
 import java.util.ArrayList;
 
@@ -11,19 +11,19 @@ public class DetailedListViewModel extends ViewModel {
     private final int listID;
     private String listHeader;
 
-    private final IListRepository listRepository;
+    private final IListItemRepository listItemRepository;
 
     private ArrayList<ListItem> listItems;
 
-    public DetailedListViewModel(IListRepository listRepository, int listID) {
+    public DetailedListViewModel(IListItemRepository listRepository, int listID, String listHeader) {
         this.listID = listID;
-        this.listRepository = listRepository;
-        listHeader = listRepository.getListHeader(listID);
+        this.listItemRepository = listRepository;
+        this.listHeader = listHeader;
         listItems = new ArrayList<>();
     }
 
     public void insertListItem(String listItemDescription) {
-        listRepository.insertListItem(listID, listItemDescription);
+        listItemRepository.insertListItem(listID, listItemDescription);
     }
 
     public void changeListItemState(int position) {
@@ -32,15 +32,15 @@ public class DetailedListViewModel extends ViewModel {
         boolean invertedState = !listItem.getState();
         listItem.setState(invertedState);
 
-        listRepository.changeListItemState(listItem.getID(), invertedState);
+        listItemRepository.changeListItemState(listItem.getID(), invertedState);
     }
 
     public void fetchListItems() {
-        listItems = listRepository.getListItems(listID);
+        listItems = listItemRepository.getListItems(listID);
     }
 
     public void fetchHeader() {
-        listHeader = listRepository.getListHeader(listID);
+        listHeader = listItemRepository.getListHeader(listID);
     }
 
     public ArrayList<ListItem> getListItems() {

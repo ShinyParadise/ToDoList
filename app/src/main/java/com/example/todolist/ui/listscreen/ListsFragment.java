@@ -50,9 +50,10 @@ public class ListsFragment extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 DetailedListFragment detailedListFragment = new DetailedListFragment(
-                        new ListRepository(getContext()),
-                        position + 1
+                        position + 1,
+                        listViewModel.getListHeader(position + 1)
                 );
+
                 getParentFragmentManager().beginTransaction()
                         .replace(R.id.fragment_container_view, detailedListFragment)
                         .setReorderingAllowed(true)

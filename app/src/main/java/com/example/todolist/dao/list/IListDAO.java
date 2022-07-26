@@ -1,10 +1,10 @@
-package com.example.todolist.repositories.listrepository;
+package com.example.todolist.dao.list;
 
 import com.example.todolist.dto.ToDoList;
 
 import java.util.ArrayList;
 
-public interface IListRepository {
+public interface IListDAO {
     void insertToDoListWithoutItems(String listName, String listDescription);
     ArrayList<ToDoList> getAllLists();
     String getListHeader(int listID);
