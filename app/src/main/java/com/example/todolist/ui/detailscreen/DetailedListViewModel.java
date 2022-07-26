@@ -8,10 +8,10 @@ import com.example.todolist.repositories.listrepository.IListRepository;
 import java.util.ArrayList;
 
 public class DetailedListViewModel extends ViewModel {
-    private int listID;
+    private final int listID;
     private String listHeader;
 
-    private IListRepository listRepository;
+    private final IListRepository listRepository;
 
     private ArrayList<ListItem> listItems;
 
@@ -20,6 +20,19 @@ public class DetailedListViewModel extends ViewModel {
         this.listRepository = listRepository;
         listHeader = listRepository.getListHeader(listID);
         listItems = new ArrayList<>();
+    }
+
+    public void insertListItem(String listItemDescription) {
+        listRepository.insertListItem(listID, listItemDescription);
+    }
+
+    public void changeListItemState(int position) {
+        ListItem listItem = listItems.get(position);
+
+        boolean invertedState = !listItem.getState();
+        listItem.setState(invertedState);
+
+        listRepository.changeListItemState(listItem.getID(), invertedState);
     }
 
     public void fetchListItems() {
@@ -36,18 +49,5 @@ public class DetailedListViewModel extends ViewModel {
 
     public String getHeader() {
         return listHeader;
-    }
-
-    public void insertListItem(String listItemDescription) {
-        listRepository.insertListItem(listID, listItemDescription);
-    }
-
-    public void changeListItemState(int position) {
-        ListItem listItem = listItems.get(position);
-
-        boolean invertedState = !listItem.getState();
-        listItem.setState(invertedState);
-
-        listRepository.changeListItemState(listItem.getID(), invertedState);
     }
 }
