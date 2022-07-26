@@ -14,7 +14,6 @@ import java.util.ArrayList;
 
 public class DetailedListViewModelUnitTest {
     private final int testId = 1;
-    private final String testHeader = "header";
 
     private IListRepository mockedListRepository;
     private DetailedListViewModel sut;
@@ -39,6 +38,7 @@ public class DetailedListViewModelUnitTest {
 
     @Test
     public void test_repository_fetched_correct_header() {
+        String testHeader = "header";
         when(mockedListRepository.getListHeader(testId)).thenReturn(testHeader);
 
         sut.fetchHeader();
