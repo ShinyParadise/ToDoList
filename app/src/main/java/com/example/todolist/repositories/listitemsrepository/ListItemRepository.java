@@ -8,10 +8,12 @@ import com.example.todolist.dto.ListItem;
 
 import java.util.ArrayList;
 
+// TODO: Репозиторий просто дублирует все методы DAO?
 public class ListItemRepository implements IListItemRepository {
     private final IListItemDAO listItemDAO;
 
     public ListItemRepository(Context context) {
+        // TODO: Какой принцип SOLID здесь нарушен?
         listItemDAO = new ListItemDAO(context);
     }
 

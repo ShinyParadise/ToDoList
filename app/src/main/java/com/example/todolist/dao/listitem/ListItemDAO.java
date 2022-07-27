@@ -12,6 +12,7 @@ import com.example.todolist.dto.ListItem;
 
 import java.util.ArrayList;
 
+// TODO: DAO это больше про CRUD операции
 public class ListItemDAO implements IListItemDAO {
     private static SQLiteOpenHelper databaseHelper = null;
 
@@ -62,6 +63,7 @@ public class ListItemDAO implements IListItemDAO {
         insertStatement.executeInsert();
     }
 
+    // TODO: Можно ли сделать так, чтобы я передавал сущность ListItem целиком вместо отдельных полей
     public void changeListItemState(int listItemID, boolean newState) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement updateStatement = db.compileStatement(
@@ -75,6 +77,7 @@ public class ListItemDAO implements IListItemDAO {
         updateStatement.executeUpdateDelete();
     }
 
+    // TODO: Как ты думаешь, где должно быть это сужение с целой сущности до одного его поля?
     public String getListHeader(int listID) {
         String header;
         SQLiteDatabase db = databaseHelper.getReadableDatabase();

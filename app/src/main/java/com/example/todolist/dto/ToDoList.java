@@ -55,6 +55,7 @@ public class ToDoList {
         return Objects.equals(description, toDoList.description);
     }
 
+    // TODO: Забыл поправить вычисление хэша
     @Override
     public int hashCode() {
         int result = id;
