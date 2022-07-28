@@ -14,6 +14,13 @@ public class ListItem {
         this.listID = listID;
     }
 
+    public ListItem(int id, String description, boolean is_checked, int listID) {
+        this.id = id;
+        this.description = description;
+        this.isChecked = is_checked;
+        this.listID = listID;
+    }
+
     public int getID() {
         return id;
     }

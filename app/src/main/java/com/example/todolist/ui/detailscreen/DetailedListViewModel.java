@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ListItem;
 import com.example.todolist.repositories.listitemsrepository.IListItemRepository;
+import com.example.todolist.repositories.listrepository.IListRepository;
 
 import java.util.ArrayList;
 
@@ -12,12 +13,17 @@ public class DetailedListViewModel extends ViewModel {
     private String listHeader;
 
     private final IListItemRepository listItemRepository;
+    private final IListRepository listRepository;
 
     private ArrayList<ListItem> listItems;
 
-    public DetailedListViewModel(IListItemRepository listRepository, int listID, String listHeader) {
+    public DetailedListViewModel(IListItemRepository listItemRepository,
+                                 IListRepository listRepository,
+                                 int listID,
+                                 String listHeader) {
         this.listID = listID;
-        this.listItemRepository = listRepository;
+        this.listItemRepository = listItemRepository;
+        this.listRepository = listRepository;
         this.listHeader = listHeader;
         listItems = new ArrayList<>();
     }
@@ -32,7 +38,7 @@ public class DetailedListViewModel extends ViewModel {
         boolean invertedState = !listItem.getState();
         listItem.setState(invertedState);
 
-        listItemRepository.changeListItemState(listItem.getID(), invertedState);
+        listItemRepository.changeListItemState(listItem);
     }
 
     public void fetchListItems() {
@@ -40,7 +46,7 @@ public class DetailedListViewModel extends ViewModel {
     }
 
     public void fetchHeader() {
-        listHeader = listItemRepository.getListHeader(listID);
+        listHeader = listRepository.getListHeader(listID);
     }
 
     public ArrayList<ListItem> getListItems() {

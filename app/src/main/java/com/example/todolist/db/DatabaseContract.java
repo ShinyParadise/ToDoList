@@ -68,8 +68,12 @@ public final class DatabaseContract {
         public static final String INSERT_VALUES = "INSERT INTO " + TABLE_NAME + " ("
                 + COLUMN_DESCRIPTION + ", " + COLUMN_FK_LIST + ") " + "VALUES (?, ?)";
 
-        public static final String UPDATE_LIST_ITEM_STATE = "UPDATE " + TABLE_NAME
-                + " SET " + COLUMN_IS_CHECKED + " = (?) WHERE " + _ID + " = (?);";
+        public static final String UPDATE_LIST_ITEM = "UPDATE " + TABLE_NAME
+                + " SET " + COLUMN_DESCRIPTION + " = (?), "
+                + COLUMN_IS_CHECKED + " = (?) WHERE " + _ID + " = (?);";
+
+        public static final String SELECT_LIST_ITEM_BY_ID = "SELECT * FROM " + TABLE_NAME
+                + " WHERE " + _ID + " = (?);";
     }
 
     public static String SELECT_SINGLE_LIST_ITEMS =
