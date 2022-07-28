@@ -11,8 +11,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.todolist.R;
+import com.example.todolist.dao.list.ListDAO;
+import com.example.todolist.dao.listitem.ListItemDAO;
 import com.example.todolist.repositories.listitemsrepository.ListItemRepository;
-import com.example.todolist.repositories.listrepository.IListRepository;
+import com.example.todolist.repositories.listrepository.ListRepository;
 import com.example.todolist.ui.detailscreen.detailrecycler.ListDetailRecyclerViewAdapter;
 import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -29,7 +31,8 @@ public class DetailedListFragment extends Fragment {
 
     public DetailedListFragment(int listID, String listHeader) {
         detailsViewModel = new DetailedListViewModel(
-                new ListItemRepository(getContext()),
+                new ListItemRepository(new ListItemDAO(getContext())),
+                new ListRepository(new ListDAO(getContext())),
                 listID,
                 listHeader
         );
