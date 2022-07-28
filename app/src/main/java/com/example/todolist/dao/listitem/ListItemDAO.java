@@ -6,9 +6,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 
+import androidx.annotation.NonNull;
+
 import com.example.todolist.db.DatabaseContract;
 import com.example.todolist.db.ToDoListDatabaseHelper;
-import com.example.todolist.dto.ListItem;
+import com.example.todolist.db.models.ListItemModel;
 
 import java.util.ArrayList;
 
@@ -19,12 +21,13 @@ public class ListItemDAO implements IListItemDAO {
         databaseHelper = ToDoListDatabaseHelper.getInstance(context);
     }
 
-    public ArrayList<ListItem> getAllListItems(int listID) {
+    public ArrayList<ListItemModel> getAllListItems(int listID) {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor request = db.rawQuery(
                 DatabaseContract.SELECT_SINGLE_LIST_ITEMS,
                 new String[] { Integer.toString(listID) });
-        ArrayList<ListItem> listItems = new ArrayList<>();
+
+        ArrayList<ListItemModel> listItems = new ArrayList<>();
 
         if (request.moveToFirst()){
             int id = Integer.parseInt(request.getString(0));
@@ -32,19 +35,19 @@ public class ListItemDAO implements IListItemDAO {
             int fk_list = request.getInt(2);
             int isChecked = request.getInt(3);
 
-            ListItem newListItem = new ListItem(id, description, fk_list);
-            if (isChecked == 1) newListItem.setState(true);
+            ListItemModel newListItem = new ListItemModel(id, description, fk_list);
+            if (isChecked == 1) newListItem.is_checked = true;
 
             listItems.add(newListItem);
 
-            while(request.moveToNext()) {
+            while (request.moveToNext()) {
                 id = Integer.parseInt(request.getString(0));
                 description = request.getString(1);
                 fk_list = request.getInt(2);
                 isChecked = request.getInt(3);
 
-                newListItem = new ListItem(id, description, fk_list);
-                if (isChecked == 1) newListItem.setState(true);
+                newListItem = new ListItemModel(id, description, fk_list);
+                if (isChecked == 1) newListItem.is_checked = true;
                 listItems.add(newListItem);
             }
         }
@@ -53,33 +56,47 @@ public class ListItemDAO implements IListItemDAO {
         return listItems;
     }
 
-    public void insertListItem(int listID, String listItem) {
+    public void create(ListItemModel listItem) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ListItemTable.INSERT_VALUES);
 
-        String[] args = { listItem, String.valueOf(listID) };
+        String[] args = {
+                listItem.description,
+                String.valueOf(listItem.fk_list)
+        };
+
         insertStatement.bindAllArgsAsStrings(args);
         insertStatement.executeInsert();
     }
 
-    public void changeListItemState(int listItemID, boolean newState) {
+    public ListItemModel update(@NonNull ListItemModel listItem) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
+
         SQLiteStatement updateStatement = db.compileStatement(
-                DatabaseContract.ListItemTable.UPDATE_LIST_ITEM_STATE
+                DatabaseContract.ListItemTable.UPDATE_LIST_ITEM
         );
 
-        String newStateString = (newState) ? "1" : "0";
+        String newStateString = (listItem.is_checked) ? "1" : "0";
 
-        String[] args = { newStateString, String.valueOf(listItemID) };
+        String[] args = {
+                listItem.description,
+                newStateString,
+                String.valueOf(listItem.id)
+        };
         updateStatement.bindAllArgsAsStrings(args);
+
         updateStatement.executeUpdateDelete();
+
+        return listItem;
     }
 
-    public String getListHeader(int listID) {
-        String header;
+    public ListItemModel getListItemByID(int listItemID) {
+        ListItemModel listItemModel = new ListItemModel();
+
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
-        Cursor request = db.rawQuery(DatabaseContract.ToDoListTable.SELECT_LIST_BY_ID,
-                new String[] { Integer.toString(listID) }
+
+        Cursor request = db.rawQuery(DatabaseContract.ListItemTable.SELECT_LIST_ITEM_BY_ID,
+                new String[] { Integer.toString(listItemID) }
         );
 
         if (!request.moveToFirst()) {
@@ -87,8 +104,12 @@ public class ListItemDAO implements IListItemDAO {
             throw new NullPointerException();
         }
 
-        header = request.getString(1);
+        listItemModel.id = request.getInt(0);
+        listItemModel.description = request.getString(1);
+        listItemModel.is_checked = request.getInt(2) != 0;
+        listItemModel.fk_list = request.getInt(3);
+
         request.close();
-        return header;
+        return listItemModel;
     }
 }

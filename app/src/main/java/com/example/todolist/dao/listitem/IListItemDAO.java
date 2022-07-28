@@ -1,12 +1,12 @@
 package com.example.todolist.dao.listitem;
 
-import com.example.todolist.dto.ListItem;
+import com.example.todolist.db.models.ListItemModel;
 
 import java.util.ArrayList;
 
 public interface IListItemDAO {
-    ArrayList<ListItem> getAllListItems(int listID);
-    void insertListItem(int listID, String listItem);
-    void changeListItemState(int listItemID, boolean newState);
-    String getListHeader(int listID);
+    ArrayList<ListItemModel> getAllListItems(int listID);
+    void create(ListItemModel listItem);
+    ListItemModel update(ListItemModel listItem);
+    ListItemModel getListItemByID(int listItemID);
 }
