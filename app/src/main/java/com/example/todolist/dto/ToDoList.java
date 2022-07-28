@@ -1,10 +1,12 @@
 package com.example.todolist.dto;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class ToDoList {
-    private int id;
+    private final int id;
     private String header;
     private String description;
     private ArrayList<ListItem> listItems;
@@ -43,6 +45,14 @@ public class ToDoList {
         this.listItems = listItems;
     }
 
+    public void setHeader(String header) {
+        this.header = header;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -52,14 +62,12 @@ public class ToDoList {
 
         if (id != toDoList.id) return false;
         if (!header.equals(toDoList.header)) return false;
+        if (!Objects.equals(listItems, toDoList.listItems)) return false;
         return Objects.equals(description, toDoList.description);
     }
 
     @Override
     public int hashCode() {
-        int result = id;
-        result = 31 * result + header.hashCode();
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        return result;
+        return Objects.hash(id, header, description, listItems);
     }
 }
