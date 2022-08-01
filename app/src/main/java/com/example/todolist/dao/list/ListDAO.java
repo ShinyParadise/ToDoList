@@ -32,8 +32,6 @@ public class ListDAO implements IListDAO {
     }
 
     public ListModel getListByID(int listID) {
-        ListModel listModel = new ListModel();
-
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor request = db.rawQuery(DatabaseContract.ToDoListTable.SELECT_LIST_BY_ID,
                 new String[] { Integer.toString(listID) }
@@ -44,9 +42,11 @@ public class ListDAO implements IListDAO {
             throw new NullPointerException();
         }
 
-        listModel.id = Integer.parseInt(request.getString(0));
-        listModel.header = request.getString(1);
-        listModel.description = request.getString(2);
+        ListModel listModel = new ListModel(
+                Integer.parseInt(request.getString(0)),
+                request.getString(1),
+                request.getString(2)
+        );
 
         request.close();
         return listModel;

@@ -12,10 +12,6 @@ public class ListModel {
         description = listDescription;
     }
 
-    public ListModel() {
-
-    }
-
     public int id;
     public String header;
     public String description;
