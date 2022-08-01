@@ -16,8 +16,8 @@ public class ListViewModel extends ViewModel {
 
     private ArrayList<ToDoList> toDoLists;
 
-    public ListViewModel(Context context) {
-        listRepository = new ListRepository(new ListDAO(context));
+    public ListViewModel(IListRepository listRepository) {
+        this.listRepository = listRepository;
     }
 
     public void fetchLists() {

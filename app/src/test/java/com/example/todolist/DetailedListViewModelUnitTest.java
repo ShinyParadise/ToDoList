@@ -6,6 +6,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.example.todolist.dto.ListItem;
+import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
 import com.example.todolist.repositories.listRepository.IListRepository;
 import com.example.todolist.ui.detailScreen.DetailedListViewModel;
@@ -24,7 +25,10 @@ public class DetailedListViewModelUnitTest {
     public void setup() {
         mockedListItemRepository = mock(IListItemRepository.class);
         mockedListRepository = mock(IListRepository.class);
-        sut = new DetailedListViewModel(mockedListItemRepository,mockedListRepository, testId, "");
+        sut = new DetailedListViewModel(
+                mockedListItemRepository,
+                mockedListRepository,
+                new ToDoList(testId, "", ""));
     }
 
     @Test
