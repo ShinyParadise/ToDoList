@@ -1,10 +1,10 @@
-package com.example.todolist.ui.detailscreen;
+package com.example.todolist.ui.detailScreen;
 
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ListItem;
-import com.example.todolist.repositories.listitemsrepository.IListItemRepository;
-import com.example.todolist.repositories.listrepository.IListRepository;
+import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
+import com.example.todolist.repositories.listRepository.IListRepository;
 
 import java.util.ArrayList;
 

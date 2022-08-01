@@ -1,8 +1,8 @@
-package com.example.todolist.repositories.listitemsrepository;
+package com.example.todolist.repositories.listItemsRepository;
 
 import androidx.annotation.NonNull;
 
-import com.example.todolist.dao.listitem.IListItemDAO;
+import com.example.todolist.dao.listItem.IListItemDAO;
 import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.dto.ListItem;
 

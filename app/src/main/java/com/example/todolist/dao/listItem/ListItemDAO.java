@@ -1,4 +1,4 @@
-package com.example.todolist.dao.listitem;
+package com.example.todolist.dao.listItem;
 
 import android.content.Context;
 import android.database.Cursor;

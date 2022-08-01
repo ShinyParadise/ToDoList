@@ -1,4 +1,4 @@
-package com.example.todolist.ui.detailscreen;
+package com.example.todolist.ui.detailScreen;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -12,10 +12,10 @@ import android.view.ViewGroup;
 
 import com.example.todolist.R;
 import com.example.todolist.dao.list.ListDAO;
-import com.example.todolist.dao.listitem.ListItemDAO;
-import com.example.todolist.repositories.listitemsrepository.ListItemRepository;
-import com.example.todolist.repositories.listrepository.ListRepository;
-import com.example.todolist.ui.detailscreen.detailrecycler.ListDetailRecyclerViewAdapter;
+import com.example.todolist.dao.listItem.ListItemDAO;
+import com.example.todolist.repositories.listItemsRepository.ListItemRepository;
+import com.example.todolist.repositories.listRepository.ListRepository;
+import com.example.todolist.ui.detailScreen.detailRecycler.ListDetailRecyclerViewAdapter;
 import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 

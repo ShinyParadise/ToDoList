@@ -1,4 +1,4 @@
-package com.example.todolist.ui.listscreen.listsrecycler;
+package com.example.todolist.ui.listScreen.listsRecycler;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.R;
-import com.example.todolist.db.models.ListModel;
 import com.example.todolist.dto.ToDoList;
 
 import java.util.ArrayList;

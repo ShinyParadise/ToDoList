@@ -6,9 +6,9 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.example.todolist.dto.ListItem;
-import com.example.todolist.repositories.listitemsrepository.IListItemRepository;
-import com.example.todolist.repositories.listrepository.IListRepository;
-import com.example.todolist.ui.detailscreen.DetailedListViewModel;
+import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
+import com.example.todolist.repositories.listRepository.IListRepository;
+import com.example.todolist.ui.detailScreen.DetailedListViewModel;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;

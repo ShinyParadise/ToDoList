@@ -1,4 +1,4 @@
-package com.example.todolist.dao.listitem;
+package com.example.todolist.dao.listItem;
 
 import com.example.todolist.db.models.ListItemModel;
 

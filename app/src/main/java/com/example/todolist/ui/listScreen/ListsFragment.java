@@ -1,4 +1,4 @@
-package com.example.todolist.ui.listscreen;
+package com.example.todolist.ui.listScreen;
 
 import android.os.Bundle;
 
@@ -14,9 +14,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
-import com.example.todolist.repositories.listrepository.ListRepository;
-import com.example.todolist.ui.detailscreen.DetailedListFragment;
-import com.example.todolist.ui.listscreen.listsrecycler.ListsRecyclerViewAdapter;
+import com.example.todolist.ui.detailScreen.DetailedListFragment;
+import com.example.todolist.ui.listScreen.listsRecycler.ListsRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ListsFragment extends Fragment {

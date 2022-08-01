@@ -1,4 +1,4 @@
-package com.example.todolist.ui.detailscreen;
+package com.example.todolist.ui.detailScreen;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

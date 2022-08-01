@@ -1,4 +1,4 @@
-package com.example.todolist.repositories.listrepository;
+package com.example.todolist.repositories.listRepository;
 
 import com.example.todolist.dto.ToDoList;
 
