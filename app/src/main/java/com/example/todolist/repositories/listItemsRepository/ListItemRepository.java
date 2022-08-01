@@ -16,15 +16,9 @@ public class ListItemRepository implements IListItemRepository {
     }
 
     public ArrayList<ListItem> getListItems(int listID) {
-        ArrayList<ListItem> listItems = new ArrayList<>();
-
         ArrayList<ListItemModel> listItemModels = listItemDAO.getAllListItems(listID);
-        for (ListItemModel itemModel : listItemModels) {
-            ListItem listItem = convertListItemModelToListItem(itemModel);
-            listItems.add(listItem);
-        }
 
-        return listItems;
+        return convertListItemModelsToListItems(listItemModels);
     }
 
     public void insertListItem(int listID, String listItemDescription) {
@@ -58,4 +52,14 @@ public class ListItemRepository implements IListItemRepository {
         );
     }
 
+    @NonNull
+    private ArrayList<ListItem> convertListItemModelsToListItems(@NonNull ArrayList<ListItemModel> listItemModels) {
+        ArrayList<ListItem> listItems = new ArrayList<>();
+
+        for (ListItemModel itemModel : listItemModels) {
+            ListItem listItem = convertListItemModelToListItem(itemModel);
+            listItems.add(listItem);
+        }
+        return listItems;
+    }
 }
