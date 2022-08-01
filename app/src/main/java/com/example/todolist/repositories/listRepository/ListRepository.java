@@ -1,5 +1,7 @@
 package com.example.todolist.repositories.listRepository;
 
+import androidx.annotation.NonNull;
+
 import com.example.todolist.dao.list.IListDAO;
 import com.example.todolist.db.models.ListModel;
 import com.example.todolist.dto.ToDoList;
@@ -14,9 +16,11 @@ public class ListRepository implements IListRepository {
         this.listDAO = listDAO;
     }
 
-    public void insertToDoList(String listName, String listDescription) {
+    public ToDoList insertToDoList(String listName, String listDescription) {
         ListModel listModel = new ListModel(listName, listDescription);
-        listDAO.create(listModel);
+        listModel = listDAO.create(listModel);
+
+        return convertListModelToList(listModel);
     }
 
     public ArrayList<ToDoList> getAllLists() {
@@ -24,7 +28,7 @@ public class ListRepository implements IListRepository {
 
         ArrayList<ListModel> listModels = listDAO.getAllLists();
         for (ListModel listModel : listModels) {
-            ToDoList list = new ToDoList(listModel.id, listModel.header, listModel.description);
+            ToDoList list = convertListModelToList(listModel);
             toDoLists.add(list);
         }
 
@@ -34,5 +38,9 @@ public class ListRepository implements IListRepository {
     public String getListHeader(int listID) {
         ListModel listModel = listDAO.getListByID(listID);
         return listModel.header;
+    }
+
+    private ToDoList convertListModelToList(@NonNull ListModel listModel) {
+        return new ToDoList(listModel.id, listModel.header, listModel.description);
     }
 }

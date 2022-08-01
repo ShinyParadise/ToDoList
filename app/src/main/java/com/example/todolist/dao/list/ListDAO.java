@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import com.example.todolist.db.DatabaseContract;
 import com.example.todolist.db.ToDoListDatabaseHelper;
 import com.example.todolist.db.models.ListModel;
-import com.example.todolist.dto.ToDoList;
 
 import java.util.ArrayList;
 
@@ -22,13 +21,15 @@ public class ListDAO implements IListDAO {
         databaseHelper = ToDoListDatabaseHelper.getInstance(context);
     }
 
-    public void create(@NonNull ListModel listModel) {
+    public ListModel create(@NonNull ListModel listModel) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ToDoListTable.INSERT_VALUES);
 
         String[] args = { listModel.header, listModel.description };
         insertStatement.bindAllArgsAsStrings(args);
         insertStatement.executeInsert();
+
+        return getLastInsertedList();
     }
 
     public ListModel getListByID(int listID) {
@@ -57,25 +58,34 @@ public class ListDAO implements IListDAO {
         Cursor request = db.rawQuery(DatabaseContract.ToDoListTable.SELECT_ALL_LISTS, null);
         ArrayList<ListModel> lists = new ArrayList<>();
 
-        if (request.moveToFirst()){
-            int id = Integer.parseInt(request.getString(0));
-            String name = request.getString(1);
-            String description = request.getString(2);
+        if (request.moveToFirst()) {
+            do {
+                int id = Integer.parseInt(request.getString(0));
+                String name = request.getString(1);
+                String description = request.getString(2);
 
-            ListModel newList = new ListModel(id, name, description);
-            lists.add(newList);
-
-            while (request.moveToNext()) {
-                id = Integer.parseInt(request.getString(0));
-                name = request.getString(1);
-                description = request.getString(2);
-
-                newList = new ListModel(id, name, description);
+                ListModel newList = new ListModel(id, name, description);
                 lists.add(newList);
-            }
+            } while (request.moveToNext());
         }
 
         request.close();
         return lists;
+    }
+
+    @NonNull
+    private ListModel getLastInsertedList() {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+        Cursor request = db.rawQuery(DatabaseContract.ToDoListTable.SELECT_LAST_ITEM, null);
+
+        request.moveToFirst();
+        ListModel lastList = new ListModel(
+                Integer.parseInt(request.getString(0)),
+                request.getString(1),
+                request.getString(2)
+        );
+
+       request.close();
+       return lastList;
     }
 }

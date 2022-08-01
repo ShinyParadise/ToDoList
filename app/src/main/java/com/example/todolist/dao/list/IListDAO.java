@@ -7,5 +7,5 @@ import java.util.ArrayList;
 public interface IListDAO {
     ArrayList<ListModel> getAllLists();
     ListModel getListByID(int listID);
-    void create(ListModel listModel);
+    ListModel create(ListModel listModel);
 }

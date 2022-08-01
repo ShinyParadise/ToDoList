@@ -1,7 +1,5 @@
 package com.example.todolist.dto;
 
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -18,14 +16,7 @@ public class ToDoList {
         listItems = new ArrayList<>();
     }
 
-    public ToDoList(int id, String header, String description, ArrayList<ListItem> listItems) {
-        this.id = id;
-        this.header = header;
-        this.description = description;
-        this.listItems = listItems;
-    }
-
-    public int getId() {
+    public int getID() {
         return id;
     }
 
