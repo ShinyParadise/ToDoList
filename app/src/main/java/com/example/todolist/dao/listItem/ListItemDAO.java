@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import com.example.todolist.db.DatabaseContract;
 import com.example.todolist.db.ToDoListDatabaseHelper;
 import com.example.todolist.db.models.ListItemModel;
+import com.example.todolist.db.models.ListModel;
 
 import java.util.ArrayList;
 
@@ -46,7 +47,7 @@ public class ListItemDAO implements IListItemDAO {
         return listItems;
     }
 
-    public void create(ListItemModel listItem) {
+    public ListItemModel create(@NonNull ListItemModel listItem) {
         SQLiteDatabase db = databaseHelper.getWritableDatabase();
         SQLiteStatement insertStatement = db.compileStatement(DatabaseContract.ListItemTable.INSERT_VALUES);
 
@@ -57,6 +58,8 @@ public class ListItemDAO implements IListItemDAO {
 
         insertStatement.bindAllArgsAsStrings(args);
         insertStatement.executeInsert();
+
+        return getLastInsertedListItem();
     }
 
     public ListItemModel update(@NonNull ListItemModel listItem) {
@@ -75,7 +78,7 @@ public class ListItemDAO implements IListItemDAO {
 
         updateStatement.executeUpdateDelete();
 
-        return listItem;
+        return getListItemByID(listItem.id);
     }
 
     public ListItemModel getListItemByID(int listItemID) {
@@ -100,5 +103,23 @@ public class ListItemDAO implements IListItemDAO {
 
         request.close();
         return listItemModel;
+    }
+
+    @NonNull
+    private ListItemModel getLastInsertedListItem() {
+        SQLiteDatabase db = databaseHelper.getReadableDatabase();
+
+        Cursor request = db.rawQuery(DatabaseContract.ListItemTable.SELECT_LAST_ITEM, null);
+
+        request.moveToFirst();
+        ListItemModel lastList = new ListItemModel(
+                request.getInt(0),
+                request.getString(1),
+                request.getInt(2),
+                request.getInt(3)
+        );
+
+        request.close();
+        return lastList;
     }
 }

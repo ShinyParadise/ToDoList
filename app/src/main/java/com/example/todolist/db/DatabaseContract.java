@@ -99,6 +99,12 @@ public final class DatabaseContract {
                 TABLE_NAME,
                 _ID
         );
+
+        public static final String SELECT_LAST_ITEM = String.format(
+                "SELECT * FROM %s ORDER BY %s DESC LIMIT 1",
+                TABLE_NAME,
+                _ID
+        );
     }
 
     public static String SELECT_SINGLE_LIST_ITEMS = String.format(

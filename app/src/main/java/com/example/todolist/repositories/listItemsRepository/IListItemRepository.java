@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface IListItemRepository {
     ArrayList<ListItem> getListItems(int listID);
-    void insertListItem(int listID, String listItem);
+    ListItem insertListItem(int listID, String listItem);
     void changeListItemState(ListItem listItem);
 }

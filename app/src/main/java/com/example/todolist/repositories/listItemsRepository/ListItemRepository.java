@@ -21,9 +21,11 @@ public class ListItemRepository implements IListItemRepository {
         return convertListItemModelsToListItems(listItemModels);
     }
 
-    public void insertListItem(int listID, String listItemDescription) {
+    public ListItem insertListItem(int listID, String listItemDescription) {
         ListItemModel listItemModel = new ListItemModel(listID, listItemDescription);
-        listItemDAO.create(listItemModel);
+        listItemModel = listItemDAO.create(listItemModel);
+
+        return convertListItemModelToListItem(listItemModel);
     }
 
     public void changeListItemState(@NonNull ListItem listItem) {
