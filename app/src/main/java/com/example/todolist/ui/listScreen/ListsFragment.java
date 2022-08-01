@@ -49,8 +49,7 @@ public class ListsFragment extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 DetailedListFragment detailedListFragment = new DetailedListFragment(
-                        position + 1,
-                        listViewModel.getListHeader(position + 1)
+                        adapter.getToDoLists().get(position)
                 );
 
                 getParentFragmentManager().beginTransaction()
@@ -70,7 +69,7 @@ public class ListsFragment extends Fragment {
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void initiateViews(View rootView) {
+    private void initiateViews(@NonNull View rootView) {
         listViewModel = new ListViewModel(getContext());
         listsRecyclerView = rootView.findViewById(R.id.fragment_lists_recycler_view);
         btnAddList = rootView.findViewById(R.id.fragment_lists_add_list_button);
@@ -82,7 +81,7 @@ public class ListsFragment extends Fragment {
         addListDialog.show(getParentFragmentManager(), AddListDialog.TAG);
     }
 
-    private void setDialogListener(AddListDialog addListDialog) {
+    private void setDialogListener(@NonNull AddListDialog addListDialog) {
         addListDialog.listener = new AddListDialog.AddListDialogListener() {
             @Override
             public void onDialogPositiveClick(String listName, String listDescription) {

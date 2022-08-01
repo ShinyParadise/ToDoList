@@ -1,6 +1,8 @@
 package com.example.todolist.ui.detailScreen;
 
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.todolist.R;
 import com.example.todolist.dao.list.ListDAO;
 import com.example.todolist.dao.listItem.ListItemDAO;
+import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.ListItemRepository;
 import com.example.todolist.repositories.listRepository.ListRepository;
 import com.example.todolist.ui.detailScreen.detailRecycler.ListDetailRecyclerViewAdapter;
@@ -29,17 +32,18 @@ public class DetailedListFragment extends Fragment {
 
     private FloatingActionButton btnAddDetail;
 
-    public DetailedListFragment(int listID, String listHeader) {
+    public DetailedListFragment(@NonNull ToDoList toDoList) {
         detailsViewModel = new DetailedListViewModel(
                 new ListItemRepository(new ListItemDAO(getContext())),
                 new ListRepository(new ListDAO(getContext())),
-                listID,
-                listHeader
+                toDoList.getID(),
+                toDoList.getHeader()
         );
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_detailed_list, container, false);
 
