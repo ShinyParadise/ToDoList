@@ -29,27 +29,17 @@ public class ListItemDAO implements IListItemDAO {
 
         ArrayList<ListItemModel> listItems = new ArrayList<>();
 
-        if (request.moveToFirst()){
-            int id = Integer.parseInt(request.getString(0));
-            String description = request.getString(1);
-            int fk_list = request.getInt(2);
-            int isChecked = request.getInt(3);
+        if (request.moveToFirst()) {
+            do {
+                int id = Integer.parseInt(request.getString(0));
+                String description = request.getString(1);
+                int fk_list = request.getInt(2);
+                int isChecked = request.getInt(3);
 
-            ListItemModel newListItem = new ListItemModel(id, description, fk_list);
-            if (isChecked == 1) newListItem.is_checked = true;
+                ListItemModel newListItem = new ListItemModel(id, description, isChecked, fk_list);
 
-            listItems.add(newListItem);
-
-            while (request.moveToNext()) {
-                id = Integer.parseInt(request.getString(0));
-                description = request.getString(1);
-                fk_list = request.getInt(2);
-                isChecked = request.getInt(3);
-
-                newListItem = new ListItemModel(id, description, fk_list);
-                if (isChecked == 1) newListItem.is_checked = true;
                 listItems.add(newListItem);
-            }
+            } while (request.moveToNext());
         }
 
         request.close();
@@ -76,11 +66,9 @@ public class ListItemDAO implements IListItemDAO {
                 DatabaseContract.ListItemTable.UPDATE_LIST_ITEM
         );
 
-        String newStateString = (listItem.is_checked) ? "1" : "0";
-
         String[] args = {
                 listItem.description,
-                newStateString,
+                String.valueOf(listItem.is_checked),
                 String.valueOf(listItem.id)
         };
         updateStatement.bindAllArgsAsStrings(args);
@@ -91,8 +79,6 @@ public class ListItemDAO implements IListItemDAO {
     }
 
     public ListItemModel getListItemByID(int listItemID) {
-        ListItemModel listItemModel = new ListItemModel();
-
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
 
         Cursor request = db.rawQuery(DatabaseContract.ListItemTable.SELECT_LIST_ITEM_BY_ID,
@@ -104,10 +90,13 @@ public class ListItemDAO implements IListItemDAO {
             throw new NullPointerException();
         }
 
-        listItemModel.id = request.getInt(0);
-        listItemModel.description = request.getString(1);
-        listItemModel.is_checked = request.getInt(2) != 0;
-        listItemModel.fk_list = request.getInt(3);
+        ListItemModel listItemModel = new ListItemModel(
+                request.getInt(0),
+                request.getString(1),
+                request.getInt(2),
+                request.getInt(3)
+        );
+
 
         request.close();
         return listItemModel;

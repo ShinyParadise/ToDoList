@@ -1,21 +1,18 @@
 package com.example.todolist.db.models;
 
 public class ListItemModel {
-    public ListItemModel() {}
-
     public ListItemModel(int listID, String listItemDescription) {
         fk_list = listID;
         description = listItemDescription;
     }
 
-    public ListItemModel(int id, String description, int fk_list) {
+    public ListItemModel(int id, String description, boolean state, int listID) {
         this.id = id;
         this.description = description;
-        this.fk_list = fk_list;
-        is_checked = false;
+        is_checked = state ? 1 : 0;
+        fk_list = listID;
     }
-
-    public ListItemModel(int id, String description, boolean state, int listID) {
+    public ListItemModel(int id, String description, int state, int listID) {
         this.id = id;
         this.description = description;
         is_checked = state;
@@ -24,6 +21,6 @@ public class ListItemModel {
 
     public int id;
     public String description;
-    public boolean is_checked;
+    public int is_checked = 0;
     public int fk_list;
 }
