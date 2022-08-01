@@ -1,8 +1,10 @@
 package com.example.todolist.ui.detailScreen;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ListItem;
+import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
 import com.example.todolist.repositories.listRepository.IListRepository;
 
@@ -19,12 +21,11 @@ public class DetailedListViewModel extends ViewModel {
 
     public DetailedListViewModel(IListItemRepository listItemRepository,
                                  IListRepository listRepository,
-                                 int listID,
-                                 String listHeader) {
-        this.listID = listID;
+                                 @NonNull ToDoList toDoList) {
+        this.listID = toDoList.getID();
+        this.listHeader = toDoList.getHeader();
         this.listItemRepository = listItemRepository;
         this.listRepository = listRepository;
-        this.listHeader = listHeader;
         listItems = new ArrayList<>();
     }
 

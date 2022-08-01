@@ -36,8 +36,7 @@ public class DetailedListFragment extends Fragment {
         detailsViewModel = new DetailedListViewModel(
                 new ListItemRepository(new ListItemDAO(getContext())),
                 new ListRepository(new ListDAO(getContext())),
-                toDoList.getID(),
-                toDoList.getHeader()
+                toDoList
         );
     }
 
