@@ -32,13 +32,7 @@ public class ListItemDAO implements IListItemDAO {
 
         if (request.moveToFirst()) {
             do {
-                int id = Integer.parseInt(request.getString(0));
-                String description = request.getString(1);
-                int fk_list = request.getInt(2);
-                int isChecked = request.getInt(3);
-
-                ListItemModel newListItem = new ListItemModel(id, description, isChecked, fk_list);
-
+                ListItemModel newListItem = toListItem(request);
                 listItems.add(newListItem);
             } while (request.moveToNext());
         }
@@ -93,13 +87,7 @@ public class ListItemDAO implements IListItemDAO {
             throw new NullPointerException();
         }
 
-        ListItemModel listItemModel = new ListItemModel(
-                request.getInt(0),
-                request.getString(1),
-                request.getInt(2),
-                request.getInt(3)
-        );
-
+        ListItemModel listItemModel = toListItem(request);
 
         request.close();
         return listItemModel;
@@ -112,14 +100,19 @@ public class ListItemDAO implements IListItemDAO {
         Cursor request = db.rawQuery(DatabaseContract.ListItemTable.SELECT_LAST_ITEM, null);
 
         request.moveToFirst();
-        ListItemModel lastList = new ListItemModel(
-                request.getInt(0),
-                request.getString(1),
-                request.getInt(2),
-                request.getInt(3)
-        );
+        ListItemModel lastList = toListItem(request);
 
         request.close();
         return lastList;
+    }
+
+    @NonNull
+    private ListItemModel toListItem(@NonNull Cursor request) {
+        int id = Integer.parseInt(request.getString(0));
+        String description = request.getString(1);
+        int fk_list = request.getInt(2);
+        int isChecked = request.getInt(3);
+
+        return new ListItemModel(id, description, isChecked, fk_list);
     }
 }

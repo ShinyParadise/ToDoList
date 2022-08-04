@@ -43,11 +43,7 @@ public class ListDAO implements IListDAO {
             throw new NullPointerException();
         }
 
-        ListModel listModel = new ListModel(
-                Integer.parseInt(request.getString(0)),
-                request.getString(1),
-                request.getString(2)
-        );
+        ListModel listModel = toList(request);
 
         request.close();
         return listModel;
@@ -60,11 +56,7 @@ public class ListDAO implements IListDAO {
 
         if (request.moveToFirst()) {
             do {
-                int id = Integer.parseInt(request.getString(0));
-                String name = request.getString(1);
-                String description = request.getString(2);
-
-                ListModel newList = new ListModel(id, name, description);
+                ListModel newList = toList(request);
                 lists.add(newList);
             } while (request.moveToNext());
         }
@@ -78,14 +70,20 @@ public class ListDAO implements IListDAO {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor request = db.rawQuery(DatabaseContract.ToDoListTable.SELECT_LAST_ITEM, null);
 
-        request.moveToFirst();
-        ListModel lastList = new ListModel(
-                Integer.parseInt(request.getString(0)),
-                request.getString(1),
-                request.getString(2)
-        );
 
-       request.close();
-       return lastList;
+        request.moveToFirst();
+        ListModel lastList = toList(request);
+
+        request.close();
+        return lastList;
+    }
+
+    @NonNull
+    private ListModel toList(@NonNull Cursor request) {
+        int id = Integer.parseInt(request.getString(0));
+        String name = request.getString(1);
+        String description = request.getString(2);
+
+        return new ListModel(id, name, description);
     }
 }
