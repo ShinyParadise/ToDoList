@@ -52,7 +52,7 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
     public void setToDoLists(ArrayList<ToDoList> toDoLists) {
         this.toDoLists = toDoLists;
     }
-    
+
     @Override
     public int getItemCount() {
         return toDoLists.size();
