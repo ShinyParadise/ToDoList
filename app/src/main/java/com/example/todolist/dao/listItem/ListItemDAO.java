@@ -108,10 +108,10 @@ public class ListItemDAO implements IListItemDAO {
 
     @NonNull
     private ListItemModel toListItem(@NonNull Cursor request) {
-        int id = Integer.parseInt(request.getString(0));
+        int id = request.getInt(0);
         String description = request.getString(1);
-        int fk_list = request.getInt(2);
-        int isChecked = request.getInt(3);
+        int isChecked = request.getInt(2);
+        int fk_list = request.getInt(3);
 
         return new ListItemModel(id, description, isChecked, fk_list);
     }

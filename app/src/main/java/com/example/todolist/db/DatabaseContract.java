@@ -117,6 +117,8 @@ public final class DatabaseContract {
     public static final String TABLE_SEPARATOR = ".";
 
     public static final String LIST_ITEM_TABLE_COLS =
+            ListItemTable.TABLE_PREFIX + ListItemTable._ID +
+            COLUMN_SEPARATOR +
             ListItemTable.TABLE_PREFIX + ListItemTable.COLUMN_DESCRIPTION +
             COLUMN_SEPARATOR +
             ListItemTable.TABLE_PREFIX + ListItemTable.COLUMN_IS_CHECKED +
