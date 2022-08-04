@@ -1,13 +1,8 @@
 package com.example.todolist.ui.listScreen;
-
-import android.content.Context;
-
 import androidx.lifecycle.ViewModel;
 
-import com.example.todolist.dao.list.ListDAO;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listRepository.IListRepository;
-import com.example.todolist.repositories.listRepository.ListRepository;
 
 import java.util.ArrayList;
 

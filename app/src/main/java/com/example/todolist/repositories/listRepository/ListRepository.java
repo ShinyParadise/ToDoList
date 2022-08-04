@@ -40,6 +40,7 @@ public class ListRepository implements IListRepository {
         return listModel.header;
     }
 
+    @NonNull
     private ToDoList convertListModelToList(@NonNull ListModel listModel) {
         return new ToDoList(listModel.id, listModel.header, listModel.description);
     }

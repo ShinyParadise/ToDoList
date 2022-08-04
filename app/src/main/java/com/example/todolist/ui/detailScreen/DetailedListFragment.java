@@ -71,7 +71,7 @@ public class DetailedListFragment extends Fragment {
         detailsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void initiateViews(View rootView) {
+    private void initiateViews(@NonNull View rootView) {
         detailsRecyclerView = rootView.findViewById(R.id.fragment_details_recycler_view);
         btnAddDetail = rootView.findViewById(R.id.fragment_details_btn_add_detail);
     }
@@ -82,7 +82,7 @@ public class DetailedListFragment extends Fragment {
         addListItemDialog.show(getParentFragmentManager(), AddListItemDialog.TAG);
     }
 
-    private void setDialogListener(AddListItemDialog addListItemDialog) {
+    private void setDialogListener(@NonNull AddListItemDialog addListItemDialog) {
         addListItemDialog.listener = new AddListItemDialog.AddListItemDialogListener() {
             @Override
             public void onDialogPositiveClick(String listItemDescription) {
