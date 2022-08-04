@@ -51,7 +51,7 @@ public class ListsFragment extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 DetailedListFragment detailedListFragment = new DetailedListFragment(
-                        adapter.getToDoLists().get(position)
+                        listViewModel.getLists().get(position)
                 );
 
                 getParentFragmentManager().beginTransaction()
