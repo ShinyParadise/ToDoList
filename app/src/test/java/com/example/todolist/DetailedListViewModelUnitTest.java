@@ -6,9 +6,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.example.todolist.dto.ListItem;
-import com.example.todolist.repositories.listitemsrepository.IListItemRepository;
-import com.example.todolist.repositories.listrepository.IListRepository;
-import com.example.todolist.ui.detailscreen.DetailedListViewModel;
+import com.example.todolist.dto.ToDoList;
+import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
+import com.example.todolist.repositories.listRepository.IListRepository;
+import com.example.todolist.ui.detailScreen.DetailedListViewModel;
 import static org.mockito.Mockito.*;
 
 import java.util.ArrayList;
@@ -17,12 +18,17 @@ public class DetailedListViewModelUnitTest {
     private final int testId = 1;
 
     private IListItemRepository mockedListItemRepository;
+    private IListRepository mockedListRepository;
     private DetailedListViewModel sut;
 
     @Before
     public void setup() {
         mockedListItemRepository = mock(IListItemRepository.class);
-        sut = new DetailedListViewModel(mockedListItemRepository, testId, "");
+        mockedListRepository = mock(IListRepository.class);
+        sut = new DetailedListViewModel(
+                mockedListItemRepository,
+                mockedListRepository,
+                new ToDoList(testId, "", ""));
     }
 
     @Test
@@ -40,7 +46,6 @@ public class DetailedListViewModelUnitTest {
     @Test
     public void test_repository_fetched_correct_header() {
         String testHeader = "header";
-        IListRepository mockedListRepository = mock(IListRepository.class);
 
         when(mockedListRepository.getListHeader(testId)).thenReturn(testHeader);
 

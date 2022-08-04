@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.todolist.R;
-import com.example.todolist.ui.listscreen.ListsFragment;
+import com.example.todolist.ui.listScreen.ListsFragment;
 
 public class MainActivity extends AppCompatActivity {
     private ActionBar actionBar;

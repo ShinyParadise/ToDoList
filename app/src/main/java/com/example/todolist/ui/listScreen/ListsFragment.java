@@ -1,4 +1,4 @@
-package com.example.todolist.ui.listscreen;
+package com.example.todolist.ui.listScreen;
 
 import android.os.Bundle;
 
@@ -14,9 +14,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.todolist.R;
-import com.example.todolist.repositories.listrepository.ListRepository;
-import com.example.todolist.ui.detailscreen.DetailedListFragment;
-import com.example.todolist.ui.listscreen.listsrecycler.ListsRecyclerViewAdapter;
+import com.example.todolist.dao.list.ListDAO;
+import com.example.todolist.repositories.listRepository.ListRepository;
+import com.example.todolist.ui.detailScreen.DetailedListFragment;
+import com.example.todolist.ui.listScreen.listsRecycler.ListsRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ListsFragment extends Fragment {
@@ -50,8 +51,7 @@ public class ListsFragment extends Fragment {
             @Override
             public void onItemClick(int position, View v) {
                 DetailedListFragment detailedListFragment = new DetailedListFragment(
-                        position + 1,
-                        listViewModel.getListHeader(position + 1)
+                        listViewModel.getLists().get(position)
                 );
 
                 getParentFragmentManager().beginTransaction()
@@ -71,8 +71,9 @@ public class ListsFragment extends Fragment {
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void initiateViews(View rootView) {
-        listViewModel = new ListViewModel(getContext());
+    private void initiateViews(@NonNull View rootView) {
+        listViewModel = new ListViewModel(new ListRepository(new ListDAO(getContext())));
+        
         listsRecyclerView = rootView.findViewById(R.id.fragment_lists_recycler_view);
         btnAddList = rootView.findViewById(R.id.fragment_lists_add_list_button);
     }
@@ -83,7 +84,7 @@ public class ListsFragment extends Fragment {
         addListDialog.show(getParentFragmentManager(), AddListDialog.TAG);
     }
 
-    private void setDialogListener(AddListDialog addListDialog) {
+    private void setDialogListener(@NonNull AddListDialog addListDialog) {
         addListDialog.listener = new AddListDialog.AddListDialogListener() {
             @Override
             public void onDialogPositiveClick(String listName, String listDescription) {

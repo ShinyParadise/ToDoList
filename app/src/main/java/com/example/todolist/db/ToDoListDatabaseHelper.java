@@ -4,6 +4,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
+
 
 public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
     private static ToDoListDatabaseHelper listHelperInstance = null;
@@ -21,7 +23,7 @@ public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onCreate(@NonNull SQLiteDatabase db) {
         db.execSQL(DatabaseContract.ListItemTable.CREATE_TABLE);
         db.execSQL(DatabaseContract.ToDoListTable.CREATE_TABLE);
     }
@@ -36,7 +38,7 @@ public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onConfigure(SQLiteDatabase db) {
+    public void onConfigure(@NonNull SQLiteDatabase db) {
         db.setForeignKeyConstraintsEnabled(true);
     }
 }

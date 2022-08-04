@@ -1,23 +1,18 @@
-package com.example.todolist.ui.listscreen;
-
-import android.content.Context;
-
+package com.example.todolist.ui.listScreen;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ToDoList;
-import com.example.todolist.repositories.listrepository.IListRepository;
-import com.example.todolist.repositories.listrepository.ListRepository;
-import com.example.todolist.db.models.ListModel;
+import com.example.todolist.repositories.listRepository.IListRepository;
 
 import java.util.ArrayList;
 
 public class ListViewModel extends ViewModel {
-    private IListRepository listRepository;
+    private final IListRepository listRepository;
 
     private ArrayList<ToDoList> toDoLists;
 
-    public ListViewModel(Context context) {
-        listRepository = new ListRepository(context);
+    public ListViewModel(IListRepository listRepository) {
+        this.listRepository = listRepository;
     }
 
     public void fetchLists() {
@@ -25,7 +20,7 @@ public class ListViewModel extends ViewModel {
     }
 
     public void insertNewList(String listName, String listDescription) {
-        listRepository.insertToDoListWithoutItems(listName, listDescription);
+        listRepository.insertToDoList(listName, listDescription);
     }
 
     public ArrayList<ToDoList> getLists() {

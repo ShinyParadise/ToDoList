@@ -1,12 +1,11 @@
-package com.example.todolist.repositories.listrepository;
+package com.example.todolist.repositories.listRepository;
 
 import com.example.todolist.dto.ToDoList;
 
 import java.util.ArrayList;
 
 public interface IListRepository {
-    void insertToDoListWithoutItems(String listName, String listDescription);
+    ToDoList insertToDoList(String listName, String listDescription);
     ArrayList<ToDoList> getAllLists();
     String getListHeader(int listID);
-    int getListID(String listHeader);
 }
