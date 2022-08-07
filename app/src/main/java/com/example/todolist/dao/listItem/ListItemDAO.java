@@ -66,6 +66,7 @@ public class ListItemDAO implements IListItemDAO {
         String[] args = {
                 listItem.description,
                 String.valueOf(listItem.is_checked),
+                String.valueOf(listItem.last_update),
                 String.valueOf(listItem.id)
         };
         updateStatement.bindAllArgsAsStrings(args);
@@ -112,7 +113,8 @@ public class ListItemDAO implements IListItemDAO {
         String description = request.getString(1);
         int isChecked = request.getInt(2);
         int fk_list = request.getInt(3);
+        long last_update = request.getLong(4);
 
-        return new ListItemModel(id, description, isChecked, fk_list);
+        return new ListItemModel(id, description, isChecked, fk_list, last_update);
     }
 }

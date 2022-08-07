@@ -6,6 +6,9 @@ import com.example.todolist.dao.listItem.IListItemDAO;
 import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.dto.ListItem;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 public class ListItemRepository implements IListItemRepository {
@@ -29,6 +32,7 @@ public class ListItemRepository implements IListItemRepository {
     }
 
     public void changeListItemState(@NonNull ListItem listItem) {
+        listItem.setLastUpdate(LocalDateTime.now(getZoneOffset()));
         ListItemModel itemModel = convertListItemToModel(listItem);
 
         listItemDAO.update(itemModel);
@@ -39,8 +43,9 @@ public class ListItemRepository implements IListItemRepository {
         return new ListItemModel(
                 listItem.getID(),
                 listItem.getDescription(),
-                listItem.getState(),
-                listItem.getListID()
+                listItem.getState() ? 1 : 0,
+                listItem.getListID(),
+                listItem.getLastUpdate().toEpochSecond(getZoneOffset())
         );
     }
 
@@ -50,7 +55,16 @@ public class ListItemRepository implements IListItemRepository {
                 itemModel.id,
                 itemModel.description,
                 itemModel.is_checked,
-                itemModel.fk_list
+                itemModel.fk_list,
+                toLocalDateTime(itemModel.last_update)
+        );
+    }
+
+    private LocalDateTime toLocalDateTime(long last_update) {
+        return LocalDateTime.ofEpochSecond(
+                last_update,
+                0,
+                ZonedDateTime.now().getOffset()
         );
     }
 
@@ -63,5 +77,9 @@ public class ListItemRepository implements IListItemRepository {
             listItems.add(listItem);
         }
         return listItems;
+    }
+
+    private ZoneOffset getZoneOffset() {
+        return ZonedDateTime.now().getOffset();
     }
 }
