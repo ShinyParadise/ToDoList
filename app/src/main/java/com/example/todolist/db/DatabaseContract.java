@@ -3,7 +3,7 @@ package com.example.todolist.db;
 import android.provider.BaseColumns;
 
 public final class DatabaseContract {
-    public static final int    DATABASE_VERSION   = 1;
+    public static final int    DATABASE_VERSION   = 2;
     public static final String DATABASE_NAME      = "todolist.db";
 
     private DatabaseContract() {}
@@ -63,22 +63,31 @@ public final class DatabaseContract {
         public static final String COLUMN_DESCRIPTION   = "description";
         public static final String COLUMN_IS_CHECKED    = "is_checked";
         public static final String COLUMN_FK_LIST       = "fk_list";
+        public static final String COLUMN_LAST_UPDATE   = "last_update";
 
         public static final String CREATE_TABLE = String.format(
                 "CREATE TABLE %s (" +
                         "%s INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         "%s TEXT, " +
                         "%s BOOLEAN NOT NULL DEFAULT 0 CHECK (%s IN (0, 1)), " +
+                        "%s INTEGER DEFAULT NULL, " +
                         "%s INTEGER, FOREIGN KEY(%s) REFERENCES %s(%s));\n",
                 TABLE_NAME,
                 _ID,
                 COLUMN_DESCRIPTION,
                 COLUMN_IS_CHECKED,
                 COLUMN_IS_CHECKED,
+                COLUMN_LAST_UPDATE,
                 COLUMN_FK_LIST,
                 COLUMN_FK_LIST,
                 ToDoListTable.TABLE_NAME,
                 ToDoListTable._ID
+        );
+
+        public static final String ALTER_TABLE = String.format(
+                "ALTER TABLE %s ADD COLUMN %s INTEGER DEFAULT NULL",
+                TABLE_NAME,
+                COLUMN_LAST_UPDATE
         );
 
         public static final String TABLE_PREFIX = TABLE_NAME + TABLE_SEPARATOR;
@@ -86,13 +95,23 @@ public final class DatabaseContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
         public static final String INSERT_VALUES = String.format(
-                "INSERT INTO %s (%s, %s) VALUES (?, ?);",
+                "INSERT INTO %s (%s, %s, %s) VALUES (?, ?);",
                 TABLE_NAME,
                 COLUMN_DESCRIPTION,
-                COLUMN_FK_LIST
+                COLUMN_FK_LIST,
+                COLUMN_LAST_UPDATE
         );
 
         public static final String UPDATE_LIST_ITEM = String.format(
+                "UPDATE %s SET %s = (?), %s = (?), %s = (?) WHERE %s = (?)",
+                TABLE_NAME,
+                COLUMN_DESCRIPTION,
+                COLUMN_IS_CHECKED,
+                COLUMN_LAST_UPDATE,
+                _ID
+        );
+
+        public static final String UPDATE_LIST_ITEM_NO_TIME = String.format(
                 "UPDATE %s SET %s = (?), %s = (?) WHERE %s = (?)",
                 TABLE_NAME,
                 COLUMN_DESCRIPTION,
@@ -123,7 +142,9 @@ public final class DatabaseContract {
             COLUMN_SEPARATOR +
             ListItemTable.TABLE_PREFIX + ListItemTable.COLUMN_IS_CHECKED +
             COLUMN_SEPARATOR +
-            ListItemTable.TABLE_PREFIX + ListItemTable.COLUMN_FK_LIST;
+            ListItemTable.TABLE_PREFIX + ListItemTable.COLUMN_FK_LIST +
+            COLUMN_SEPARATOR +
+            ListItemTable.TABLE_PREFIX + ListItemTable.COLUMN_LAST_UPDATE;
 
     public static final String LISTS_AND_ITEMS_INNER_JOIN =
             ToDoListTable.TABLE_NAME +
