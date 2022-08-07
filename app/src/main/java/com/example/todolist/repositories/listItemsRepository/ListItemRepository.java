@@ -64,7 +64,7 @@ public class ListItemRepository implements IListItemRepository {
         return LocalDateTime.ofEpochSecond(
                 last_update,
                 0,
-                ZonedDateTime.now().getOffset()
+                getZoneOffset()
         );
     }
 
