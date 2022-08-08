@@ -95,11 +95,10 @@ public final class DatabaseContract {
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
         public static final String INSERT_VALUES = String.format(
-                "INSERT INTO %s (%s, %s, %s) VALUES (?, ?);",
+                "INSERT INTO %s (%s, %s) VALUES (?, ?);",
                 TABLE_NAME,
                 COLUMN_DESCRIPTION,
-                COLUMN_FK_LIST,
-                COLUMN_LAST_UPDATE
+                COLUMN_FK_LIST
         );
 
         public static final String UPDATE_LIST_ITEM = String.format(
