@@ -40,10 +40,12 @@ public class DetailedListViewModel extends ViewModel {
         listItem.setState(invertedState);
 
         listItemRepository.changeListItemState(listItem);
+        listItems.sort(DetailedListViewModel::listItemsCompare);
     }
 
     public void fetchListItems() {
         listItems = listItemRepository.getListItems(listID);
+        listItems.sort(DetailedListViewModel::listItemsCompare);
     }
 
     public void fetchHeader() {
@@ -56,5 +58,14 @@ public class DetailedListViewModel extends ViewModel {
 
     public String getHeader() {
         return listHeader;
+    }
+
+    private static int listItemsCompare(ListItem firstItem, ListItem secondItem) {
+        if (!firstItem.getState() && secondItem.getState())
+            return -1;
+        if (firstItem.getLastUpdate().isBefore(secondItem.getLastUpdate())) {
+            return 1;
+        }
+        return 0;
     }
 }
