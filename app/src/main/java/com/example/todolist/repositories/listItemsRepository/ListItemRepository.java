@@ -60,9 +60,10 @@ public class ListItemRepository implements IListItemRepository {
         );
     }
 
-    private LocalDateTime toLocalDateTime(long last_update) {
+    private LocalDateTime toLocalDateTime(long updatedAt) {
+
         return LocalDateTime.ofEpochSecond(
-                last_update,
+                updatedAt,
                 0,
                 getZoneOffset()
         );
