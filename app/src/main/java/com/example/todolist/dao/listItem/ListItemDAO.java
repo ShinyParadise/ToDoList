@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import com.example.todolist.db.DatabaseContract;
 import com.example.todolist.db.ToDoListDatabaseHelper;
 import com.example.todolist.db.models.ListItemModel;
-import com.example.todolist.db.models.ListModel;
 
 import java.util.ArrayList;
 
@@ -47,7 +46,7 @@ public class ListItemDAO implements IListItemDAO {
 
         String[] args = {
                 listItem.description,
-                String.valueOf(listItem.fk_list)
+                String.valueOf(listItem.listID)
         };
 
         insertStatement.bindAllArgsAsStrings(args);
@@ -65,8 +64,8 @@ public class ListItemDAO implements IListItemDAO {
 
         String[] args = {
                 listItem.description,
-                String.valueOf(listItem.is_checked),
-                String.valueOf(listItem.last_update),
+                String.valueOf(listItem.isChecked),
+                String.valueOf(listItem.updatedAt),
                 String.valueOf(listItem.id)
         };
         updateStatement.bindAllArgsAsStrings(args);

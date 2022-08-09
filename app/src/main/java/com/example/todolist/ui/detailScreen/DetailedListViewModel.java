@@ -63,7 +63,7 @@ public class DetailedListViewModel extends ViewModel {
     private static int listItemsCompare(ListItem firstItem, ListItem secondItem) {
         if (!firstItem.getState() && secondItem.getState())
             return -1;
-        if (firstItem.getLastUpdate().isBefore(secondItem.getLastUpdate())) {
+        if (firstItem.getUpdatedAt().isBefore(secondItem.getUpdatedAt())) {
             return 1;
         }
         return 0;

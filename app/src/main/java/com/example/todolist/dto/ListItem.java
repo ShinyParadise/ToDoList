@@ -8,7 +8,7 @@ public class ListItem {
     private String description;
     private boolean isChecked = false;
     private final int listID;
-    private LocalDateTime lastUpdate;
+    private LocalDateTime updatedAt;
 
     public ListItem(int id, String description, int listID) {
         this.id = id;
@@ -20,12 +20,12 @@ public class ListItem {
                     String description,
                     int is_checked,
                     int fk_list,
-                    LocalDateTime lastUpdate) {
+                    LocalDateTime updatedAt) {
         this.id = id;
         this.description = description;
         this.isChecked = is_checked != 0;
         this.listID = fk_list;
-        this.lastUpdate = lastUpdate;
+        this.updatedAt = updatedAt;
     }
 
     public int getID() {
@@ -46,12 +46,12 @@ public class ListItem {
 
     public int getListID() { return listID; }
 
-    public LocalDateTime getLastUpdate() {
-        return lastUpdate;
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
     }
 
-    public void setLastUpdate(LocalDateTime lastUpdate) {
-        this.lastUpdate = lastUpdate;
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -64,12 +64,12 @@ public class ListItem {
         if (id != listItem.id) return false;
         if (listID != listItem.listID) return false;
         if (isChecked != listItem.isChecked) return false;
-        if (lastUpdate.isEqual(listItem.lastUpdate)) return false;
+        if (updatedAt.isEqual(listItem.updatedAt)) return false;
         return description.equals(listItem.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, description, isChecked, listID, lastUpdate);
+        return Objects.hash(id, description, isChecked, listID, updatedAt);
     }
 }

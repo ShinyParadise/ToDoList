@@ -32,7 +32,7 @@ public class ListItemRepository implements IListItemRepository {
     }
 
     public void changeListItemState(@NonNull ListItem listItem) {
-        listItem.setLastUpdate(LocalDateTime.now(getZoneOffset()));
+        listItem.setUpdatedAt(LocalDateTime.now(getZoneOffset()));
         ListItemModel itemModel = convertListItemToModel(listItem);
 
         listItemDAO.update(itemModel);
@@ -45,7 +45,7 @@ public class ListItemRepository implements IListItemRepository {
                 listItem.getDescription(),
                 listItem.getState() ? 1 : 0,
                 listItem.getListID(),
-                listItem.getLastUpdate().toEpochSecond(getZoneOffset())
+                listItem.getUpdatedAt().toEpochSecond(getZoneOffset())
         );
     }
 
@@ -54,9 +54,9 @@ public class ListItemRepository implements IListItemRepository {
         return new ListItem(
                 itemModel.id,
                 itemModel.description,
-                itemModel.is_checked,
-                itemModel.fk_list,
-                toLocalDateTime(itemModel.last_update)
+                itemModel.isChecked,
+                itemModel.listID,
+                toLocalDateTime(itemModel.updatedAt)
         );
     }
 
