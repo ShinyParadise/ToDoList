@@ -31,7 +31,7 @@ public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if (oldVersion < 2) {
-            db.execSQL(DatabaseContract.ListItemTable.ALTER_TABLE);
+            db.execSQL(DatabaseContract.ListItemTable.MIGRATE_TO_VERSION_2);
         }
     }
 
