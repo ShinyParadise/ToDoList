@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ListItem;
+import com.example.todolist.dto.ListItemComparator;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
 import com.example.todolist.repositories.listRepository.IListRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class DetailedListViewModel extends ViewModel {
     private final int listID;
@@ -40,12 +42,13 @@ public class DetailedListViewModel extends ViewModel {
         listItem.setState(invertedState);
 
         listItemRepository.changeListItemState(listItem);
-        listItems.sort(DetailedListViewModel::listItemsCompare);
+
+        listItems.sort(new ListItemComparator());
     }
 
     public void fetchListItems() {
         listItems = listItemRepository.getListItems(listID);
-        listItems.sort(DetailedListViewModel::listItemsCompare);
+        listItems.sort(new ListItemComparator());
     }
 
     public void fetchHeader() {
@@ -58,14 +61,5 @@ public class DetailedListViewModel extends ViewModel {
 
     public String getHeader() {
         return listHeader;
-    }
-
-    private static int listItemsCompare(ListItem firstItem, ListItem secondItem) {
-        if (!firstItem.getState() && secondItem.getState())
-            return -1;
-        if (firstItem.getUpdatedAt().isBefore(secondItem.getUpdatedAt())) {
-            return 1;
-        }
-        return 0;
     }
 }
