@@ -84,12 +84,6 @@ public final class DatabaseContract {
                 ToDoListTable._ID
         );
 
-        public static final String MIGRATE_TO_VERSION_2 = String.format(
-                "ALTER TABLE %s ADD COLUMN %s INTEGER DEFAULT NULL",
-                TABLE_NAME,
-                COLUMN_LAST_UPDATE
-        );
-
         public static final String TABLE_PREFIX = TABLE_NAME + TABLE_SEPARATOR;
 
         public static final String DELETE_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
