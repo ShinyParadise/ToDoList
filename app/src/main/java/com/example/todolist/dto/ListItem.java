@@ -1,6 +1,6 @@
 package com.example.todolist.dto;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 public class ListItem {
@@ -8,7 +8,7 @@ public class ListItem {
     private String description;
     private boolean isChecked = false;
     private final int listID;
-    private LocalDateTime updatedAt;
+    private ZonedDateTime updatedAt;
 
     public ListItem(int id, String description, int listID) {
         this.id = id;
@@ -20,7 +20,7 @@ public class ListItem {
                     String description,
                     int is_checked,
                     int fk_list,
-                    LocalDateTime updatedAt) {
+                    ZonedDateTime updatedAt) {
         this.id = id;
         this.description = description;
         this.isChecked = is_checked != 0;
@@ -46,11 +46,11 @@ public class ListItem {
 
     public int getListID() { return listID; }
 
-    public LocalDateTime getUpdatedAt() {
+    public ZonedDateTime getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(LocalDateTime updatedAt) {
+    public void setUpdatedAt(ZonedDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
 

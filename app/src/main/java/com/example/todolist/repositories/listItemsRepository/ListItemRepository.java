@@ -7,9 +7,11 @@ import com.example.todolist.db.models.ListItemModel;
 import com.example.todolist.dto.ListItem;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
+import java.util.TimeZone;
 
 public class ListItemRepository implements IListItemRepository {
     private final IListItemDAO listItemDAO;
@@ -32,7 +34,8 @@ public class ListItemRepository implements IListItemRepository {
     }
 
     public void changeListItemState(@NonNull ListItem listItem) {
-        listItem.setUpdatedAt(LocalDateTime.now(getZoneOffset()));
+        listItem.setUpdatedAt(ZonedDateTime.now(ZoneId.systemDefault()));
+
         ListItemModel itemModel = convertListItemToModel(listItem);
 
         listItemDAO.update(itemModel);
@@ -45,7 +48,7 @@ public class ListItemRepository implements IListItemRepository {
                 listItem.getDescription(),
                 listItem.getState() ? 1 : 0,
                 listItem.getListID(),
-                listItem.getUpdatedAt().toEpochSecond(getZoneOffset())
+                listItem.getUpdatedAt().toEpochSecond()
         );
     }
 
@@ -56,16 +59,14 @@ public class ListItemRepository implements IListItemRepository {
                 itemModel.description,
                 itemModel.isChecked,
                 itemModel.listID,
-                toLocalDateTime(itemModel.updatedAt)
+                toZonedDateTime(itemModel.updatedAt)
         );
     }
 
-    private LocalDateTime toLocalDateTime(long updatedAt) {
-
-        return LocalDateTime.ofEpochSecond(
-                updatedAt,
-                0,
-                getZoneOffset()
+    private ZonedDateTime toZonedDateTime(long updatedAt) {
+        return ZonedDateTime.of(
+                LocalDateTime.ofEpochSecond(updatedAt, 0, ZoneOffset.UTC),
+                ZoneId.systemDefault()
         );
     }
 
@@ -78,9 +79,5 @@ public class ListItemRepository implements IListItemRepository {
             listItems.add(listItem);
         }
         return listItems;
-    }
-
-    private ZoneOffset getZoneOffset() {
-        return ZonedDateTime.now().getOffset();
     }
 }
