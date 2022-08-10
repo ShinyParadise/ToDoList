@@ -18,13 +18,13 @@ public class ListItem {
 
     public ListItem(int id,
                     String description,
-                    int is_checked,
-                    int fk_list,
+                    int isChecked,
+                    int listID,
                     ZonedDateTime updatedAt) {
         this.id = id;
         this.description = description;
-        this.isChecked = is_checked != 0;
-        this.listID = fk_list;
+        this.isChecked = isChecked != 0;
+        this.listID = listID;
         this.updatedAt = updatedAt;
     }
 
@@ -64,7 +64,7 @@ public class ListItem {
         if (id != listItem.id) return false;
         if (listID != listItem.listID) return false;
         if (isChecked != listItem.isChecked) return false;
-        if (updatedAt.isEqual(listItem.updatedAt)) return false;
+        if (updatedAt != listItem.updatedAt) return false;
         return description.equals(listItem.description);
     }
 
