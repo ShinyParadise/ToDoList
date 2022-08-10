@@ -43,12 +43,12 @@ public class DetailedListViewModel extends ViewModel {
 
         listItemRepository.changeListItemState(listItem);
 
-        listItems.sort(new ListItemComparator());
+        Collections.sort(listItems, new ListItemComparator());
     }
 
     public void fetchListItems() {
         listItems = listItemRepository.getListItems(listID);
-        listItems.sort(new ListItemComparator());
+        Collections.sort(listItems, new ListItemComparator());
     }
 
     public void fetchHeader() {
