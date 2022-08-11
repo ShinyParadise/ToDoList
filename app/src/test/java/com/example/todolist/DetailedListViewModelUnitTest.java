@@ -18,6 +18,8 @@ import java.util.ArrayList;
 
 public class DetailedListViewModelUnitTest {
     private final int testId = 1;
+    private final int checked = 1;
+    private final int unchecked = 0;
 
     private IListItemRepository mockedListItemRepository;
     private IListRepository mockedListRepository;
@@ -60,8 +62,8 @@ public class DetailedListViewModelUnitTest {
     public void test_item_selection_inverts_item_selected_state() {
         when(mockedListItemRepository.getListItems(testId)).thenReturn(new ArrayList<ListItem>() {
             {
-                add(new ListItem(1, "asdas", 2));
-                add(new ListItem(2, "asdassdas", 3));
+                add(new ListItem(1, "asdas", checked, testId, ZonedDateTime.now()));
+                add(new ListItem(2, "asdassdas", unchecked, testId, ZonedDateTime.now()));
             }
         });
         sut.fetchListItems();
@@ -73,7 +75,6 @@ public class DetailedListViewModelUnitTest {
 
     @Test
     public void test_item_sort_on_fetch_items() {
-        int checked = 1;
 
         ListItem testItem1 = new ListItem(1, "", checked, testId, ZonedDateTime.now());
         ListItem testItem2 = new ListItem(2, "", testId);
