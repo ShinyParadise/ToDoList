@@ -30,10 +30,8 @@ public class ToDoListDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion != newVersion) {
-            db.execSQL(DatabaseContract.ToDoListTable.DELETE_TABLE);
-            db.execSQL(DatabaseContract.ListItemTable.DELETE_TABLE);
-            onCreate(db);
+        if (oldVersion < 2) {
+            db.execSQL(MigrationContracts.MIGRATE_TO_VERSION_2);
         }
     }
 

@@ -12,10 +12,14 @@ import com.example.todolist.repositories.listRepository.IListRepository;
 import com.example.todolist.ui.detailScreen.DetailedListViewModel;
 import static org.mockito.Mockito.*;
 
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class DetailedListViewModelUnitTest {
     private final int testId = 1;
+    private final int checked = 1;
+    private final int unchecked = 0;
 
     private IListItemRepository mockedListItemRepository;
     private IListRepository mockedListRepository;
@@ -58,8 +62,8 @@ public class DetailedListViewModelUnitTest {
     public void test_item_selection_inverts_item_selected_state() {
         when(mockedListItemRepository.getListItems(testId)).thenReturn(new ArrayList<ListItem>() {
             {
-                add(new ListItem(1, "asdas", 2));
-                add(new ListItem(2, "asdassdas", 3));
+                add(new ListItem(1, "asdas", checked, testId, ZonedDateTime.now()));
+                add(new ListItem(2, "asdassdas", unchecked, testId, ZonedDateTime.now()));
             }
         });
         sut.fetchListItems();
@@ -67,5 +71,34 @@ public class DetailedListViewModelUnitTest {
         sut.changeListItemState(0);
 
         assertTrue(sut.getListItems().get(0).getState());
+    }
+
+    @Test
+    public void test_item_sort_on_fetch_items() {
+
+        ListItem testItem1 = new ListItem(1, "", checked, testId, ZonedDateTime.now());
+        ListItem testItem2 = new ListItem(2, "", testId);
+        ListItem testItem3 = new ListItem(3,
+                "",
+                checked,
+                testId,
+                ZonedDateTime.now().plus(1, ChronoUnit.SECONDS));
+        ArrayList<ListItem> correctOrder = new ArrayList<>();
+        correctOrder.add(testItem2);
+        correctOrder.add(testItem3);
+        correctOrder.add(testItem1);
+
+        when(mockedListItemRepository.getListItems(testId)).thenReturn(new ArrayList<ListItem>() {
+            {
+                add(testItem1);
+                add(testItem2);
+                add(testItem3);
+            }
+        });
+
+
+        sut.fetchListItems();
+
+        assertEquals(correctOrder, sut.getListItems());
     }
 }
