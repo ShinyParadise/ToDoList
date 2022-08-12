@@ -7,6 +7,7 @@ import com.example.todolist.db.models.ListModel;
 import com.example.todolist.dto.ToDoList;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 
 public class ListRepository implements IListRepository {
@@ -18,15 +19,26 @@ public class ListRepository implements IListRepository {
 
     public ToDoList insertToDoList(String listName, String listDescription) {
         ListModel listModel = new ListModel(listName, listDescription);
-        listModel = listDAO.create(listModel);
+
+        try {
+            listModel = listDAO.create(listModel);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
 
         return convertListModelToList(listModel);
     }
 
     public ArrayList<ToDoList> getAllLists() {
         ArrayList<ToDoList> toDoLists = new ArrayList<>();
+        ArrayList<ListModel> listModels = new ArrayList<>();
 
-        ArrayList<ListModel> listModels = listDAO.getAllLists();
+        try {
+            listModels = listDAO.getAllLists();
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
         for (ListModel listModel : listModels) {
             ToDoList list = convertListModelToList(listModel);
             toDoLists.add(list);
@@ -36,7 +48,14 @@ public class ListRepository implements IListRepository {
     }
 
     public String getListHeader(int listID) {
-        ListModel listModel = listDAO.getListByID(listID);
+        ListModel listModel = new ListModel(listID);
+
+        try {
+            listModel = listDAO.getListByID(listID);
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+        }
+
         return listModel.header;
     }
 
