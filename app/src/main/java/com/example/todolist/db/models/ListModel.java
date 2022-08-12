@@ -7,6 +7,10 @@ public class ListModel {
         this.description = description;
     }
 
+    public ListModel(int listID) {
+        this.id = listID;
+    }
+
     public ListModel(String listName, String listDescription) {
         header = listName;
         description = listDescription;
