@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.todolist.R;
 import com.example.todolist.dao.list.ListDAO;
 import com.example.todolist.repositories.listRepository.ListRepository;
+import com.example.todolist.ui.app.ToDoListApp;
 import com.example.todolist.ui.detailScreen.DetailedListFragment;
 import com.example.todolist.ui.listScreen.listsRecycler.ListsRecyclerViewAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -72,7 +73,10 @@ public class ListsFragment extends Fragment {
     }
 
     private void initiateViews(@NonNull View rootView) {
-        listViewModel = new ListViewModel(new ListRepository(new ListDAO(getContext())));
+        listViewModel = new ListViewModel(
+                new ListRepository(new ListDAO(getContext())),
+                ToDoListApp.getAppExecutor()
+        );
         
         listsRecyclerView = rootView.findViewById(R.id.fragment_lists_recycler_view);
         btnAddList = rootView.findViewById(R.id.fragment_lists_add_list_button);
