@@ -51,10 +51,6 @@ public class DetailedListViewModel extends ViewModel {
         Collections.sort(listItems, new ListItemComparator());
     }
 
-    public void fetchHeader() {
-        listHeader = listRepository.getListHeader(listID);
-    }
-
     public ArrayList<ListItem> getListItems() {
         return listItems;
     }

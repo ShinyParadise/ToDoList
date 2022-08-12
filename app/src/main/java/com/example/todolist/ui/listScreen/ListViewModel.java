@@ -26,8 +26,4 @@ public class ListViewModel extends ViewModel {
     public ArrayList<ToDoList> getLists() {
         return toDoLists;
     }
-
-    public String getListHeader(int listID) {
-        return listRepository.getListHeader(listID);
-    }
 }

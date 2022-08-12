@@ -37,12 +37,6 @@ public class ListRepository implements IListRepository {
         return toDoLists;
     }
 
-    public String getListHeader(int listID) {
-        ListModel listModel = listDAO.getListByID(listID);
-
-        return listModel.header;
-    }
-
     @NonNull
     private ToDoList convertListModelToList(@NonNull ListModel listModel) {
         return new ToDoList(listModel.id, listModel.header, listModel.description);
