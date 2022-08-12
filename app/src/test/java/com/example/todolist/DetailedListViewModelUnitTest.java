@@ -15,6 +15,7 @@ import static org.mockito.Mockito.*;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
 
 public class DetailedListViewModelUnitTest {
     private final int testId = 1;
@@ -29,7 +30,8 @@ public class DetailedListViewModelUnitTest {
         mockedListItemRepository = mock(IListItemRepository.class);
         sut = new DetailedListViewModel(
                 mockedListItemRepository,
-                new ToDoList(testId, "", "")
+                new ToDoList(testId, "", ""),
+                Executors.newCachedThreadPool()
         );
     }
 

@@ -18,6 +18,7 @@ import com.example.todolist.dao.listItem.ListItemDAO;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.ListItemRepository;
 import com.example.todolist.repositories.listRepository.ListRepository;
+import com.example.todolist.ui.app.ToDoListApp;
 import com.example.todolist.ui.detailScreen.detailRecycler.ListDetailRecyclerViewAdapter;
 import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,7 +36,8 @@ public class DetailedListFragment extends Fragment {
     public DetailedListFragment(@NonNull ToDoList toDoList) {
         detailsViewModel = new DetailedListViewModel(
                 new ListItemRepository(new ListItemDAO(getContext())),
-                toDoList
+                toDoList,
+                ToDoListApp.getAppExecutor()
         );
     }
 

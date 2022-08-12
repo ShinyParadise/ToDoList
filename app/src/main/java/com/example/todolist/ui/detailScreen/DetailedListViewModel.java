@@ -11,6 +11,7 @@ import com.example.todolist.repositories.listRepository.IListRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ExecutorService;
 
 public class DetailedListViewModel extends ViewModel {
     private final int listID;
@@ -20,31 +21,40 @@ public class DetailedListViewModel extends ViewModel {
 
     private ArrayList<ListItem> listItems;
 
-    public DetailedListViewModel(IListItemRepository listItemRepository, @NonNull ToDoList toDoList) {
+    private final ExecutorService executor;
+
+    public DetailedListViewModel(IListItemRepository listItemRepository,
+                                 @NonNull ToDoList toDoList,
+                                 ExecutorService executor) {
         this.listID = toDoList.getID();
         this.listHeader = toDoList.getHeader();
         this.listItemRepository = listItemRepository;
+        this.executor = executor;
         listItems = new ArrayList<>();
     }
 
     public void insertListItem(String listItemDescription) {
-        listItemRepository.insertListItem(listID, listItemDescription);
+        executor.submit(() -> listItemRepository.insertListItem(listID, listItemDescription));
     }
 
     public void changeListItemState(int position) {
-        ListItem listItem = listItems.get(position);
+        executor.submit(() -> {
+            ListItem listItem = listItems.get(position);
 
-        boolean invertedState = !listItem.getState();
-        listItem.setState(invertedState);
+            boolean invertedState = !listItem.getState();
+            listItem.setState(invertedState);
 
-        listItemRepository.changeListItemState(listItem);
+            listItemRepository.changeListItemState(listItem);
 
-        Collections.sort(listItems, new ListItemComparator());
+            Collections.sort(listItems, new ListItemComparator());
+        });
     }
 
     public void fetchListItems() {
-        listItems = listItemRepository.getListItems(listID);
-        Collections.sort(listItems, new ListItemComparator());
+        executor.submit(() -> {
+            listItems = listItemRepository.getListItems(listID);
+            Collections.sort(listItems, new ListItemComparator());
+        });
     }
 
     public ArrayList<ListItem> getListItems() {
