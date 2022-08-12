@@ -20,24 +20,14 @@ public class ListRepository implements IListRepository {
     public ToDoList insertToDoList(String listName, String listDescription) {
         ListModel listModel = new ListModel(listName, listDescription);
 
-        try {
-            listModel = listDAO.create(listModel);
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        listModel = listDAO.create(listModel);
 
         return convertListModelToList(listModel);
     }
 
     public ArrayList<ToDoList> getAllLists() {
         ArrayList<ToDoList> toDoLists = new ArrayList<>();
-        ArrayList<ListModel> listModels = new ArrayList<>();
-
-        try {
-            listModels = listDAO.getAllLists();
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        ArrayList<ListModel> listModels = listDAO.getAllLists();
 
         for (ListModel listModel : listModels) {
             ToDoList list = convertListModelToList(listModel);
@@ -48,13 +38,7 @@ public class ListRepository implements IListRepository {
     }
 
     public String getListHeader(int listID) {
-        ListModel listModel = new ListModel(listID);
-
-        try {
-            listModel = listDAO.getListByID(listID);
-        } catch (ExecutionException | InterruptedException e) {
-            e.printStackTrace();
-        }
+        ListModel listModel = listDAO.getListByID(listID);
 
         return listModel.header;
     }
