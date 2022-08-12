@@ -22,17 +22,15 @@ public class DetailedListViewModelUnitTest {
     private final int unchecked = 0;
 
     private IListItemRepository mockedListItemRepository;
-    private IListRepository mockedListRepository;
     private DetailedListViewModel sut;
 
     @Before
     public void setup() {
         mockedListItemRepository = mock(IListItemRepository.class);
-        mockedListRepository = mock(IListRepository.class);
         sut = new DetailedListViewModel(
                 mockedListItemRepository,
-                mockedListRepository,
-                new ToDoList(testId, "", ""));
+                new ToDoList(testId, "", "")
+        );
     }
 
     @Test
@@ -45,17 +43,6 @@ public class DetailedListViewModelUnitTest {
         sut.fetchListItems();
 
         verify(mockedListItemRepository).getListItems(testId);
-    }
-
-    @Test
-    public void test_repository_fetched_correct_header() {
-        String testHeader = "header";
-
-        when(mockedListRepository.getListHeader(testId)).thenReturn(testHeader);
-
-        sut.fetchHeader();
-
-        assertEquals(testHeader, sut.getHeader());
     }
 
     @Test

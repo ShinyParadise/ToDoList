@@ -14,20 +14,16 @@ import java.util.Collections;
 
 public class DetailedListViewModel extends ViewModel {
     private final int listID;
-    private String listHeader;
+    private final String listHeader;
 
     private final IListItemRepository listItemRepository;
-    private final IListRepository listRepository;
 
     private ArrayList<ListItem> listItems;
 
-    public DetailedListViewModel(IListItemRepository listItemRepository,
-                                 IListRepository listRepository,
-                                 @NonNull ToDoList toDoList) {
+    public DetailedListViewModel(IListItemRepository listItemRepository, @NonNull ToDoList toDoList) {
         this.listID = toDoList.getID();
         this.listHeader = toDoList.getHeader();
         this.listItemRepository = listItemRepository;
-        this.listRepository = listRepository;
         listItems = new ArrayList<>();
     }
 
