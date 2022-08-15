@@ -8,7 +8,6 @@ import static org.junit.Assert.*;
 import com.example.todolist.dto.ListItem;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
-import com.example.todolist.repositories.listRepository.IListRepository;
 import com.example.todolist.ui.detailScreen.DetailedListViewModel;
 import static org.mockito.Mockito.*;
 
@@ -44,6 +43,12 @@ public class DetailedListViewModelUnitTest {
     public void test_repository_called_on_list_items_fetch() {
         sut.fetchListItems();
 
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         verify(mockedListItemRepository).getListItems(testId);
     }
 
@@ -57,14 +62,20 @@ public class DetailedListViewModelUnitTest {
         });
         sut.fetchListItems();
 
-        sut.changeListItemState(0);
+        try {
+            Thread.sleep(100);
+
+            sut.changeListItemState(0);
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         assertTrue(sut.getListItems().get(0).getState());
     }
 
     @Test
     public void test_item_sort_on_fetch_items() {
-
         ListItem testItem1 = new ListItem(1, "", checked, testId, ZonedDateTime.now());
         ListItem testItem2 = new ListItem(2, "", testId);
         ListItem testItem3 = new ListItem(3,
@@ -85,8 +96,12 @@ public class DetailedListViewModelUnitTest {
             }
         });
 
-
         sut.fetchListItems();
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         assertEquals(correctOrder, sut.getListItems());
     }
