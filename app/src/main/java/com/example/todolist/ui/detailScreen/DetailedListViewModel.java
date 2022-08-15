@@ -38,12 +38,11 @@ public class DetailedListViewModel extends ViewModel {
     }
 
     public void changeListItemState(int position) {
-        executor.submit(() -> {
+        executor.execute(() -> {
             ListItem listItem = listItems.get(position);
 
             boolean invertedState = !listItem.getState();
             listItem.setState(invertedState);
-
             listItemRepository.changeListItemState(listItem);
 
             Collections.sort(listItems, new ListItemComparator());
@@ -51,7 +50,7 @@ public class DetailedListViewModel extends ViewModel {
     }
 
     public void fetchListItems() {
-        executor.submit(() -> {
+        executor.execute(() -> {
             listItems = listItemRepository.getListItems(listID);
             Collections.sort(listItems, new ListItemComparator());
         });

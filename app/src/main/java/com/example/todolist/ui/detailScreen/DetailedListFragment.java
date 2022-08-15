@@ -56,7 +56,8 @@ public class DetailedListFragment extends Fragment {
         }
 
         detailsViewModel.fetchListItems();
-        initiateRecyclerView();
+
+        requireActivity().runOnUiThread(this::initiateRecyclerView);
 
         btnAddDetail.setOnClickListener(this::onAddDetailClick);
 
@@ -74,8 +75,11 @@ public class DetailedListFragment extends Fragment {
 
     private void onItemStateChange(int position) {
         detailsViewModel.changeListItemState(position);
-        adapter.setListItems(detailsViewModel.getListItems());
-        adapter.notifyDataSetChanged();
+
+        requireActivity().runOnUiThread(() -> {
+            adapter.setListItems(detailsViewModel.getListItems());
+            adapter.notifyDataSetChanged();
+        });
     }
 
     private void initiateViews(@NonNull View rootView) {
@@ -94,9 +98,13 @@ public class DetailedListFragment extends Fragment {
             @Override
             public void onDialogPositiveClick(String listItemDescription) {
                 detailsViewModel.insertListItem(listItemDescription);
+
                 detailsViewModel.fetchListItems();
-                adapter.setListItems(detailsViewModel.getListItems());
-                adapter.notifyDataSetChanged();
+
+                requireActivity().runOnUiThread(() -> {
+                    adapter.setListItems(detailsViewModel.getListItems());
+                    adapter.notifyDataSetChanged();
+                });
             }
 
             @Override

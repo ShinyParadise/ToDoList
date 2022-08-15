@@ -20,15 +20,11 @@ public class ListViewModel extends ViewModel {
     }
 
     public void fetchLists() {
-        executor.submit(() -> {
-            toDoLists = new ArrayList<>(listRepository.getAllLists());
-        });
+        executor.execute(() -> toDoLists = new ArrayList<>(listRepository.getAllLists()));
     }
 
     public void insertNewList(String listName, String listDescription) {
-        executor.submit(() -> {
-            listRepository.insertToDoList(listName, listDescription);
-        });
+        executor.execute(() -> listRepository.insertToDoList(listName, listDescription));
     }
 
     public ArrayList<ToDoList> getLists() {

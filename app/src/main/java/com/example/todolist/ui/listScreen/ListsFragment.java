@@ -38,10 +38,7 @@ public class ListsFragment extends Fragment {
 
         listViewModel.fetchLists();
 
-        initiateRecyclerView();
-
         btnAddList.setOnClickListener(this::onAddClick);
-
 
         return rootView;
     }
@@ -93,9 +90,13 @@ public class ListsFragment extends Fragment {
             @Override
             public void onDialogPositiveClick(String listName, String listDescription) {
                 listViewModel.insertNewList(listName, listDescription);
+
                 listViewModel.fetchLists();
-                adapter.setToDoLists(listViewModel.getLists());
-                adapter.notifyDataSetChanged();
+
+                requireActivity().runOnUiThread(() -> {
+                    adapter.setToDoLists(listViewModel.getLists());
+                    adapter.notifyDataSetChanged();
+                });
             }
 
             @Override
