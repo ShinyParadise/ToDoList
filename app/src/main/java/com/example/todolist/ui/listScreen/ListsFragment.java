@@ -75,7 +75,7 @@ public class ListsFragment extends Fragment {
                 new ListRepository(new ListDAO(getContext())),
                 ToDoListApp.getAppExecutor()
         );
-        
+
         listsRecyclerView = rootView.findViewById(R.id.fragment_lists_recycler_view);
         btnAddList = rootView.findViewById(R.id.fragment_lists_add_list_button);
     }
@@ -94,10 +94,8 @@ public class ListsFragment extends Fragment {
 
                 listViewModel.fetchLists();
 
-                requireActivity().runOnUiThread(() -> {
-                    adapter.setToDoLists(listViewModel.getLists());
-                    adapter.notifyDataSetChanged();
-                });
+                adapter.setToDoLists(listViewModel.getLists());
+                adapter.notifyDataSetChanged();
             }
 
             @Override

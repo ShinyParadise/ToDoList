@@ -47,14 +47,14 @@ public class DetailedListFragment extends Fragment {
         initiateViews(rootView);
 
         try {
-            ((MainActivity)requireActivity()).changeActionBarTitle(detailsViewModel.getHeader());
+            ((MainActivity) requireActivity()).changeActionBarTitle(detailsViewModel.getHeader());
         } catch (IllegalStateException exception) {
             Log.e(TAG, "On change action bar title: ", exception);
         }
 
         detailsViewModel.fetchListItems();
 
-        requireActivity().runOnUiThread(this::initiateRecyclerView);
+        initiateRecyclerView();
 
         btnAddDetail.setOnClickListener(this::onAddDetailClick);
 
@@ -73,10 +73,8 @@ public class DetailedListFragment extends Fragment {
     private void onItemStateChange(int position) {
         detailsViewModel.changeListItemState(position);
 
-        requireActivity().runOnUiThread(() -> {
-            adapter.setListItems(detailsViewModel.getListItems());
-            adapter.notifyDataSetChanged();
-        });
+        adapter.setListItems(detailsViewModel.getListItems());
+        adapter.notifyDataSetChanged();
     }
 
     private void initiateViews(@NonNull View rootView) {
@@ -98,10 +96,8 @@ public class DetailedListFragment extends Fragment {
 
                 detailsViewModel.fetchListItems();
 
-                requireActivity().runOnUiThread(() -> {
-                    adapter.setListItems(detailsViewModel.getListItems());
-                    adapter.notifyDataSetChanged();
-                });
+                adapter.setListItems(detailsViewModel.getListItems());
+                adapter.notifyDataSetChanged();
             }
 
             @Override

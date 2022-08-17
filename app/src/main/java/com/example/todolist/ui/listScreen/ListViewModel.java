@@ -17,6 +17,7 @@ public class ListViewModel extends ViewModel {
     public ListViewModel(IListRepository listRepository, ExecutorService executor) {
         this.listRepository = listRepository;
         this.executor = executor;
+        toDoLists = new ArrayList<>();
     }
 
     public void fetchLists() {

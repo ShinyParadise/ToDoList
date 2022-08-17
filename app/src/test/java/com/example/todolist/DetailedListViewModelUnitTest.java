@@ -48,12 +48,6 @@ public class DetailedListViewModelUnitTest {
     public void test_repository_called_on_list_items_fetch() {
         sut.fetchListItems();
 
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
         verify(mockedListItemRepository).getListItems(testId);
     }
 
@@ -67,16 +61,10 @@ public class DetailedListViewModelUnitTest {
         });
         sut.fetchListItems();
 
-        try {
-            Thread.sleep(100);
+        sut.changeListItemState(0);
 
-            sut.changeListItemState(0);
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        assertTrue(sut.getListItems().get(0).getState());
+        ArrayList<ListItem> listItems = sut.getListItems();
+        assertTrue(listItems.get(0).getState());
     }
 
     @Test
@@ -104,11 +92,6 @@ public class DetailedListViewModelUnitTest {
         });
 
         sut.fetchListItems();
-        try {
-            Thread.sleep(100);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         assertEquals(correctOrder, sut.getListItems());
     }
