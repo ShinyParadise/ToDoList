@@ -1,23 +1,20 @@
 package com.example.todolist.ui.detailScreen;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.example.todolist.R;
-import com.example.todolist.dao.list.ListDAO;
 import com.example.todolist.dao.listItem.ListItemDAO;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.ListItemRepository;
-import com.example.todolist.repositories.listRepository.ListRepository;
 import com.example.todolist.ui.app.ToDoListApp;
 import com.example.todolist.ui.detailScreen.detailRecycler.ListDetailRecyclerViewAdapter;
 import com.example.todolist.ui.startup.MainActivity;
@@ -118,7 +115,7 @@ public class DetailedListFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
         try {
-            ((MainActivity)requireActivity()).changeActionBarTitle("Lists");
+            ((MainActivity) requireActivity()).changeActionBarTitle("Lists");
         } catch (NullPointerException exception) {
             Log.e(TAG, "on change action bar title: ", exception);
         }

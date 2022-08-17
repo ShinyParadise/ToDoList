@@ -14,15 +14,20 @@ import static org.mockito.Mockito.*;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class DetailedListViewModelUnitTest {
     private final int testId = 1;
     private final int checked = 1;
     private final int unchecked = 0;
+    private final int threads = 4;
 
     private IListItemRepository mockedListItemRepository;
     private DetailedListViewModel sut;
+    private final ExecutorService executorService = Executors.newFixedThreadPool(threads);
+    private final CountDownLatch latch = new CountDownLatch(threads);
 
     @Before
     public void setup() {
@@ -30,7 +35,7 @@ public class DetailedListViewModelUnitTest {
         sut = new DetailedListViewModel(
                 mockedListItemRepository,
                 new ToDoList(testId, "", ""),
-                Executors.newCachedThreadPool()
+                executorService
         );
     }
 
@@ -82,7 +87,9 @@ public class DetailedListViewModelUnitTest {
                 "",
                 checked,
                 testId,
-                ZonedDateTime.now().plus(1, ChronoUnit.SECONDS));
+                ZonedDateTime.now().plus(1, ChronoUnit.SECONDS)
+        );
+
         ArrayList<ListItem> correctOrder = new ArrayList<>();
         correctOrder.add(testItem2);
         correctOrder.add(testItem3);

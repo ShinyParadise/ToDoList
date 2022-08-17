@@ -7,7 +7,6 @@ import com.example.todolist.db.models.ListModel;
 import com.example.todolist.dto.ToDoList;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 
 public class ListRepository implements IListRepository {
