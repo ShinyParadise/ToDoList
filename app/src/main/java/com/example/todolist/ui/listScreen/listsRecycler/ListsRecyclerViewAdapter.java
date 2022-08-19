@@ -17,8 +17,8 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
     private ArrayList<ToDoList> toDoLists;
     private static ClickListener clickListener;
 
-    public ListsRecyclerViewAdapter(ArrayList<ToDoList> toDoLists) {
-        this.toDoLists = toDoLists;
+    public ListsRecyclerViewAdapter() {
+        toDoLists = new ArrayList<>();
     }
 
     public interface ClickListener {
@@ -49,8 +49,9 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         }
     }
 
-    public void setToDoLists(ArrayList<ToDoList> toDoLists) {
+    public void updateToDoLists(ArrayList<ToDoList> toDoLists) {
         this.toDoLists = toDoLists;
+        notifyDataSetChanged();
     }
 
     @Override

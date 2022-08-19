@@ -1,4 +1,6 @@
 package com.example.todolist.ui.listScreen;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ToDoList;
@@ -12,17 +14,17 @@ public class ListViewModel extends ViewModel {
 
     private final ExecutorService executor;
 
-    private ArrayList<ToDoList> toDoLists;
+    private final MutableLiveData<ArrayList<ToDoList>> toDoLists;
 
     public ListViewModel(IListRepository listRepository, ExecutorService executor) {
         this.listRepository = listRepository;
         this.executor = executor;
-        toDoLists = new ArrayList<>();
+        toDoLists = new MutableLiveData<>();
     }
 
     public void fetchLists() {
         executor.execute(() -> {
-            toDoLists = new ArrayList<>(listRepository.getAllLists());
+            toDoLists.postValue(listRepository.getAllLists());
         });
     }
 
@@ -32,7 +34,7 @@ public class ListViewModel extends ViewModel {
         });
     }
 
-    public ArrayList<ToDoList> getLists() {
+    public LiveData<ArrayList<ToDoList>> getLists() {
         return toDoLists;
     }
 }
