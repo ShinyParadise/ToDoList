@@ -14,7 +14,6 @@ import static org.mockito.Mockito.*;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,7 +26,6 @@ public class DetailedListViewModelUnitTest {
     private IListItemRepository mockedListItemRepository;
     private DetailedListViewModel sut;
     private final ExecutorService executorService = Executors.newFixedThreadPool(threads);
-    private final CountDownLatch latch = new CountDownLatch(threads);
 
     @Before
     public void setup() {
@@ -41,7 +39,7 @@ public class DetailedListViewModelUnitTest {
 
     @Test
     public void test_init_data() {
-        assertTrue(sut.getListItems().isEmpty());
+        assertTrue(sut.getListItems().getValue().isEmpty());
     }
 
     @Test
@@ -63,7 +61,7 @@ public class DetailedListViewModelUnitTest {
 
         sut.changeListItemState(0);
 
-        ArrayList<ListItem> listItems = sut.getListItems();
+        ArrayList<ListItem> listItems = sut.getListItems().getValue();
         assertTrue(listItems.get(0).getState());
     }
 
@@ -93,6 +91,6 @@ public class DetailedListViewModelUnitTest {
 
         sut.fetchListItems();
 
-        assertEquals(correctOrder, sut.getListItems());
+        assertEquals(correctOrder, sut.getListItems().getValue());
     }
 }
