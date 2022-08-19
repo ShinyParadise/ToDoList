@@ -83,12 +83,12 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
 
         @Override
         public void onClick(View v) {
-            clickListener.onItemClick(getAdapterPosition(), v);
+            clickListener.onItemClick(getBindingAdapterPosition(), v);
         }
 
         @Override
         public boolean onLongClick(View v) {
-            clickListener.onItemLongClick(getAdapterPosition(), v);
+            clickListener.onItemLongClick(getBindingAdapterPosition(), v);
             return false;
         }
     }
