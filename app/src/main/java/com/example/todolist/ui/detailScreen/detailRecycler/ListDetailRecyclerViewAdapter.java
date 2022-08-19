@@ -17,12 +17,13 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
     private ArrayList<ListItem> listItems;
     private static CheckListener checkListener;
 
-    public ListDetailRecyclerViewAdapter(ArrayList<ListItem> listItems) {
-        this.listItems = listItems;
+    public ListDetailRecyclerViewAdapter() {
+        listItems = new ArrayList<>();
     }
 
-    public void setListItems(ArrayList<ListItem> listItems) {
+    public void updateListItems(ArrayList<ListItem> listItems) {
         this.listItems = listItems;
+        notifyDataSetChanged();
     }
 
     public interface CheckListener {

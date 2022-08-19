@@ -1,13 +1,14 @@
 package com.example.todolist.ui.detailScreen;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ListItem;
 import com.example.todolist.dto.ListItemComparator;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
-import com.example.todolist.repositories.listRepository.IListRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +20,7 @@ public class DetailedListViewModel extends ViewModel {
 
     private final IListItemRepository listItemRepository;
 
-    private ArrayList<ListItem> listItems;
+    private final MutableLiveData<ArrayList<ListItem>> listItemsLiveData;
 
     private final ExecutorService executor;
 
@@ -30,7 +31,7 @@ public class DetailedListViewModel extends ViewModel {
         this.listHeader = toDoList.getHeader();
         this.listItemRepository = listItemRepository;
         this.executor = executor;
-        listItems = new ArrayList<>();
+        listItemsLiveData = new MutableLiveData<>();
     }
 
     public void insertListItem(String listItemDescription) {
@@ -41,25 +42,24 @@ public class DetailedListViewModel extends ViewModel {
 
     public void changeListItemState(int position) {
         executor.execute(() -> {
-            ListItem listItem = listItems.get(position);
+            ListItem listItem = listItemsLiveData.getValue().get(position);
 
             boolean invertedState = !listItem.getState();
             listItem.setState(invertedState);
             listItemRepository.changeListItemState(listItem);
-
-            Collections.sort(listItems, new ListItemComparator());
+            //Collections.sort(listItemsLiveData.getValue(), new ListItemComparator());
         });
     }
 
     public void fetchListItems() {
         executor.execute(() -> {
-            listItems = listItemRepository.getListItems(listID);
-            Collections.sort(listItems, new ListItemComparator());
+            listItemsLiveData.postValue(listItemRepository.getListItems(listID));
+            //Collections.sort(listItemsLiveData.getValue(), new ListItemComparator());
         });
     }
 
-    public ArrayList<ListItem> getListItems() {
-        return listItems;
+    public LiveData<ArrayList<ListItem>> getListItems() {
+        return listItemsLiveData;
     }
 
     public String getHeader() {
