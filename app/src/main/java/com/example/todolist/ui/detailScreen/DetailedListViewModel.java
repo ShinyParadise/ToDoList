@@ -1,8 +1,10 @@
 package com.example.todolist.ui.detailScreen;
 
 import androidx.annotation.NonNull;
+import androidx.arch.core.util.Function;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ListItem;
@@ -47,14 +49,18 @@ public class DetailedListViewModel extends ViewModel {
             boolean invertedState = !listItem.getState();
             listItem.setState(invertedState);
             listItemRepository.changeListItemState(listItem);
-            //Collections.sort(listItemsLiveData.getValue(), new ListItemComparator());
+
+            ArrayList<ListItem> listItems = listItemsLiveData.getValue();
+            Collections.sort(listItems, new ListItemComparator());
+            listItemsLiveData.postValue(listItems);
         });
     }
 
     public void fetchListItems() {
         executor.execute(() -> {
-            listItemsLiveData.postValue(listItemRepository.getListItems(listID));
-            //Collections.sort(listItemsLiveData.getValue(), new ListItemComparator());
+            ArrayList<ListItem> listItems = listItemRepository.getListItems(listID);
+            Collections.sort(listItems, new ListItemComparator());
+            listItemsLiveData.postValue(listItems);
         });
     }
 
