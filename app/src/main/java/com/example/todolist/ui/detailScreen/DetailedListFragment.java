@@ -99,7 +99,7 @@ public class DetailedListFragment extends Fragment {
     }
 
     private void setDialogListener(@NonNull AddListItemDialog addListItemDialog) {
-        addListItemDialog.listener = new AddListItemDialog.AddListItemDialogListener() {
+        addListItemDialog.setListener(new AddListItemDialog.AddListItemDialogListener() {
             @Override
             public void onDialogPositiveClick(String listItemDescription) {
                 detailsViewModel.insertListItem(listItemDescription);
@@ -107,10 +107,8 @@ public class DetailedListFragment extends Fragment {
             }
 
             @Override
-            public void onDialogNegativeClick() {
-
-            }
-        };
+            public void onDialogNegativeClick() {}
+        });
     }
 
     @Override

@@ -18,7 +18,7 @@ public class AddListItemDialog extends DialogFragment {
     private EditText etListItemDescription;
     private String listItemDescription;
 
-    AddListItemDialogListener listener;
+    private AddListItemDialogListener listener;
 
     public static final String TAG = "AddListItemDialog";
 
@@ -41,6 +41,10 @@ public class AddListItemDialog extends DialogFragment {
                 .setNegativeButton(R.string.cancel_dialog, this::onCancelDialogClick);
 
         return builder.create();
+    }
+
+    public void setListener(AddListItemDialogListener listener) {
+        this.listener = listener;
     }
 
     private void onOkButtonClick(DialogInterface dialog, int which) {
