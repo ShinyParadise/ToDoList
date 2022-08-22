@@ -10,21 +10,23 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 
 public class ListViewModel extends ViewModel {
+    public LiveData<ArrayList<ToDoList>> toDoListsLiveData;
+    private final MutableLiveData<ArrayList<ToDoList>> toDoListsMutableLiveData;
+
     private final IListRepository listRepository;
 
     private final ExecutorService executor;
 
-    private final MutableLiveData<ArrayList<ToDoList>> toDoLists;
-
     public ListViewModel(IListRepository listRepository, ExecutorService executor) {
         this.listRepository = listRepository;
         this.executor = executor;
-        toDoLists = new MutableLiveData<>();
+        toDoListsMutableLiveData = new MutableLiveData<>(new ArrayList<>());
+        toDoListsLiveData = (LiveData<ArrayList<ToDoList>>) toDoListsMutableLiveData;
     }
 
     public void fetchLists() {
         executor.execute(() -> {
-            toDoLists.postValue(listRepository.getAllLists());
+            toDoListsMutableLiveData.postValue(listRepository.getAllLists());
         });
     }
 
@@ -32,9 +34,5 @@ public class ListViewModel extends ViewModel {
         executor.execute(() -> {
             listRepository.insertToDoList(listName, listDescription);
         });
-    }
-
-    public LiveData<ArrayList<ToDoList>> getLists() {
-        return toDoLists;
     }
 }

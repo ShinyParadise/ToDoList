@@ -1,7 +1,9 @@
 package com.example.todolist;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import static org.junit.Assert.*;
 
@@ -11,17 +13,26 @@ import com.example.todolist.repositories.listItemsRepository.IListItemRepository
 import com.example.todolist.ui.detailScreen.DetailedListViewModel;
 import static org.mockito.Mockito.*;
 
+import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
+
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import kotlin.jvm.JvmField;
+
+
 public class DetailedListViewModelUnitTest {
     private final int testId = 1;
     private final int checked = 1;
     private final int unchecked = 0;
     private final int threads = 4;
+
+    @Rule
+    @JvmField
+    public TestRule rule = new InstantTaskExecutorRule();
 
     private IListItemRepository mockedListItemRepository;
     private DetailedListViewModel sut;

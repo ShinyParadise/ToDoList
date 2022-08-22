@@ -61,7 +61,7 @@ public class ListsFragment extends Fragment {
             adapter.updateToDoLists(toDoLists);
         };
 
-        listViewModel.getLists().observe(getViewLifecycleOwner(), observer);
+        listViewModel.toDoListsLiveData.observe(getViewLifecycleOwner(), observer);
     }
 
     private void initiateRecyclerView() {
@@ -69,15 +69,21 @@ public class ListsFragment extends Fragment {
         adapter.setOnItemClickListener(new ListsRecyclerViewAdapter.ClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                DetailedListFragment detailedListFragment = new DetailedListFragment(
-                        Objects.requireNonNull(listViewModel.getLists().getValue()).get(position)
-                );
+                ArrayList<ToDoList> currentLists = listViewModel.toDoListsLiveData.getValue();
 
-                getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container_view, detailedListFragment)
-                        .setReorderingAllowed(true)
-                        .addToBackStack("fragment_lists")
-                        .commit();
+                if (currentLists != null) {
+                    DetailedListFragment detailedListFragment = new DetailedListFragment(
+                            currentLists.get(position)
+                    );
+
+                    getParentFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container_view, detailedListFragment)
+                            .setReorderingAllowed(true)
+                            .addToBackStack("fragment_lists")
+                            .commit();
+                } else {
+                    Toast.makeText(getContext(), "current list is NULL", Toast.LENGTH_SHORT).show();
+                }
             }
 
             @Override
@@ -105,7 +111,6 @@ public class ListsFragment extends Fragment {
         addListDialog.setListener((listName, listDescription) -> {
             listViewModel.insertNewList(listName, listDescription);
             listViewModel.fetchLists();
-        }
-        );
+        });
     }
 }

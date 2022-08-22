@@ -1,5 +1,7 @@
 package com.example.todolist.ui.detailScreen;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -15,12 +17,14 @@ import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 
 public class DetailedListViewModel extends ViewModel {
+    public LiveData<ArrayList<ListItem>> listItemsLiveData;
+    private final MutableLiveData<ArrayList<ListItem>> listItemsMutableLiveData;
+
     private final int listID;
     private final String listHeader;
+    public static final String TAG = "DetailsViewModel";
 
     private final IListItemRepository listItemRepository;
-
-    private final MutableLiveData<ArrayList<ListItem>> listItemsLiveData;
 
     private final ExecutorService executor;
 
@@ -31,7 +35,8 @@ public class DetailedListViewModel extends ViewModel {
         this.listHeader = toDoList.getHeader();
         this.listItemRepository = listItemRepository;
         this.executor = executor;
-        listItemsLiveData = new MutableLiveData<>(new ArrayList<>());
+        listItemsMutableLiveData = new MutableLiveData<>(new ArrayList<>());
+        listItemsLiveData = (LiveData<ArrayList<ListItem>>) listItemsMutableLiveData;
     }
 
     public void insertListItem(String listItemDescription) {
@@ -42,15 +47,22 @@ public class DetailedListViewModel extends ViewModel {
 
     public void changeListItemState(int position) {
         executor.execute(() -> {
-            ListItem listItem = listItemsLiveData.getValue().get(position);
+            ArrayList<ListItem> lists = listItemsMutableLiveData.getValue();
+            ListItem listItem;
 
+            if (lists == null) {
+                Log.e(TAG, "on change list item state: list is null");
+                return;
+            }
+
+            listItem = lists.get(position);
             boolean invertedState = !listItem.getState();
             listItem.setState(invertedState);
             listItemRepository.changeListItemState(listItem);
 
-            ArrayList<ListItem> listItems = listItemsLiveData.getValue();
+            ArrayList<ListItem> listItems = listItemsMutableLiveData.getValue();
             Collections.sort(listItems, new ListItemComparator());
-            listItemsLiveData.postValue(listItems);
+            listItemsMutableLiveData.postValue(listItems);
         });
     }
 
@@ -58,12 +70,8 @@ public class DetailedListViewModel extends ViewModel {
         executor.execute(() -> {
             ArrayList<ListItem> listItems = listItemRepository.getListItems(listID);
             Collections.sort(listItems, new ListItemComparator());
-            listItemsLiveData.postValue(listItems);
+            listItemsMutableLiveData.postValue(listItems);
         });
-    }
-
-    public LiveData<ArrayList<ListItem>> getListItems() {
-        return listItemsLiveData;
     }
 
     public String getHeader() {

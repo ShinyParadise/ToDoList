@@ -71,7 +71,7 @@ public class DetailedListFragment extends Fragment {
             adapter.updateListItems(listItems);
         };
 
-        detailsViewModel.getListItems().observe(getViewLifecycleOwner(), observer);
+        detailsViewModel.listItemsLiveData.observe(getViewLifecycleOwner(), observer);
     }
 
     private void initiateRecyclerView() {
