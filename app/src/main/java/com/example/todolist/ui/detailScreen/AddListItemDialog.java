@@ -24,7 +24,6 @@ public class AddListItemDialog extends DialogFragment {
 
     public interface AddListItemDialogListener {
         void onDialogPositiveClick(String listItemDescription);
-        void onDialogNegativeClick();
     }
 
     @NonNull
@@ -36,9 +35,7 @@ public class AddListItemDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_add_list_item, null);
         etListItemDescription = view.findViewById(R.id.dialog_add_list_item_input);
 
-        builder.setView(view)
-                .setPositiveButton(R.string.add_list_dialog_ok_button, this::onOkButtonClick)
-                .setNegativeButton(R.string.cancel_dialog, this::onCancelDialogClick);
+        builder.setView(view).setPositiveButton(R.string.add_list_dialog_ok_button, this::onOkButtonClick);
 
         return builder.create();
     }
@@ -53,10 +50,5 @@ public class AddListItemDialog extends DialogFragment {
         if (!listItemDescription.isEmpty()) {
             listener.onDialogPositiveClick(listItemDescription);
         }
-    }
-
-    private void onCancelDialogClick(DialogInterface dialog, int which) {
-        // TODO: save what user have typed
-        listener.onDialogNegativeClick();
     }
 }

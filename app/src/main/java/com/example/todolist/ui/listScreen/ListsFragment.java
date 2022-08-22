@@ -102,17 +102,10 @@ public class ListsFragment extends Fragment {
     }
 
     private void setDialogListener(@NonNull AddListDialog addListDialog) {
-        addListDialog.setListener(new AddListDialog.AddListDialogListener() {
-                @Override
-                public void onDialogPositiveClick(String listName, String listDescription) {
-                    listViewModel.insertNewList(listName, listDescription);
-                    listViewModel.fetchLists();
-                }
-
-                @Override
-                public void onDialogNegativeClick() {
-                }
-            }
+        addListDialog.setListener((listName, listDescription) -> {
+            listViewModel.insertNewList(listName, listDescription);
+            listViewModel.fetchLists();
+        }
         );
     }
 }
