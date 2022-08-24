@@ -9,24 +9,21 @@ public class SynchronousExecutorService extends AbstractExecutorService {
     private volatile boolean terminated;
 
     @Override
-    public void shutdown() {
-        terminated = true;
-    }
+    public void shutdown() { }
 
     @Override
     public boolean isShutdown() {
-        return terminated;
+        return false;
     }
 
     @Override
     public boolean isTerminated() {
-        return terminated;
+        return false;
     }
 
     @Override
     public boolean awaitTermination(long theTimeout, TimeUnit theUnit) {
-        shutdown();
-        return terminated;
+        return true;
     }
 
     @Override
