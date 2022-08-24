@@ -11,7 +11,7 @@ import java.util.concurrent.ExecutorService;
 
 public class ListViewModel extends ViewModel {
     public LiveData<ArrayList<ToDoList>> toDoListsLiveData;
-    private final MutableLiveData<ArrayList<ToDoList>> toDoListsMutableLiveData;
+    private final MutableLiveData<ArrayList<ToDoList>> _toDoListsLiveData;
 
     private final IListRepository listRepository;
 
@@ -20,13 +20,13 @@ public class ListViewModel extends ViewModel {
     public ListViewModel(IListRepository listRepository, ExecutorService executor) {
         this.listRepository = listRepository;
         this.executor = executor;
-        toDoListsMutableLiveData = new MutableLiveData<>(new ArrayList<>());
-        toDoListsLiveData = (LiveData<ArrayList<ToDoList>>) toDoListsMutableLiveData;
+        _toDoListsLiveData = new MutableLiveData<>(new ArrayList<>());
+        toDoListsLiveData = _toDoListsLiveData;
     }
 
     public void fetchLists() {
         executor.execute(() -> {
-            toDoListsMutableLiveData.postValue(listRepository.getAllLists());
+            _toDoListsLiveData.postValue(listRepository.getAllLists());
         });
     }
 
