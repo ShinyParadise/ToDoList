@@ -2,9 +2,13 @@ package com.example.todolist;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.*;
 
+import android.util.Log;
+
+import androidx.annotation.NonNull;
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule;
 import androidx.lifecycle.Observer;
 
@@ -12,7 +16,9 @@ import com.example.todolist.dto.ListItem;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
 import com.example.todolist.ui.detailScreen.DetailedListViewModel;
+import com.example.todolist.utils.SynchronousExecutorService;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,8 +27,10 @@ import org.junit.rules.TestRule;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 
 public class DetailedListViewModelUnitTest {
@@ -39,9 +47,9 @@ public class DetailedListViewModelUnitTest {
 
     @Before
     public void setup() {
-        int threads = 4;
         mockedListItemRepository = mock(IListItemRepository.class);
-        pool = Executors.newFixedThreadPool(threads);
+        pool = new SynchronousExecutorService();
+
         sut = new DetailedListViewModel(
                 mockedListItemRepository,
                 new ToDoList(testId, "", ""),
@@ -50,6 +58,11 @@ public class DetailedListViewModelUnitTest {
 
         Observer<ArrayList<ListItem>> mockObserver = mock(Observer.class);
         sut.listItemsLiveData.observeForever(mockObserver);
+    }
+
+    @After
+    public void tearDown() {
+        pool.shutdown();
     }
 
     @Test
@@ -81,25 +94,23 @@ public class DetailedListViewModelUnitTest {
         });
 
         sut.fetchListItems();
-        sut.changeListItemState(1);
-        pool.shutdownNow();
+        sut.changeListItemState(0);
 
         ArrayList<ListItem> listItems = sut.listItemsLiveData.getValue();
 
-        assert listItems != null;
-
-        assertFalse(listItems.get(1).getState());
+        assertNotNull(listItems);
+        assertTrue(listItems.get(0).getState());
     }
 
     @Test
     public void test_item_sort_on_fetch_items() {
         ListItem testItem1 = new ListItem(1, "", checked, testId, ZonedDateTime.now());
-        ListItem testItem2 = new ListItem(2, "", testId);
+        ListItem testItem2 = new ListItem(2, "", checked, testId, ZonedDateTime.now());
         ListItem testItem3 = new ListItem(3, "", unchecked, testId, ZonedDateTime.now().plus(1, ChronoUnit.SECONDS));
 
         ArrayList<ListItem> correctOrder = new ArrayList<>();
-        correctOrder.add(testItem2);
         correctOrder.add(testItem3);
+        correctOrder.add(testItem2);
         correctOrder.add(testItem1);
 
         when(mockedListItemRepository.getListItems(testId)).thenReturn(new ArrayList<ListItem>() {
@@ -113,7 +124,7 @@ public class DetailedListViewModelUnitTest {
         sut.fetchListItems();
         ArrayList<ListItem> listItems = sut.listItemsLiveData.getValue();
 
-        assert listItems != null;
+        assertNotNull(listItems);
         assertEquals(correctOrder, listItems);
     }
 }
