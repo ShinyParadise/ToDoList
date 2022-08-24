@@ -47,20 +47,19 @@ public class DetailedListViewModel extends ViewModel {
 
     public void changeListItemState(int position) {
         executor.execute(() -> {
-            ArrayList<ListItem> lists = listItemsMutableLiveData.getValue();
+            ArrayList<ListItem> listItems = listItemsMutableLiveData.getValue();
             ListItem listItem;
 
-            if (lists == null) {
+            if (listItems == null) {
                 Log.e(TAG, "on change list item state: list is null");
                 return;
             }
 
-            listItem = lists.get(position);
+            listItem = listItems.get(position);
             boolean invertedState = !listItem.getState();
             listItem.setState(invertedState);
             listItemRepository.changeListItemState(listItem);
 
-            ArrayList<ListItem> listItems = listItemsMutableLiveData.getValue();
             Collections.sort(listItems, new ListItemComparator());
             listItemsMutableLiveData.postValue(listItems);
         });
