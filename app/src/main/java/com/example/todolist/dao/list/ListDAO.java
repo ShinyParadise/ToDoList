@@ -70,11 +70,11 @@ public class ListDAO implements IListDAO {
         SQLiteDatabase db = databaseHelper.getReadableDatabase();
         Cursor request = db.rawQuery(DatabaseContract.ToDoListTable.SELECT_LAST_ITEM, null);
 
-
         request.moveToFirst();
         ListModel lastList = toList(request);
 
         request.close();
+
         return lastList;
     }
 

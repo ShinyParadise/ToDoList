@@ -1,62 +1,77 @@
 package com.example.todolist.ui.detailScreen;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.todolist.dto.ListItem;
 import com.example.todolist.dto.ListItemComparator;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.IListItemRepository;
-import com.example.todolist.repositories.listRepository.IListRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.concurrent.ExecutorService;
 
 public class DetailedListViewModel extends ViewModel {
+    public LiveData<ArrayList<ListItem>> listItemsLiveData;
+    private final MutableLiveData<ArrayList<ListItem>> _listItemsLiveData;
+
     private final int listID;
-    private String listHeader;
+    private final String listHeader;
+    public static final String TAG = "DetailsViewModel";
 
     private final IListItemRepository listItemRepository;
-    private final IListRepository listRepository;
 
-    private ArrayList<ListItem> listItems;
+    private final ExecutorService executor;
 
     public DetailedListViewModel(IListItemRepository listItemRepository,
-                                 IListRepository listRepository,
-                                 @NonNull ToDoList toDoList) {
+                                 @NonNull ToDoList toDoList,
+                                 ExecutorService executor) {
         this.listID = toDoList.getID();
         this.listHeader = toDoList.getHeader();
         this.listItemRepository = listItemRepository;
-        this.listRepository = listRepository;
-        listItems = new ArrayList<>();
+        this.executor = executor;
+        _listItemsLiveData = new MutableLiveData<>(new ArrayList<>());
+        listItemsLiveData = _listItemsLiveData;
     }
 
     public void insertListItem(String listItemDescription) {
-        listItemRepository.insertListItem(listID, listItemDescription);
+        executor.execute(() -> {
+            listItemRepository.insertListItem(listID, listItemDescription);
+            fetchListItems();
+        });
     }
 
     public void changeListItemState(int position) {
-        ListItem listItem = listItems.get(position);
+        executor.execute(() -> {
+            ArrayList<ListItem> listItems = _listItemsLiveData.getValue();
+            ListItem listItem;
 
-        boolean invertedState = !listItem.getState();
-        listItem.setState(invertedState);
+            if (listItems == null) {
+                Log.e(TAG, "on change list item state: list is null");
+                return;
+            }
 
-        listItemRepository.changeListItemState(listItem);
+            listItem = listItems.get(position);
+            boolean invertedState = !listItem.getState();
+            listItem.setState(invertedState);
+            listItemRepository.changeListItemState(listItem);
 
-        Collections.sort(listItems, new ListItemComparator());
+            Collections.sort(listItems, new ListItemComparator());
+            _listItemsLiveData.postValue(listItems);
+        });
     }
 
     public void fetchListItems() {
-        listItems = listItemRepository.getListItems(listID);
-        Collections.sort(listItems, new ListItemComparator());
-    }
-
-    public void fetchHeader() {
-        listHeader = listRepository.getListHeader(listID);
-    }
-
-    public ArrayList<ListItem> getListItems() {
-        return listItems;
+        executor.execute(() -> {
+            ArrayList<ListItem> listItems = listItemRepository.getListItems(listID);
+            Collections.sort(listItems, new ListItemComparator());
+            _listItemsLiveData.postValue(listItems);
+        });
     }
 
     public String getHeader() {

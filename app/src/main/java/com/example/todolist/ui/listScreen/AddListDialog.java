@@ -18,13 +18,12 @@ public class AddListDialog extends DialogFragment {
     private EditText etListName, etListDescription;
     private String listName, listDescription;
 
-    AddListDialogListener listener;
+    private AddListDialogOkButtonListener okButtonListener;
 
     public static final String TAG = "AddListDialog";
 
-    public interface AddListDialogListener {
+    public interface AddListDialogOkButtonListener {
         void onDialogPositiveClick(String listName, String listDescription);
-        void onDialogNegativeClick();
     }
 
     @NonNull
@@ -39,22 +38,21 @@ public class AddListDialog extends DialogFragment {
 
         builder.setView(view)
                 .setPositiveButton(R.string.add_list_dialog_ok_button, this::onOkButtonClick)
-                .setNegativeButton(R.string.cancel_dialog, this::onCancelDialogClick);
+                .setNegativeButton(R.string.cancel_dialog, (dialog, which) -> {});
 
         return builder.create();
     }
 
-    private void onOkButtonClick(DialogInterface dialog, int which) {
+    public void setOkButtonListener(AddListDialogOkButtonListener okButtonListener) {
+        this.okButtonListener = okButtonListener;
+    }
+
+    private void onOkButtonClick(DialogInterface dialogInterface, int which) {
         listName = etListName.getText().toString();
         listDescription = etListDescription.getText().toString();
 
         if (!listName.isEmpty() && !listDescription.isEmpty()) {
-            listener.onDialogPositiveClick(listName, listDescription);
+            okButtonListener.onDialogPositiveClick(listName, listDescription);
         }
-    }
-
-    private void onCancelDialogClick(DialogInterface dialog, int which) {
-        // TODO: save what user have typed
-        listener.onDialogNegativeClick();
     }
 }

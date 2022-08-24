@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class ListItem {
     private final int id;
-    private String description;
+    private final String description;
     private boolean isChecked = false;
     private final int listID;
     private ZonedDateTime updatedAt;

@@ -1,26 +1,28 @@
 package com.example.todolist.ui.detailScreen;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.todolist.R;
-import com.example.todolist.dao.list.ListDAO;
 import com.example.todolist.dao.listItem.ListItemDAO;
+import com.example.todolist.dto.ListItem;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.ListItemRepository;
-import com.example.todolist.repositories.listRepository.ListRepository;
+import com.example.todolist.ui.app.ToDoListApp;
 import com.example.todolist.ui.detailScreen.detailRecycler.ListDetailRecyclerViewAdapter;
 import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.ArrayList;
 
 public class DetailedListFragment extends Fragment {
     private static final String TAG = "DetailedListFragment";
@@ -35,8 +37,8 @@ public class DetailedListFragment extends Fragment {
     public DetailedListFragment(@NonNull ToDoList toDoList) {
         detailsViewModel = new DetailedListViewModel(
                 new ListItemRepository(new ListItemDAO(getContext())),
-                new ListRepository(new ListDAO(getContext())),
-                toDoList
+                toDoList,
+                ToDoListApp.getAppExecutor()
         );
     }
 
@@ -49,21 +51,31 @@ public class DetailedListFragment extends Fragment {
         initiateViews(rootView);
 
         try {
-            ((MainActivity)requireActivity()).changeActionBarTitle(detailsViewModel.getHeader());
+            ((MainActivity) requireActivity()).changeActionBarTitle(detailsViewModel.getHeader());
         } catch (IllegalStateException exception) {
             Log.e(TAG, "On change action bar title: ", exception);
         }
 
-        detailsViewModel.fetchListItems();
         initiateRecyclerView();
+        initiateObserver();
+
+        detailsViewModel.fetchListItems();
 
         btnAddDetail.setOnClickListener(this::onAddDetailClick);
 
         return rootView;
     }
 
+    private void initiateObserver() {
+        Observer<ArrayList<ListItem>> observer = listItems -> {
+            adapter.updateListItems(listItems);
+        };
+
+        detailsViewModel.listItemsLiveData.observe(getViewLifecycleOwner(), observer);
+    }
+
     private void initiateRecyclerView() {
-        adapter = new ListDetailRecyclerViewAdapter(detailsViewModel.getListItems());
+        adapter = new ListDetailRecyclerViewAdapter();
 
         adapter.setOnCheckChangedListener(this::onItemStateChange);
 
@@ -73,8 +85,6 @@ public class DetailedListFragment extends Fragment {
 
     private void onItemStateChange(int position) {
         detailsViewModel.changeListItemState(position);
-        adapter.setListItems(detailsViewModel.getListItems());
-        adapter.notifyDataSetChanged();
     }
 
     private void initiateViews(@NonNull View rootView) {
@@ -89,27 +99,14 @@ public class DetailedListFragment extends Fragment {
     }
 
     private void setDialogListener(@NonNull AddListItemDialog addListItemDialog) {
-        addListItemDialog.listener = new AddListItemDialog.AddListItemDialogListener() {
-            @Override
-            public void onDialogPositiveClick(String listItemDescription) {
-                detailsViewModel.insertListItem(listItemDescription);
-                detailsViewModel.fetchListItems();
-                adapter.setListItems(detailsViewModel.getListItems());
-                adapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onDialogNegativeClick() {
-
-            }
-        };
+        addListItemDialog.setOkButtonListener(detailsViewModel::insertListItem);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         try {
-            ((MainActivity)requireActivity()).changeActionBarTitle("Lists");
+            ((MainActivity) requireActivity()).changeActionBarTitle("Lists");
         } catch (NullPointerException exception) {
             Log.e(TAG, "on change action bar title: ", exception);
         }
