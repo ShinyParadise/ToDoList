@@ -35,8 +35,8 @@ public class DetailedListViewModel extends ViewModel {
         this.listHeader = toDoList.getHeader();
         this.listItemRepository = listItemRepository;
         this.executor = executor;
-        listItemsMutableLiveData = new MutableLiveData<>(new ArrayList<>());
-        listItemsLiveData = (LiveData<ArrayList<ListItem>>) listItemsMutableLiveData;
+        _listItemsLiveData = new MutableLiveData<>(new ArrayList<>());
+        listItemsLiveData = (LiveData<ArrayList<ListItem>>) _listItemsLiveData;
     }
 
     public void insertListItem(String listItemDescription) {
