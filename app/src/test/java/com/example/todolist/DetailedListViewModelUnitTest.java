@@ -14,7 +14,6 @@ import com.example.todolist.repositories.listItemsRepository.IListItemRepository
 import com.example.todolist.ui.detailScreen.DetailedListViewModel;
 import com.example.todolist.utils.SynchronousExecutorService;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
