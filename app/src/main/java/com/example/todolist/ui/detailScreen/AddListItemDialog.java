@@ -18,11 +18,11 @@ public class AddListItemDialog extends DialogFragment {
     private EditText etListItemDescription;
     private String listItemDescription;
 
-    private AddListItemDialogListener listener;
+    private AddListItemOkButtonDialogListener okButtonListener;
 
     public static final String TAG = "AddListItemDialog";
 
-    public interface AddListItemDialogListener {
+    public interface AddListItemOkButtonDialogListener {
         void onDialogPositiveClick(String listItemDescription);
     }
 
@@ -35,20 +35,22 @@ public class AddListItemDialog extends DialogFragment {
         View view = inflater.inflate(R.layout.dialog_add_list_item, null);
         etListItemDescription = view.findViewById(R.id.dialog_add_list_item_input);
 
-        builder.setView(view).setPositiveButton(R.string.add_list_dialog_ok_button, this::onOkButtonClick);
+        builder.setView(view)
+                .setPositiveButton(R.string.add_list_dialog_ok_button, this::onOkButtonClick)
+                .setNegativeButton(R.string.cancel_dialog, (dialog, which) -> {});
 
         return builder.create();
     }
 
-    public void setListener(AddListItemDialogListener listener) {
-        this.listener = listener;
+    public void setOkButtonListener(AddListItemOkButtonDialogListener okButtonListener) {
+        this.okButtonListener = okButtonListener;
     }
 
     private void onOkButtonClick(DialogInterface dialog, int which) {
         listItemDescription = etListItemDescription.getText().toString();
 
         if (!listItemDescription.isEmpty()) {
-            listener.onDialogPositiveClick(listItemDescription);
+            okButtonListener.onDialogPositiveClick(listItemDescription);
         }
     }
 }

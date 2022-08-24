@@ -18,11 +18,11 @@ public class AddListDialog extends DialogFragment {
     private EditText etListName, etListDescription;
     private String listName, listDescription;
 
-    private AddListDialogListener listener;
+    private AddListDialogOkButtonListener okButtonListener;
 
     public static final String TAG = "AddListDialog";
 
-    public interface AddListDialogListener {
+    public interface AddListDialogOkButtonListener {
         void onDialogPositiveClick(String listName, String listDescription);
     }
 
@@ -36,21 +36,23 @@ public class AddListDialog extends DialogFragment {
         etListName = view.findViewById(R.id.dialog_add_list_input_name);
         etListDescription = view.findViewById(R.id.dialog_add_list_input_description);
 
-        builder.setView(view).setPositiveButton(R.string.add_list_dialog_ok_button, this::onOkButtonClick);
+        builder.setView(view)
+                .setPositiveButton(R.string.add_list_dialog_ok_button, this::onOkButtonClick)
+                .setNegativeButton(R.string.cancel_dialog, (dialog, which) -> {});
 
         return builder.create();
     }
 
-    public void setListener(AddListDialogListener listener) {
-        this.listener = listener;
+    public void setOkButtonListener(AddListDialogOkButtonListener okButtonListener) {
+        this.okButtonListener = okButtonListener;
     }
 
-    private void onOkButtonClick(DialogInterface dialog, int which) {
+    private void onOkButtonClick(DialogInterface dialogInterface, int which) {
         listName = etListName.getText().toString();
         listDescription = etListDescription.getText().toString();
 
         if (!listName.isEmpty() && !listDescription.isEmpty()) {
-            listener.onDialogPositiveClick(listName, listDescription);
+            okButtonListener.onDialogPositiveClick(listName, listDescription);
         }
     }
 }

@@ -23,7 +23,6 @@ import com.example.todolist.ui.listScreen.listsRecycler.ListsRecyclerViewAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class ListsFragment extends Fragment {
     private RecyclerView listsRecyclerView;
@@ -108,7 +107,7 @@ public class ListsFragment extends Fragment {
     }
 
     private void setDialogListener(@NonNull AddListDialog addListDialog) {
-        addListDialog.setListener((listName, listDescription) -> {
+        addListDialog.setOkButtonListener((listName, listDescription) -> {
             listViewModel.insertNewList(listName, listDescription);
             listViewModel.fetchLists();
         });

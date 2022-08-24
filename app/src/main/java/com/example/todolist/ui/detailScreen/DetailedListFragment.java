@@ -99,7 +99,7 @@ public class DetailedListFragment extends Fragment {
     }
 
     private void setDialogListener(@NonNull AddListItemDialog addListItemDialog) {
-        addListItemDialog.setListener(listItemDescription -> {
+        addListItemDialog.setOkButtonListener(listItemDescription -> {
             detailsViewModel.insertListItem(listItemDescription);
             detailsViewModel.fetchListItems();
         });
