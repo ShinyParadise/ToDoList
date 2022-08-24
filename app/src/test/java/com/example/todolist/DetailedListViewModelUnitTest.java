@@ -52,12 +52,7 @@ public class DetailedListViewModelUnitTest {
         Observer<ArrayList<ListItem>> mockObserver = mock(Observer.class);
         sut.listItemsLiveData.observeForever(mockObserver);
     }
-
-    @After
-    public void tearDown() {
-        pool.shutdown();
-    }
-
+    
     @Test
     public void test_init_data() {
         ArrayList<ListItem> listItems = sut.listItemsLiveData.getValue();
