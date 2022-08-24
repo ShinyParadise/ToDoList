@@ -42,6 +42,7 @@ public class DetailedListViewModel extends ViewModel {
     public void insertListItem(String listItemDescription) {
         executor.execute(() -> {
             listItemRepository.insertListItem(listID, listItemDescription);
+            fetchListItems();
         });
     }
 

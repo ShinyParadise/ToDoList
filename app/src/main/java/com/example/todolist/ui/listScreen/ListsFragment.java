@@ -109,7 +109,6 @@ public class ListsFragment extends Fragment {
     private void setDialogListener(@NonNull AddListDialog addListDialog) {
         addListDialog.setOkButtonListener((listName, listDescription) -> {
             listViewModel.insertNewList(listName, listDescription);
-            listViewModel.fetchLists();
         });
     }
 }

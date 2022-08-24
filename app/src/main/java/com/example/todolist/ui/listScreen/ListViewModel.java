@@ -33,6 +33,7 @@ public class ListViewModel extends ViewModel {
     public void insertNewList(String listName, String listDescription) {
         executor.execute(() -> {
             listRepository.insertToDoList(listName, listDescription);
+            fetchLists();
         });
     }
 }
