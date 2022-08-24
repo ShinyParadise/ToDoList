@@ -18,7 +18,7 @@ import java.util.concurrent.ExecutorService;
 
 public class DetailedListViewModel extends ViewModel {
     public LiveData<ArrayList<ListItem>> listItemsLiveData;
-    private final MutableLiveData<ArrayList<ListItem>> listItemsMutableLiveData;
+    private final MutableLiveData<ArrayList<ListItem>> _listItemsLiveData;
 
     private final int listID;
     private final String listHeader;
@@ -36,7 +36,7 @@ public class DetailedListViewModel extends ViewModel {
         this.listItemRepository = listItemRepository;
         this.executor = executor;
         _listItemsLiveData = new MutableLiveData<>(new ArrayList<>());
-        listItemsLiveData = (LiveData<ArrayList<ListItem>>) _listItemsLiveData;
+        listItemsLiveData = _listItemsLiveData;
     }
 
     public void insertListItem(String listItemDescription) {
@@ -47,7 +47,7 @@ public class DetailedListViewModel extends ViewModel {
 
     public void changeListItemState(int position) {
         executor.execute(() -> {
-            ArrayList<ListItem> listItems = listItemsMutableLiveData.getValue();
+            ArrayList<ListItem> listItems = _listItemsLiveData.getValue();
             ListItem listItem;
 
             if (listItems == null) {
@@ -61,7 +61,7 @@ public class DetailedListViewModel extends ViewModel {
             listItemRepository.changeListItemState(listItem);
 
             Collections.sort(listItems, new ListItemComparator());
-            listItemsMutableLiveData.postValue(listItems);
+            _listItemsLiveData.postValue(listItems);
         });
     }
 
@@ -69,7 +69,7 @@ public class DetailedListViewModel extends ViewModel {
         executor.execute(() -> {
             ArrayList<ListItem> listItems = listItemRepository.getListItems(listID);
             Collections.sort(listItems, new ListItemComparator());
-            listItemsMutableLiveData.postValue(listItems);
+            _listItemsLiveData.postValue(listItems);
         });
     }
 
