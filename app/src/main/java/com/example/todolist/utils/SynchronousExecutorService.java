@@ -6,8 +6,6 @@ import java.util.concurrent.AbstractExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class SynchronousExecutorService extends AbstractExecutorService {
-    private volatile boolean terminated;
-
     @Override
     public void shutdown() { }
 
