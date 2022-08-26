@@ -12,8 +12,8 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.R;
 import com.example.todolist.dao.listItem.ListItemDAO;
+import com.example.todolist.databinding.FragmentDetailedListBinding;
 import com.example.todolist.dto.ListItem;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.ListItemRepository;
@@ -46,9 +46,10 @@ public class DetailedListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_detailed_list, container, false);
+        FragmentDetailedListBinding binding = FragmentDetailedListBinding.inflate(inflater);
+        View rootView = binding.getRoot();
 
-        initiateViews(rootView);
+        initiateViews(binding);
 
         try {
             ((MainActivity) requireActivity()).changeActionBarTitle(detailsViewModel.getHeader());
@@ -87,9 +88,9 @@ public class DetailedListFragment extends Fragment {
         detailsViewModel.changeListItemState(position);
     }
 
-    private void initiateViews(@NonNull View rootView) {
-        detailsRecyclerView = rootView.findViewById(R.id.fragment_details_recycler_view);
-        btnAddDetail = rootView.findViewById(R.id.fragment_details_btn_add_detail);
+    private void initiateViews(@NonNull FragmentDetailedListBinding binding) {
+        detailsRecyclerView = binding.fragmentDetailsRecyclerView;
+        btnAddDetail = binding.fragmentDetailsBtnAddDetail;
     }
 
     private void onAddDetailClick(View v) {

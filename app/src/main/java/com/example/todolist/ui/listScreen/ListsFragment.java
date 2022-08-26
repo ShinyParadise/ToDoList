@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.R;
 import com.example.todolist.dao.list.ListDAO;
+import com.example.todolist.databinding.FragmentListsBinding;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listRepository.ListRepository;
 import com.example.todolist.ui.app.ToDoListApp;
@@ -34,11 +34,13 @@ public class ListsFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_lists, container, false);
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+        FragmentListsBinding binding = FragmentListsBinding.inflate(inflater);
 
-        initiateViews(rootView);
+        View rootView = binding.getRoot();
+
+        initiateViews(binding);
 
         initiateRecyclerView();
         initiateViewModel();
@@ -95,9 +97,9 @@ public class ListsFragment extends Fragment {
         listsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void initiateViews(@NonNull View rootView) {
-        listsRecyclerView = rootView.findViewById(R.id.fragment_lists_recycler_view);
-        btnAddList = rootView.findViewById(R.id.fragment_lists_add_list_button);
+    private void initiateViews(@NonNull FragmentListsBinding binding) {
+        listsRecyclerView = binding.fragmentListsRecyclerView;
+        btnAddList = binding.fragmentListsAddListButton;
     }
 
     private void onAddClick(View v) {
