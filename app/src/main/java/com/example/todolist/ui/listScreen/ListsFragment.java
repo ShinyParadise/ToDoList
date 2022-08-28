@@ -67,30 +67,14 @@ public class ListsFragment extends Fragment {
 
     private void initiateRecyclerView() {
         adapter = new ListsRecyclerViewAdapter();
-        adapter.setOnItemClickListener(new ListsRecyclerViewAdapter.ClickListener() {
-            @Override
-            public void onItemClick(int position, View v) {
-                ArrayList<ToDoList> currentLists = listViewModel.toDoListsLiveData.getValue();
+        adapter.setOnItemClickListener((list) -> {
+            DetailedListFragment detailedListFragment = new DetailedListFragment(list);
 
-                if (currentLists != null) {
-                    DetailedListFragment detailedListFragment = new DetailedListFragment(
-                            currentLists.get(position)
-                    );
-
-                    getParentFragmentManager().beginTransaction()
-                            .replace(R.id.fragment_container_view, detailedListFragment)
-                            .setReorderingAllowed(true)
-                            .addToBackStack("fragment_lists")
-                            .commit();
-                } else {
-                    Toast.makeText(getContext(), "current list is NULL", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onItemLongClick(int position, View v) {
-                Toast.makeText(getContext(), "long clicked " + position + " item", Toast.LENGTH_SHORT).show();
-            }
+            getParentFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container_view, detailedListFragment)
+                .setReorderingAllowed(true)
+                .addToBackStack("fragment_lists")
+                .commit();
         });
 
         listsRecyclerView.setAdapter(adapter);

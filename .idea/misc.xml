@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../../layout/custom_preview.xml" value="0.25" />
         <entry key="../../../../layout/custom_preview.xml" value="0.12020383693045564" />
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/coding/AndroidProjects/ToDoList/app/src/main/res/layout/activity_todolists.xml" value="0.4" />
