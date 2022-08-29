@@ -8,14 +8,14 @@
             type="com.example.todolist.dto.ToDoList" />
 
         <variable
-            name="clickListener"
-            type="com.example.todolist.ui.listScreen.listsRecycler.ListClickListener" />
+            name="listClickHandler"
+            type="com.example.todolist.ui.handlers.ListClickHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="@{() -> clickListener.onItemClick(list)}">
+        android:onClick="@{(v) -> listClickHandler.onItemClick(list)}">
 
         <TextView
             android:id="@+id/recycler_list_name"

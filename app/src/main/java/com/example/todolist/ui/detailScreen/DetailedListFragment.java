@@ -19,6 +19,7 @@ import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.ListItemRepository;
 import com.example.todolist.ui.app.ToDoListApp;
 import com.example.todolist.ui.detailScreen.detailRecycler.ListDetailRecyclerViewAdapter;
+import com.example.todolist.ui.handlers.ItemClickHandler;
 import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -78,14 +79,10 @@ public class DetailedListFragment extends Fragment {
     private void initiateRecyclerView() {
         adapter = new ListDetailRecyclerViewAdapter();
 
-        adapter.setOnCheckChangedListener(this::onItemStateChange);
+        adapter.setOnClickListener(detailsViewModel::changeListItemState);
 
         detailsRecyclerView.setAdapter(adapter);
         detailsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
-
-    private void onItemStateChange(int position) {
-        detailsViewModel.changeListItemState(position);
     }
 
     private void initiateViews(@NonNull FragmentDetailedListBinding binding) {
@@ -95,12 +92,8 @@ public class DetailedListFragment extends Fragment {
 
     private void onAddDetailClick(View v) {
         AddListItemDialog addListItemDialog = new AddListItemDialog();
-        setDialogListener(addListItemDialog);
-        addListItemDialog.show(getParentFragmentManager(), AddListItemDialog.TAG);
-    }
-
-    private void setDialogListener(@NonNull AddListItemDialog addListItemDialog) {
         addListItemDialog.setOkButtonListener(detailsViewModel::insertListItem);
+        addListItemDialog.show(getParentFragmentManager(), AddListItemDialog.TAG);
     }
 
     @Override

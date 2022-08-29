@@ -8,18 +8,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.todolist.databinding.ListsRecyclerViewItemBinding;
 import com.example.todolist.dto.ToDoList;
+import com.example.todolist.ui.handlers.ListClickHandler;
 
 import java.util.ArrayList;
 
 public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
     private ArrayList<ToDoList> toDoLists;
-    private ListClickListener clickListener;
+    private ListClickHandler clickListener;
 
     public ListsRecyclerViewAdapter() {
         toDoLists = new ArrayList<>();
     }
 
-    public void setOnItemClickListener(ListClickListener clickListener) {
+    public void setOnItemClickListener(ListClickHandler clickListener) {
         this.clickListener = clickListener;
     }
 
@@ -37,8 +38,8 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         ToDoList list = toDoLists.get(position);
 
         if (!(list.getHeader().isEmpty() || list.getDescription().isEmpty())) {
+            holder.binding.setListClickHandler(clickListener);
             holder.bind(list);
-            holder.binding.setClickListener(clickListener);
         }
     }
 

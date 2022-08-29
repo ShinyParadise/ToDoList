@@ -32,7 +32,6 @@ public class DetailedListViewModelUnitTest {
 
     private IListItemRepository mockedListItemRepository;
     private DetailedListViewModel sut;
-    private ExecutorService executorService;
 
     @Rule
     public TestRule rule = new InstantTaskExecutorRule();
@@ -40,7 +39,7 @@ public class DetailedListViewModelUnitTest {
     @Before
     public void setup() {
         mockedListItemRepository = mock(IListItemRepository.class);
-        executorService = new SynchronousExecutorService();
+        ExecutorService executorService = new SynchronousExecutorService();
 
         sut = new DetailedListViewModel(
                 mockedListItemRepository,

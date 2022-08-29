@@ -1,21 +1,20 @@
 package com.example.todolist.ui.detailScreen.detailRecycler;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.R;
+import com.example.todolist.databinding.DetailsRecyclerViewItemBinding;
 import com.example.todolist.dto.ListItem;
+import com.example.todolist.ui.handlers.ItemClickHandler;
 
 import java.util.ArrayList;
 
 public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDetailRecyclerViewAdapter.ViewHolder> {
     private ArrayList<ListItem> listItems;
-    private static CheckListener checkListener;
+    private ItemClickHandler clickListener;
 
     public ListDetailRecyclerViewAdapter() {
         listItems = new ArrayList<>();
@@ -26,21 +25,17 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
         notifyDataSetChanged();
     }
 
-    public interface CheckListener {
-        void onCheckChanged(int position);
-    }
-
-    public void setOnCheckChangedListener(CheckListener checkListener) {
-        ListDetailRecyclerViewAdapter.checkListener = checkListener;
+    public void setOnClickListener(ItemClickHandler clickListener) {
+        this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
     public ListDetailRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.details_recycler_view_item, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        DetailsRecyclerViewItemBinding binding = DetailsRecyclerViewItemBinding.inflate(inflater);
 
-        return new ViewHolder(rootView);
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -48,8 +43,10 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
         ListItem listItem = listItems.get(position);
 
         if (!listItem.getDescription().isEmpty()) {
-            holder.getListItemView().setText(listItem.getDescription());
-            holder.getListItemView().setChecked(listItem.getState());
+            holder.binding.setItem(listItem);
+            holder.binding.setItemPosition(position);
+            holder.binding.setItemClickHandler(clickListener);
+            holder.binding.executePendingBindings();
         }
     }
 
@@ -59,19 +56,11 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final CheckBox listItemView;
+        public DetailsRecyclerViewItemBinding binding;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            listItemView = itemView.findViewById(R.id.list_item);
-            listItemView.setOnClickListener((buttonView) ->
-                    checkListener.onCheckChanged(getAbsoluteAdapterPosition())
-            );
-        }
-
-        public CheckBox getListItemView() {
-            return listItemView;
+        public ViewHolder(@NonNull DetailsRecyclerViewItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

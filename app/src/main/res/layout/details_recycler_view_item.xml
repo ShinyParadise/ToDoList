@@ -1,18 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="item"
+            type="com.example.todolist.dto.ListItem" />
+
+        <variable
+            name="itemPosition"
+            type="Integer" />
+
+        <variable
+            name="itemClickHandler"
+            type="com.example.todolist.ui.handlers.ItemClickHandler" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{(v) -> itemClickHandler.onItemClick(itemPosition)}">
 
         <CheckBox
-            android:id="@+id/list_item"
+            android:id="@+id/recycler_list_item"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_weight="1"
-            android:checked="false"
-            android:text=""
+            android:checked="@{item.state}"
+            android:text="@{item.description}"
+            tools:text="@tools:sample/lorem[4:10]"
             android:textSize="20sp">
         </CheckBox>
 
