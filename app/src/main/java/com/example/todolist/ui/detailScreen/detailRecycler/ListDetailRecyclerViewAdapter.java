@@ -45,7 +45,11 @@ public class ListDetailRecyclerViewAdapter extends RecyclerView.Adapter<ListDeta
         if (!listItem.getDescription().isEmpty()) {
             holder.binding.setItem(listItem);
             holder.binding.setItemPosition(position);
-            holder.binding.setItemClickHandler(clickListener);
+
+            holder.binding.detailsItemView.setOnClickListener(v -> {
+                clickListener.onItemClick(position);
+            });
+
             holder.binding.executePendingBindings();
         }
     }

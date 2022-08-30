@@ -10,19 +10,16 @@
         <variable
             name="itemPosition"
             type="Integer" />
-
-        <variable
-            name="itemClickHandler"
-            type="com.example.todolist.ui.handlers.ItemClickHandler" />
     </data>
 
     <LinearLayout
+        android:id="@+id/details_item_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{(v) -> itemClickHandler.onItemClick(itemPosition)}">
+        android:layout_height="wrap_content">
 
         <CheckBox
             android:id="@+id/recycler_list_item"
+            android:clickable="false"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="5dp"
