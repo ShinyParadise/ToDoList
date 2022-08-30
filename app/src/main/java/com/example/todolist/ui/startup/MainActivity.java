@@ -17,8 +17,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MainActivityBinding binding = DataBindingUtil.setContentView(this, R.layout.main_activity);
-        binding.setLifecycleOwner(this);
+        setContentView(R.layout.main_activity);
 
         actionBar = getSupportActionBar();
         changeActionBarTitle("Lists");
