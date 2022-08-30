@@ -38,8 +38,12 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         ToDoList list = toDoLists.get(position);
 
         if (!(list.getHeader().isEmpty() || list.getDescription().isEmpty())) {
-            holder.binding.setListClickHandler(clickListener);
-            holder.bind(list);
+            holder.binding.setList(list);
+            holder.binding.listsItemView.setOnClickListener(v -> {
+                clickListener.onItemClick(list);
+            });
+
+            holder.binding.executePendingBindings();
         }
     }
 
@@ -59,11 +63,6 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         public ViewHolder(@NonNull ListsRecyclerViewItemBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
-        }
-
-        public void bind(ToDoList toDoList) {
-            binding.setList(toDoList);
-            binding.executePendingBindings();
         }
     }
 }

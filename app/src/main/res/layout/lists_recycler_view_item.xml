@@ -6,16 +6,12 @@
         <variable
             name="list"
             type="com.example.todolist.dto.ToDoList" />
-
-        <variable
-            name="listClickHandler"
-            type="com.example.todolist.ui.handlers.ListClickHandler" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/lists_item_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{(v) -> listClickHandler.onItemClick(list)}">
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/recycler_list_name"
