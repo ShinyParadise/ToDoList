@@ -12,13 +12,14 @@ import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.R;
 import com.example.todolist.dao.listItem.ListItemDAO;
+import com.example.todolist.databinding.FragmentDetailedListBinding;
 import com.example.todolist.dto.ListItem;
 import com.example.todolist.dto.ToDoList;
 import com.example.todolist.repositories.listItemsRepository.ListItemRepository;
 import com.example.todolist.ui.app.ToDoListApp;
 import com.example.todolist.ui.detailScreen.detailRecycler.ListDetailRecyclerViewAdapter;
+import com.example.todolist.ui.handlers.ItemClickHandler;
 import com.example.todolist.ui.startup.MainActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -46,9 +47,10 @@ public class DetailedListFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_detailed_list, container, false);
+        FragmentDetailedListBinding binding = FragmentDetailedListBinding.inflate(inflater);
+        View rootView = binding.getRoot();
 
-        initiateViews(rootView);
+        initiateViews(binding);
 
         try {
             ((MainActivity) requireActivity()).changeActionBarTitle(detailsViewModel.getHeader());
@@ -77,29 +79,21 @@ public class DetailedListFragment extends Fragment {
     private void initiateRecyclerView() {
         adapter = new ListDetailRecyclerViewAdapter();
 
-        adapter.setOnCheckChangedListener(this::onItemStateChange);
+        adapter.setOnClickListener(detailsViewModel::changeListItemState);
 
         detailsRecyclerView.setAdapter(adapter);
         detailsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
-    private void onItemStateChange(int position) {
-        detailsViewModel.changeListItemState(position);
-    }
-
-    private void initiateViews(@NonNull View rootView) {
-        detailsRecyclerView = rootView.findViewById(R.id.fragment_details_recycler_view);
-        btnAddDetail = rootView.findViewById(R.id.fragment_details_btn_add_detail);
+    private void initiateViews(@NonNull FragmentDetailedListBinding binding) {
+        detailsRecyclerView = binding.fragmentDetailsRecyclerView;
+        btnAddDetail = binding.fragmentDetailsBtnAddDetail;
     }
 
     private void onAddDetailClick(View v) {
         AddListItemDialog addListItemDialog = new AddListItemDialog();
-        setDialogListener(addListItemDialog);
-        addListItemDialog.show(getParentFragmentManager(), AddListItemDialog.TAG);
-    }
-
-    private void setDialogListener(@NonNull AddListItemDialog addListItemDialog) {
         addListItemDialog.setOkButtonListener(detailsViewModel::insertListItem);
+        addListItemDialog.show(getParentFragmentManager(), AddListItemDialog.TAG);
     }
 
     @Override

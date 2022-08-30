@@ -1,42 +1,36 @@
 package com.example.todolist.ui.listScreen.listsRecycler;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.todolist.R;
+import com.example.todolist.databinding.ListsRecyclerViewItemBinding;
 import com.example.todolist.dto.ToDoList;
+import com.example.todolist.ui.handlers.ListClickHandler;
 
 import java.util.ArrayList;
 
 public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecyclerViewAdapter.ViewHolder> {
     private ArrayList<ToDoList> toDoLists;
-    private static ClickListener clickListener;
+    private ListClickHandler clickListener;
 
     public ListsRecyclerViewAdapter() {
         toDoLists = new ArrayList<>();
     }
 
-    public interface ClickListener {
-        void onItemClick(int position, View v);
-        void onItemLongClick(int position, View v);
-    }
-
-    public void setOnItemClickListener(ClickListener clickListener) {
-        ListsRecyclerViewAdapter.clickListener = clickListener;
+    public void setOnItemClickListener(ListClickHandler clickListener) {
+        this.clickListener = clickListener;
     }
 
     @NonNull
     @Override
     public ListsRecyclerViewAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View rootView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.lists_recycler_view_item, parent, false);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        ListsRecyclerViewItemBinding binding = ListsRecyclerViewItemBinding.inflate(inflater);
 
-        return new ViewHolder(rootView);
+        return new ViewHolder(binding);
     }
 
     @Override
@@ -44,8 +38,12 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         ToDoList list = toDoLists.get(position);
 
         if (!(list.getHeader().isEmpty() || list.getDescription().isEmpty())) {
-            holder.getListNameView().setText(list.getHeader());
-            holder.getListDescriptionView().setText(list.getDescription());
+            holder.binding.setList(list);
+            holder.binding.listsItemView.setOnClickListener(v -> {
+                clickListener.onItemClick(list);
+            });
+
+            holder.binding.executePendingBindings();
         }
     }
 
@@ -59,37 +57,12 @@ public class ListsRecyclerViewAdapter extends RecyclerView.Adapter<ListsRecycler
         return toDoLists.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener,View.OnLongClickListener {
-        private final TextView listNameView;
-        private final TextView listDescriptionView;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public ListsRecyclerViewItemBinding binding;
 
-        public ViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            itemView.setOnClickListener(this);
-            itemView.setOnLongClickListener(this);
-
-            listNameView = itemView.findViewById(R.id.recycler_list_name);
-            listDescriptionView = itemView.findViewById(R.id.recycler_list_description);
-        }
-
-        public TextView getListNameView() {
-            return listNameView;
-        }
-
-        public TextView getListDescriptionView() {
-            return listDescriptionView;
-        }
-
-        @Override
-        public void onClick(View v) {
-            clickListener.onItemClick(getBindingAdapterPosition(), v);
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            clickListener.onItemLongClick(getBindingAdapterPosition(), v);
-            return false;
+        public ViewHolder(@NonNull ListsRecyclerViewItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
     }
 }

@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="item"
+            type="com.example.todolist.dto.ListItem" />
+    </data>
 
-    <CheckBox
-        android:id="@+id/list_item"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_weight="1"
-        android:checked="false"
-        android:text=""
-        android:textSize="20sp">
-    </CheckBox>
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/details_item_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <CheckBox
+            android:id="@+id/recycler_list_item"
+            android:clickable="false"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:checked="@{item.state}"
+            android:text="@{item.description}"
+            tools:text="@tools:sample/lorem[4:10]"
+            android:textSize="20sp">
+        </CheckBox>
+
+    </LinearLayout>
+
+</layout>

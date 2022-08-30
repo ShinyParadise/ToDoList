@@ -13,10 +13,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.DialogFragment;
 
 import com.example.todolist.R;
+import com.example.todolist.databinding.DialogAddListBinding;
 
 public class AddListDialog extends DialogFragment {
     private EditText etListName, etListDescription;
-    private String listName, listDescription;
 
     private AddListDialogOkButtonListener okButtonListener;
 
@@ -31,12 +31,13 @@ public class AddListDialog extends DialogFragment {
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
 
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.dialog_add_list, null);
-        etListName = view.findViewById(R.id.dialog_add_list_input_name);
-        etListDescription = view.findViewById(R.id.dialog_add_list_input_description);
+        DialogAddListBinding binding = DialogAddListBinding.inflate(LayoutInflater.from(getContext()));
+        View rootView = binding.getRoot();
 
-        builder.setView(view)
+        etListName = binding.dialogAddListInputName;
+        etListDescription = binding.dialogAddListInputDescription;
+
+        builder.setView(rootView)
                 .setPositiveButton(R.string.add_list_dialog_ok_button, this::onOkButtonClick)
                 .setNegativeButton(R.string.cancel_dialog, (dialog, which) -> {});
 
@@ -48,8 +49,8 @@ public class AddListDialog extends DialogFragment {
     }
 
     private void onOkButtonClick(DialogInterface dialogInterface, int which) {
-        listName = etListName.getText().toString();
-        listDescription = etListDescription.getText().toString();
+        String listName = etListName.getText().toString();
+        String listDescription = etListDescription.getText().toString();
 
         if (!listName.isEmpty() && !listDescription.isEmpty()) {
             okButtonListener.onDialogPositiveClick(listName, listDescription);
