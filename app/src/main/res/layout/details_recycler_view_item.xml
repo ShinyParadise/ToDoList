@@ -6,10 +6,6 @@
         <variable
             name="item"
             type="com.example.todolist.dto.ListItem" />
-
-        <variable
-            name="itemPosition"
-            type="Integer" />
     </data>
 
     <LinearLayout
